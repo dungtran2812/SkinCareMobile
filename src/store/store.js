@@ -1,18 +1,18 @@
-import { configureStore } from '@reduxjs/toolkit';
-
-import { persistStore } from 'redux-persist';
-import rootReducer from '../redux/rootReducer';
-import skincareApi from '../services/skincare.service';
+import { configureStore } from "@reduxjs/toolkit";
+import { persistStore } from "redux-persist";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import rootReducer from "../redux/rootReducer";
+import skincareApi from "../services/skincare.service";
 
 const store = configureStore({
 	reducer: {
 		rootReducer,
-		[skincareApi.reducerPath]: skincareApi.reducer
+		[skincareApi.reducerPath]: skincareApi.reducer,
 	},
-	middleware: getDefaultMiddleware =>
+	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
-			serializableCheck: false
-		}).concat(skincareApi.middleware)
+			serializableCheck: false,
+		}).concat(skincareApi.middleware),
 });
 
 const persistor = persistStore(store);
