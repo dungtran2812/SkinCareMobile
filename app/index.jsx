@@ -5,6 +5,8 @@ import { createStackNavigator } from "@react-navigation/stack"; // Thêm dòng n
 import { NavigationContainer } from "@react-navigation/native"; // Thêm dòng này
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "../src/store/store";
+import IntroScreen from "../src/screen/IntroScreen";
+import MainTabNavigator from "../src/screen/navigation/MainTabNavigator";
 
 LogBox.ignoreLogs([
 	"Non-serializable values were found in the navigation state",
@@ -18,10 +20,18 @@ export default function App() {
 	return (
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
-				<NavigationContainer>
-					<Stack.Navigator>
-						<Stack.Screen name="Home" component={Home} />
-						<Stack.Screen name="Detail" component={Detail} />
+				<NavigationContainer independent={true}>
+					<Stack.Navigator
+						initialRouteName="IntroScreen"
+						screenOptions={{ headerShown: false }}
+					>
+						<Stack.Screen
+							name="IntroScreen"
+							component={IntroScreen}
+						/>
+						<Stack.Screen name="MainTabNavigator">
+							{() => <MainTabNavigator isLoggedIn={isLoggedIn} />}
+						</Stack.Screen>
 					</Stack.Navigator>
 				</NavigationContainer>
 			</PersistGate>
