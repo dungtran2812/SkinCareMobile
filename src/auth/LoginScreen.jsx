@@ -25,7 +25,7 @@ const LoginScreen = ({ navigation }) => {
 					style={styles.backButton}
 					onPress={() => navigation.goBack()}
 				>
-					<Ionicons name="arrow-back" size={24} color="black" />
+					<Ionicons name="arrow-back" size={24} color="#1E3A5F" />
 				</TouchableOpacity>
 
 				<View style={styles.upperSection}>
@@ -33,17 +33,21 @@ const LoginScreen = ({ navigation }) => {
 						Chào bạn, hãy đăng nhập để tham gia cùng Beauté nhé!
 					</Text>
 
-					<TextInput
-						style={styles.input}
-						placeholder="Tên đăng nhập"
-						value={username}
-						onChangeText={setUsername}
-					/>
-
-					<View style={styles.passwordContainer}>
+					<View style={styles.inputContainer}>
 						<TextInput
-							style={styles.inputPassword}
+							style={styles.input}
+							placeholder="Tên đăng nhập"
+							placeholderTextColor="#888"
+							value={username}
+							onChangeText={setUsername}
+						/>
+					</View>
+
+					<View style={styles.inputContainer}>
+						<TextInput
+							style={styles.input}
 							placeholder="Mật khẩu"
+							placeholderTextColor="#888"
 							secureTextEntry={!showPassword}
 							value={password}
 							onChangeText={setPassword}
@@ -54,7 +58,7 @@ const LoginScreen = ({ navigation }) => {
 							<Ionicons
 								name={showPassword ? "eye" : "eye-off"}
 								size={24}
-								color="gray"
+								color="#1E3A5F"
 							/>
 						</TouchableOpacity>
 					</View>
@@ -66,11 +70,11 @@ const LoginScreen = ({ navigation }) => {
 							Chưa có tài khoản? Đăng ký tại đây
 						</Text>
 					</TouchableOpacity>
-				</View>
 
-				<TouchableOpacity style={styles.loginButton}>
-					<Text style={styles.loginButtonText}>Đăng nhập</Text>
-				</TouchableOpacity>
+					<TouchableOpacity style={styles.loginButton}>
+						<Text style={styles.loginButtonText}>Đăng nhập</Text>
+					</TouchableOpacity>
+				</View>
 			</View>
 
 			<Text style={styles.copyright}>
@@ -84,12 +88,12 @@ const styles = StyleSheet.create({
 	background: {
 		flex: 1,
 		resizeMode: "cover",
-		justifyContent: "space-between",
+		justifyContent: "center",
 		alignItems: "center",
 	},
 	container: {
 		flex: 1,
-		justifyContent: "flex-start",
+		justifyContent: "space-between",
 		alignItems: "center",
 		width: "100%",
 		paddingTop: 80,
@@ -102,14 +106,7 @@ const styles = StyleSheet.create({
 	upperSection: {
 		width: "85%",
 		alignItems: "center",
-		backgroundColor: "rgba(255, 255, 255, 0.95)",
-		padding: 20,
-		borderRadius: 10,
-		elevation: 3,
-		shadowColor: "#000",
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.2,
-		shadowRadius: 4,
+		padding: 10,
 	},
 	title: {
 		fontSize: 22,
@@ -118,30 +115,22 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 		color: "#1E3A5F",
 	},
-	input: {
-		width: "100%",
-		height: 50,
-		borderWidth: 1,
-		borderColor: "gray",
-		borderRadius: 10,
-		paddingHorizontal: 15,
-		marginBottom: 15,
-		backgroundColor: "white",
-	},
-	passwordContainer: {
+	inputContainer: {
 		flexDirection: "row",
 		alignItems: "center",
 		width: "100%",
-		borderWidth: 1,
-		borderColor: "gray",
-		borderRadius: 10,
+		borderWidth: 0.15,
+		borderColor: "#1E3A5F",
+		borderRadius: 20,
 		paddingHorizontal: 15,
 		marginBottom: 15,
 		backgroundColor: "white",
 	},
-	inputPassword: {
+	input: {
 		flex: 1,
 		height: 50,
+		fontSize: 16,
+		color: "#1E3A5F",
 	},
 	signupText: {
 		color: "#1E3A5F",
@@ -149,12 +138,13 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 	},
 	loginButton: {
-		width: "85%",
+		width: "50%",
 		backgroundColor: "#1E3A5F",
-		padding: 15,
-		borderRadius: 10,
+		padding: 12,
+		borderRadius: 20,
 		alignItems: "center",
 		elevation: 3,
+		marginTop: 10,
 	},
 	loginButtonText: {
 		color: "white",
