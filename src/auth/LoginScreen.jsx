@@ -8,11 +8,23 @@ import {
 	ImageBackground,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import MainTabNavigator from "../screen/navigation/MainTabNavigator"; // Thêm dòng này
 
 const LoginScreen = ({ navigation }) => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
+
+	const isFormValid = username.trim() !== "" && password.trim() !== "";
+
+	const handleLogin = () => {
+		if (isFormValid) {
+			navigation.reset({
+				index: 0,
+				routes: [{ name: "MainTabNavigator" }],
+			});
+		}
+	};
 
 	return (
 		<ImageBackground
@@ -71,7 +83,14 @@ const LoginScreen = ({ navigation }) => {
 						</Text>
 					</TouchableOpacity>
 
-					<TouchableOpacity style={styles.loginButton}>
+					<TouchableOpacity
+						style={[
+							styles.loginButton,
+							{ opacity: isFormValid ? 1 : 0.5 },
+						]}
+						onPress={handleLogin}
+						disabled={!isFormValid}
+					>
 						<Text style={styles.loginButtonText}>Đăng nhập</Text>
 					</TouchableOpacity>
 				</View>

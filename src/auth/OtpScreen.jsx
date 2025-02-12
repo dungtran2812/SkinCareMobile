@@ -26,7 +26,7 @@ const OtpScreen = ({ navigation }) => {
 
 	const handleSubmit = () => {
 		if (otp.join("").length === 4) {
-			navigation.navigate("HomeScreen");
+			navigation.navigate("MainTabNavigator");
 		}
 	};
 

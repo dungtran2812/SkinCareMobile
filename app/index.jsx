@@ -45,7 +45,7 @@ export default function App() {
 						options={{ headerShown: false }}
 					/>
 					<Stack.Screen
-						name="HomeScreen"
+						name="MainTabNavigator"
 						component={MainTabNavigator}
 						options={{ headerShown: false }}
 					/>

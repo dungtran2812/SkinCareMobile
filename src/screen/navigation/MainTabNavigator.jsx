@@ -22,7 +22,6 @@ const MainTabNavigator = () => {
 						iconName = focused ? "bulb" : "bulb-outline";
 					} else if (route.name === "Roadmap") {
 						iconName = focused ? "map" : "map-outline";
-						size = 40; // Roadmap icon lớn hơn và nằm cao hơn
 					} else if (route.name === "Notifications") {
 						iconName = focused
 							? "notifications"
@@ -46,17 +45,7 @@ const MainTabNavigator = () => {
 		>
 			<Tab.Screen name="Home" component={HomeScreen} />
 			<Tab.Screen name="Suggest" component={SuggestScreen} />
-			<Tab.Screen
-				name="Roadmap"
-				component={RoadmapScreen}
-				options={{
-					tabBarStyle: {
-						position: "absolute",
-						top: -10,
-						backgroundColor: "white",
-					},
-				}}
-			/>
+			<Tab.Screen name="Roadmap" component={RoadmapScreen} />
 			<Tab.Screen name="Notifications" component={NotificationScreen} />
 			<Tab.Screen name="Profile" component={ProfileScreen} />
 		</Tab.Navigator>
