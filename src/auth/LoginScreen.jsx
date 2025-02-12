@@ -36,7 +36,7 @@ const LoginScreen = ({ navigation }) => {
 					<View style={styles.inputContainer}>
 						<TextInput
 							style={styles.input}
-							placeholder="Tên đăng nhập"
+							placeholder="Email hoặc số điện thoại"
 							placeholderTextColor="#888"
 							value={username}
 							onChangeText={setUsername}
