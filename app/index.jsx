@@ -7,6 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { store, persistor } from "../src/store/store";
 import { setUpInterceptor } from "../src/services/api.service";
 import IntroScreen from "../src/screen/IntroScreen";
+import LoginScreen from "../src/auth/LoginScreen";
 
 LogBox.ignoreLogs([
 	"Non-serializable values were found in the navigation state",
@@ -24,6 +25,11 @@ export default function App() {
 					<Stack.Screen
 						name="IntroScreen"
 						component={IntroScreen}
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name="LoginScreen"
+						component={LoginScreen}
 						options={{ headerShown: false }}
 					/>
 				</Stack.Navigator>
