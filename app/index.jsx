@@ -9,6 +9,7 @@ import { setUpInterceptor } from "../src/services/api.service";
 import IntroScreen from "../src/screen/IntroScreen";
 import LoginScreen from "../src/auth/LoginScreen";
 import SignupScreen from "../src/auth/SignupScreen";
+import OtpScreen from "../src/auth/OtpScreen";
 
 LogBox.ignoreLogs([
 	"Non-serializable values were found in the navigation state",
@@ -36,6 +37,11 @@ export default function App() {
 					<Stack.Screen
 						name="SignupScreen"
 						component={SignupScreen}
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name="OtpScreen"
+						component={OtpScreen}
 						options={{ headerShown: false }}
 					/>
 				</Stack.Navigator>
