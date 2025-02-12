@@ -1,5 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { View, Text } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import HomeScreen from "../HomeScreen";
 import SuggestScreen from "../SuggestScreen";
@@ -16,21 +17,39 @@ const MainTabNavigator = () => {
 				tabBarIcon: ({ focused, color, size }) => {
 					let iconName;
 
-					if (route.name === "Home") {
+					if (route.name === "Trang chủ") {
 						iconName = focused ? "home" : "home-outline";
-					} else if (route.name === "Suggest") {
+					} else if (route.name === "Đề xuất") {
 						iconName = focused ? "bulb" : "bulb-outline";
-					} else if (route.name === "Roadmap") {
+					} else if (route.name === "Lộ trình") {
 						iconName = focused ? "map" : "map-outline";
-					} else if (route.name === "Notifications") {
+					} else if (route.name === "Thông báo") {
 						iconName = focused
 							? "notifications"
 							: "notifications-outline";
-					} else if (route.name === "Profile") {
+					} else if (route.name === "Tài khoản") {
 						iconName = focused ? "person" : "person-outline";
 					}
+
 					return (
-						<Ionicons name={iconName} size={size} color={color} />
+						<View style={{ alignItems: "center" }}>
+							<Ionicons
+								name={iconName}
+								size={focused ? 28 : 24}
+								color={focused ? "#1E3A5F" : "gray"}
+							/>
+							{focused && (
+								<View
+									style={{
+										width: 5,
+										height: 5,
+										backgroundColor: "#1E3A5F",
+										borderRadius: 50,
+										marginTop: 3,
+									}}
+								/>
+							)}
+						</View>
 					);
 				},
 				tabBarStyle: {
@@ -40,14 +59,36 @@ const MainTabNavigator = () => {
 				},
 				tabBarLabelStyle: {
 					fontSize: 12,
+					color: "#1E3A5F",
+					fontWeight: "bold",
 				},
 			})}
 		>
-			<Tab.Screen name="Home" component={HomeScreen} />
-			<Tab.Screen name="Suggest" component={SuggestScreen} />
-			<Tab.Screen name="Roadmap" component={RoadmapScreen} />
-			<Tab.Screen name="Notifications" component={NotificationScreen} />
-			<Tab.Screen name="Profile" component={ProfileScreen} />
+			<Tab.Screen
+				name="Trang chủ"
+				component={HomeScreen}
+				options={{ headerShown: false }}
+			/>
+			<Tab.Screen
+				name="Lộ trình"
+				component={RoadmapScreen}
+				options={{ headerShown: false }}
+			/>
+			<Tab.Screen
+				name="Đề xuất"
+				component={SuggestScreen}
+				options={{ headerShown: false }}
+			/>
+			<Tab.Screen
+				name="Thông báo"
+				component={NotificationScreen}
+				options={{ headerShown: false }}
+			/>
+			<Tab.Screen
+				name="Tài khoản"
+				component={ProfileScreen}
+				options={{ headerShown: false }}
+			/>
 		</Tab.Navigator>
 	);
 };
