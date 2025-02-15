@@ -1,6 +1,5 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { View, Text } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import HomeScreen from "../HomeScreen";
 import SuggestScreen from "../SuggestScreen";
@@ -32,35 +31,22 @@ const MainTabNavigator = () => {
 					}
 
 					return (
-						<View style={{ alignItems: "center" }}>
-							<Ionicons
-								name={iconName}
-								size={focused ? 28 : 24}
-								color={focused ? "#1E3A5F" : "gray"}
-							/>
-							{focused && (
-								<View
-									style={{
-										width: 5,
-										height: 5,
-										backgroundColor: "#1E3A5F",
-										borderRadius: 50,
-										marginTop: 3,
-									}}
-								/>
-							)}
-						</View>
+						<Ionicons
+							name={iconName}
+							size={focused ? 30 : 24}
+							color={focused ? "#B3E5FC" : "gray"}
+						/>
 					);
+				},
+				tabBarLabelStyle: {
+					fontSize: 8.5,
+					color: "#1E3A5F",
+					marginBottom: 5,
 				},
 				tabBarStyle: {
 					height: 60,
 					paddingBottom: 5,
 					paddingTop: 5,
-				},
-				tabBarLabelStyle: {
-					fontSize: 12,
-					color: "#1E3A5F",
-					fontWeight: "bold",
 				},
 			})}
 		>
