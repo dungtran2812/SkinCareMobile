@@ -6,6 +6,7 @@ import QuickAccess from "../components/QuickAccess";
 import FlashDeals from "../components/FlashDeals";
 import CategoryHeader from "../components/category/CategoryHeader";
 import BrandHeader from "../components/brand/BrandHeader";
+import Suggest from "../components/Suggest";
 
 export default function HomeScreen() {
 	return (
@@ -16,6 +17,7 @@ export default function HomeScreen() {
 			<FlashDeals />
 			<CategoryHeader />
 			<BrandHeader />
+			<Suggest />
 		</ScrollView>
 	);
 }
