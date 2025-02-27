@@ -5,6 +5,7 @@ import Carousel from "../components/Carousel";
 import QuickAccess from "../components/QuickAccess";
 import FlashDeals from "../components/FlashDeals";
 import CategoryHeader from "../components/category/CategoryHeader";
+import BrandHeader from "../components/brand/BrandHeader";
 
 export default function HomeScreen() {
 	return (
@@ -14,9 +15,7 @@ export default function HomeScreen() {
 			<QuickAccess />
 			<FlashDeals />
 			<CategoryHeader />
-			<View style={styles.content}>
-				<Text style={styles.text}>HomeScreen</Text>
-			</View>
+			<BrandHeader />
 		</ScrollView>
 	);
 }
