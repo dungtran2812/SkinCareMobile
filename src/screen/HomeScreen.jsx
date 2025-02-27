@@ -1,21 +1,23 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { ScrollView, View, Text, StyleSheet } from "react-native";
 import Header from "../components/Header";
 import Carousel from "../components/Carousel";
 import QuickAccess from "../components/QuickAccess";
 import FlashDeals from "../components/FlashDeals";
+import CategoryHeader from "../components/category/CategoryHeader";
 
 export default function HomeScreen() {
 	return (
-		<View style={styles.container}>
+		<ScrollView style={styles.container}>
 			<Header />
 			<Carousel />
 			<QuickAccess />
 			<FlashDeals />
+			<CategoryHeader />
 			<View style={styles.content}>
 				<Text style={styles.text}>HomeScreen</Text>
 			</View>
-		</View>
+		</ScrollView>
 	);
 }
 
@@ -25,9 +27,9 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 	},
 	content: {
-		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
+		marginBottom: 20, // Khoảng cách dưới để tránh text bị dính vào đáy
 	},
 	text: {
 		fontSize: 20,
