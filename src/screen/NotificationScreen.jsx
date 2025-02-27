@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 	},
 	header: {
-		backgroundColor: "#1E90FF", // Màu xanh cho header
+		backgroundColor: "#B3E5FC", // Màu xanh cho header
 		paddingVertical: 20,
 		justifyContent: "center",
 		alignItems: "center",
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
 		color: "#000",
 	},
 	activeTab: {
-		backgroundColor: "#1E90FF", // Màu nền khi tab đang được chọn
+		backgroundColor: "#B3E5FC", // Màu nền khi tab đang được chọn
 		borderRadius: 5,
 	},
 	contentContainer: {
