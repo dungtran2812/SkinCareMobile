@@ -14,16 +14,56 @@ const { width } = Dimensions.get("window");
 const QuickAccess = () => {
 	const navigation = useNavigation();
 
-	// Mảng chứa tên các màn hình, nút và tên icon
+	// Mảng chứa tên các màn hình, nút, tên icon và màu sắc cho mỗi icon
 	const buttons = [
-		{ title: "Hàng mới về", screen: "NewArrivals", icon: "gift" },
-		{ title: "Giao 2h", screen: "Delivery2h", icon: "clock-o" }, // Sử dụng "clock-o"
-		{ title: "Xem đơn hàng", screen: "TrackOrder", icon: "search" },
-		{ title: "Bán chạy", screen: "BestSellers", icon: "star" }, // Sử dụng "star" thay vì "chart-line"
-		{ title: "Cẩm nang", screen: "Guide", icon: "book" },
-		{ title: "Làm quiz", screen: "Quiz", icon: "question-circle" },
-		{ title: "Tư vấn", screen: "Consult", icon: "headphones" }, // Sử dụng "headphones"
-		{ title: "Chu trình", screen: "Process", icon: "cogs" },
+		{
+			title: "Hàng mới về",
+			screen: "NewArrivals",
+			icon: "gift",
+			iconColor: "#FF5733",
+		},
+		{
+			title: "Giao 2h",
+			screen: "Delivery2h",
+			icon: "clock-o",
+			iconColor: "#1E90FF",
+		}, // Màu xanh dương
+		{
+			title: "Xem đơn hàng",
+			screen: "TrackOrder",
+			icon: "search",
+			iconColor: "#32CD32",
+		}, // Màu xanh lá
+		{
+			title: "Bán chạy",
+			screen: "BestSellers",
+			icon: "star",
+			iconColor: "#FFD700",
+		}, // Màu vàng
+		{
+			title: "Cẩm nang",
+			screen: "Guide",
+			icon: "book",
+			iconColor: "#8A2BE2",
+		}, // Màu tím
+		{
+			title: "Làm quiz",
+			screen: "Quiz",
+			icon: "question-circle",
+			iconColor: "#FF6347",
+		}, // Màu đỏ
+		{
+			title: "Tư vấn",
+			screen: "Consult",
+			icon: "headphones",
+			iconColor: "#20B2AA",
+		}, // Màu xanh ngọc
+		{
+			title: "Chu trình",
+			screen: "Process",
+			icon: "cogs",
+			iconColor: "#A52A2A",
+		}, // Màu nâu
 	];
 
 	const handlePress = (screen) => {
@@ -44,9 +84,8 @@ const QuickAccess = () => {
 							<Icon
 								name={button.icon}
 								size={24}
-								color="#1E3A5F"
+								color={button.iconColor} // Dùng màu sắc của từng icon
 							/>{" "}
-							{/* Màu icon */}
 						</View>
 						<Text style={styles.buttonText}>{button.title}</Text>
 					</TouchableOpacity>
@@ -65,9 +104,8 @@ const QuickAccess = () => {
 							<Icon
 								name={button.icon}
 								size={24}
-								color="#1E3A5F"
+								color={button.iconColor} // Dùng màu sắc của từng icon
 							/>{" "}
-							{/* Màu icon */}
 						</View>
 						<Text style={styles.buttonText}>{button.title}</Text>
 					</TouchableOpacity>
