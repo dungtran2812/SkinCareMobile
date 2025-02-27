@@ -5,8 +5,7 @@ import HomeScreen from "../HomeScreen";
 import SuggestScreen from "../SuggestScreen";
 import RoadmapScreen from "../RoadmapScreen";
 import NotificationScreen from "../NotificationScreen";
-import ProfileScreen from "../ProfileScreen";
-import { NavigationContainer } from "@react-navigation/native";
+import ProfileStack from "../stack/profile/ProfileStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -73,7 +72,7 @@ const MainTabNavigator = () => {
 			/>
 			<Tab.Screen
 				name="Tài khoản"
-				component={ProfileScreen}
+				component={ProfileStack}
 				options={{ headerShown: false }}
 			/>
 		</Tab.Navigator>
