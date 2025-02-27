@@ -2,7 +2,11 @@ import React, { useRef, useState, useEffect } from "react";
 import { View, ScrollView, Image, StyleSheet, Dimensions } from "react-native";
 
 const { width, height } = Dimensions.get("window");
-const imageHeight = height * 0.5; // Fit chiều dọc với màn hình
+
+// Tính tỷ lệ chiều cao / chiều rộng của ảnh gốc
+const aspectRatio = 227 / 736;
+const imageHeight = width * aspectRatio; // Tính chiều cao dựa trên tỷ lệ
+
 const images = [
 	require("../../assets/images/carousel/slide1.jpg"),
 	require("../../assets/images/carousel/slide2.jpg"),
@@ -20,6 +24,14 @@ const Carousel = () => {
 	const scrollViewRef = useRef(null);
 	const [currentIndex, setCurrentIndex] = useState(0);
 
+	// Hàm theo dõi sự kiện scroll và cập nhật currentIndex
+	const onScroll = (event) => {
+		const contentOffsetX = event.nativeEvent.contentOffset.x;
+		const index = Math.floor(contentOffsetX / width); // Lấy index từ vị trí cuộn
+		setCurrentIndex(index);
+	};
+
+	// Cập nhật tự động sau mỗi 5 giây
 	useEffect(() => {
 		const interval = setInterval(() => {
 			const nextIndex = (currentIndex + 1) % images.length;
@@ -34,13 +46,15 @@ const Carousel = () => {
 	}, [currentIndex]);
 
 	return (
-		<View style={styles.carouselContainer}>
+		<View style={[styles.carouselContainer, { height: imageHeight }]}>
 			<ScrollView
 				ref={scrollViewRef}
 				horizontal
 				pagingEnabled
 				showsHorizontalScrollIndicator={false}
 				scrollEventThrottle={16}
+				onScroll={onScroll} // Thêm sự kiện onScroll
+				scrollEnabled // Đảm bảo người dùng có thể cuộn nhanh
 			>
 				{images.map((image, index) => (
 					<View key={index} style={styles.imageWrapper}>
@@ -66,18 +80,19 @@ const Carousel = () => {
 const styles = StyleSheet.create({
 	carouselContainer: {
 		width: width,
-		height: imageHeight,
 		backgroundColor: "#B3E5FC",
 		alignItems: "center",
 	},
 	imageWrapper: {
 		width: width,
-		height: imageHeight,
+		height: "100%", // Đảm bảo chiều cao là 100% của container
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	image: {
-		width: width,
-		height: imageHeight,
-		resizeMode: "cover",
+		width: width, // Đảm bảo ảnh vừa với chiều rộng màn hình
+		height: "100%", // Đảm bảo ảnh vừa với chiều cao container
+		resizeMode: "contain", // Giữ nguyên tỷ lệ ảnh
 		borderRadius: 15,
 	},
 	indicatorContainer: {
