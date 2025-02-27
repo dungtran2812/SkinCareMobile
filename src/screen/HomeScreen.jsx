@@ -2,12 +2,14 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Header from "../components/Header";
 import Carousel from "../components/Carousel";
+import QuickAccess from "../components/QuickAccess";
 
 export default function HomeScreen() {
 	return (
 		<View style={styles.container}>
 			<Header />
 			<Carousel />
+			<QuickAccess />
 			<View style={styles.content}>
 				<Text style={styles.text}>HomeScreen</Text>
 			</View>
