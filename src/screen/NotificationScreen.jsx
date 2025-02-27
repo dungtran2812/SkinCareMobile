@@ -1,5 +1,4 @@
-// NotificationScreen.js
-import React, { useState } from "react";
+import React from "react";
 import {
 	View,
 	Text,
@@ -8,11 +7,12 @@ import {
 	ScrollView,
 	FlatList,
 } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome"; // Import icon thư viện
 import PromotionCard from "../components/promotion/PromotionCard"; // Import component PromotionCard
 import { promotionData } from "../components/promotion/PromotionData"; // Import dữ liệu giả lập
 
-export default function NotificationScreen() {
-	const [activeTab, setActiveTab] = useState("promotions"); // Quản lý tab hiện tại
+export default function NotificationScreen({ navigation }) {
+	const [activeTab, setActiveTab] = React.useState("promotions"); // Quản lý tab hiện tại
 
 	const handleTabChange = (tab) => {
 		setActiveTab(tab);
@@ -60,16 +60,25 @@ export default function NotificationScreen() {
 					/>
 				) : (
 					<View style={styles.content}>
-						<Text style={styles.contentTitle}>
-							Thông báo của bạn
+						{/* Biểu tượng "Không có thông báo" */}
+						<Icon name="bell-slash" size={50} color="#ccc" />
+						<Text style={styles.noNotificationText}>
+							Hiện bạn chưa có thông báo nào
 						</Text>
-						<Text>
-							Bạn có một tin nhắn mới từ bộ phận hỗ trợ khách
-							hàng.
-						</Text>
-						<Text>
-							Đơn hàng #12345 của bạn đã được giao thành công!
-						</Text>
+
+						{/* Nút "Tiếp tục mua sắm" */}
+						<TouchableOpacity
+							style={styles.continueShoppingButton}
+							onPress={() =>
+								navigation.navigate("MainTabNavigator", {
+									screen: "Trang chủ",
+								})
+							} // Chuyển qua HomeScreen
+						>
+							<Text style={styles.continueShoppingText}>
+								Tiếp tục mua sắm
+							</Text>
+						</TouchableOpacity>
 					</View>
 				)}
 			</ScrollView>
@@ -98,12 +107,17 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		paddingHorizontal: 20,
 		paddingVertical: 10,
-		backgroundColor: "#f0f0f0",
+		backgroundColor: "#fff", // Đổi thành màu trắng
+		borderBottomWidth: 1,
+		borderBottomColor: "#ddd", // Viền dưới nhẹ cho tabs
 	},
 	tab: {
 		flex: 1,
 		alignItems: "center",
 		paddingVertical: 10,
+		borderWidth: 1,
+		borderColor: "#ddd", // Viền nhẹ cho mỗi button
+		borderRadius: 5,
 	},
 	tabText: {
 		fontSize: 16,
@@ -118,11 +132,25 @@ const styles = StyleSheet.create({
 		padding: 20,
 	},
 	content: {
-		paddingBottom: 20,
+		justifyContent: "center",
+		alignItems: "center",
+		paddingVertical: 30,
 	},
-	contentTitle: {
-		fontSize: 18,
+	noNotificationText: {
+		fontSize: 16,
+		color: "#888", // Màu xám cho văn bản
+		marginVertical: 10,
+	},
+	continueShoppingButton: {
+		marginTop: 20,
+		backgroundColor: "#1E90FF", // Nền xanh cho nút
+		paddingVertical: 10,
+		paddingHorizontal: 50,
+		borderRadius: 5,
+	},
+	continueShoppingText: {
+		fontSize: 16,
+		color: "white",
 		fontWeight: "bold",
-		marginBottom: 10,
 	},
 });

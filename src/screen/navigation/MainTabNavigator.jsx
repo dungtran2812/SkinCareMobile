@@ -6,6 +6,7 @@ import SuggestScreen from "../SuggestScreen";
 import RoadmapScreen from "../RoadmapScreen";
 import NotificationScreen from "../NotificationScreen";
 import ProfileScreen from "../ProfileScreen";
+import { NavigationContainer } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
