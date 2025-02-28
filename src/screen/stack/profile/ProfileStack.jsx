@@ -18,7 +18,7 @@ const ProfileStack = () => {
 			<Stack.Screen
 				name="ProfileUser"
 				component={ProfileUser}
-				options={{ headerShown: true, title: "Sửa Hồ Sơ" }}
+				options={{ headerShown: false, title: "Sửa Hồ Sơ" }}
 			/>
 			<Stack.Screen
 				name="ProfilePoint"
