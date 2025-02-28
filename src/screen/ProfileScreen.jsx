@@ -2,6 +2,7 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import ProfileHeader from "../components/profile/ProfileHeader"; // Import ProfileHeader
+import OrderHeader from "../components/order/OrderHeader";
 
 export default function ProfileScreen({ navigation }) {
 	// Giả sử dữ liệu người dùng
@@ -15,6 +16,7 @@ export default function ProfileScreen({ navigation }) {
 	return (
 		<ScrollView style={styles.container}>
 			<ProfileHeader user={user} navigation={navigation} />
+			<OrderHeader />
 		</ScrollView>
 	);
 }
