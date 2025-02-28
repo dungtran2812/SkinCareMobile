@@ -15,9 +15,9 @@ import RadioButtonsGroup from "react-native-radio-buttons-group";
 export default function ProfileUser({ navigation }) {
 	// Giả sử dữ liệu người dùng
 	const user = {
-		avatar: "https://via.placeholder.com/100",
-		name: "Nguyễn Văn A",
-		email: "nguyenvana@example.com",
+		avatar: "https://cdn-icons-png.freepik.com/512/146/146005.png",
+		name: "Đẹp gái",
+		email: "depgaicute@example.com",
 	};
 
 	// Trạng thái cho các trường nhập liệu

@@ -23,7 +23,7 @@ const ProfileStack = () => {
 			<Stack.Screen
 				name="ProfilePoint"
 				component={ProfilePoint}
-				options={{ headerShown: true, title: "Tích Điểm" }}
+				options={{ headerShown: false, title: "Tích Điểm" }}
 			/>
 		</Stack.Navigator>
 	);
