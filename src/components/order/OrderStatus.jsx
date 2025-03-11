@@ -1,14 +1,6 @@
-import React, { useState, useEffect } from "react";
-import {
-	View,
-	Text,
-	StyleSheet,
-	TouchableOpacity,
-	ScrollView,
-} from "react-native";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { Ionicons } from "react-native-vector-icons"; // Icon thư viện Ionicons
-import { useRoute } from "@react-navigation/native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, FlatList } from "react-native";
+import OrderHeader from "./OrderHeader"; // Import OrderHeader
 
 // Giả sử dữ liệu cho các đơn hàng của từng trạng thái
 const orderData = {
@@ -28,45 +20,46 @@ const orderData = {
 	],
 };
 
-const Tab = createMaterialTopTabNavigator();
+const OrderStatusScreen = () => {
+	const [status, setStatus] = useState("newOrders"); // Trạng thái mặc định là Mới đặt
 
-const OrderStatus = () => {
-	const route = useRoute();
-	const { status } = route.params; // Lấy trạng thái đơn hàng từ tham số truyền vào
-
-	// Chuyển tab dựa vào tham số status khi vào màn hình
-	const initialTab = status || "newOrders"; // Mặc định là Mới đặt
+	// Hàm render đơn hàng
+	const renderOrderList = (orders) => {
+		return orders.map((order) => (
+			<View key={order.id} style={styles.orderItem}>
+				<Text style={styles.orderText}>
+					Đơn hàng {order.orderAmount.toLocaleString()} VNĐ
+				</Text>
+				<Text style={styles.orderText}>
+					Tích được {order.points} điểm
+				</Text>
+			</View>
+		));
+	};
 
 	return (
-		<Tab.Navigator initialRouteName={initialTab}>
-			<Tab.Screen name="allOrders" component={AllOrders} />
-			<Tab.Screen name="newOrders" component={NewOrders} />
-			<Tab.Screen name="processingOrders" component={ProcessingOrders} />
-			<Tab.Screen name="successOrders" component={SuccessOrders} />
-			<Tab.Screen name="canceledOrders" component={CanceledOrders} />
-		</Tab.Navigator>
+		<View style={styles.container}>
+			<OrderHeader setStatus={setStatus} />{" "}
+			{/* Truyền setStatus để cập nhật trạng thái */}
+			<View style={styles.orderContainer}>
+				{status === "allOrders" && renderOrderList(orderData.allOrders)}
+				{status === "newOrders" && renderOrderList(orderData.newOrders)}
+				{status === "processingOrders" &&
+					renderOrderList(orderData.processingOrders)}
+				{status === "successOrders" &&
+					renderOrderList(orderData.successOrders)}
+				{status === "canceledOrders" &&
+					renderOrderList(orderData.canceledOrders)}
+			</View>
+		</View>
 	);
 };
 
-// Các màn hình con cho từng trạng thái đơn hàng
-const renderOrderList = (orders) => {
-	return orders.map((order) => (
-		<View key={order.id} style={styles.orderItem}>
-			<Text style={styles.orderText}>
-				Đơn hàng {order.orderAmount.toLocaleString()} VNĐ
-			</Text>
-			<Text style={styles.orderText}>Tích được {order.points} điểm</Text>
-		</View>
-	));
-};
-
-const AllOrders = () => renderOrderList(orderData.allOrders);
-const NewOrders = () => renderOrderList(orderData.newOrders);
-const ProcessingOrders = () => renderOrderList(orderData.processingOrders);
-const SuccessOrders = () => renderOrderList(orderData.successOrders);
-const CanceledOrders = () => renderOrderList(orderData.canceledOrders);
-
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: "#fff",
+	},
 	orderItem: {
 		padding: 15,
 		marginBottom: 10,
@@ -79,6 +72,10 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		color: "#000", // Chữ màu đen
 	},
+	orderContainer: {
+		flex: 1,
+		padding: 10,
+	},
 });
 
-export default OrderStatus;
+export default OrderStatusScreen;

@@ -3,12 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "react-native-vector-icons"; // Icon thư viện Ionicons
 import { useNavigation } from "@react-navigation/native";
 
-export default function OrderHeader() {
+export default function OrderHeader({ setStatus }) {
 	const navigation = useNavigation();
-
-	// Chuyển đến màn hình OrderStatusScreen và truyền tham số
+	// Chuyển đến màn hình OrderStatusScreen và truyền tham số trạng thái đơn hàng
 	const handleNavigate = (status) => {
-		navigation.navigate("OrderStatus", { status });
+		navigation.navigate("OrderStatus", { status }); // Truyền trạng thái đơn hàng vào params
 	};
 
 	return (
