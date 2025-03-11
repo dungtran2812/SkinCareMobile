@@ -48,7 +48,7 @@ const QuickAccess = () => {
 		}, // Màu tím
 		{
 			title: "Làm quiz",
-			screen: "Quiz",
+			screen: "QuizzScreen",
 			icon: "question-circle",
 			iconColor: "#FF6347",
 		}, // Màu đỏ

@@ -10,6 +10,8 @@ import LoginScreen from "../src/auth/LoginScreen";
 import SignupScreen from "../src/auth/SignupScreen";
 import OtpScreen from "../src/auth/OtpScreen";
 import MainTabNavigator from "../src/screen/navigation/MainTabNavigator";
+import QuizzScreen from "../src/components/quizz/QuizzScreen";
+import QuizzAnswer from "../src/components/quizz/QuizzAnswer";
 
 LogBox.ignoreLogs([
 	"Non-serializable values were found in the navigation state",
@@ -47,6 +49,16 @@ export default function App() {
 					<Stack.Screen
 						name="MainTabNavigator"
 						component={MainTabNavigator}
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name="QuizzScreen"
+						component={QuizzScreen}
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name="QuizzAnswer"
+						component={QuizzAnswer}
 						options={{ headerShown: false }}
 					/>
 				</Stack.Navigator>
