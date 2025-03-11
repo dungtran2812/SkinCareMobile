@@ -1,29 +1,73 @@
-// OilySkin.jsx
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const OilySkin = () => {
+	const navigation = useNavigation();
+
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>Lộ Trình Chăm Sóc Da Dầu</Text>
-			<Text style={styles.step}>
-				Bước 1: Làm sạch da bằng sữa rửa mặt kiềm dầu, giúp kiểm soát bã
-				nhờn.
+			<Text style={styles.title}>Da Dầu</Text>
+			<Image
+				source={require("../../../assets/images/skin/oily.jpg")}
+				style={styles.image}
+			/>
+			<Text style={styles.sectionTitle}>Thông Tin Về Da Dầu</Text>
+			<Text style={styles.text}>
+				Da dầu là loại da có tuyến bã nhờn hoạt động mạnh, dẫn đến việc
+				da luôn bóng nhờn và dễ bị mụn.
 			</Text>
-			<Text style={styles.step}>
-				Bước 2: Sử dụng toner để làm sạch sâu và se khít lỗ chân lông.
+			<Text style={styles.sectionTitle}>Nguyên Nhân</Text>
+			<Text style={styles.text}>
+				Nguyên nhân của da dầu có thể do di truyền, môi trường, và cách
+				chăm sóc da không đúng cách.
 			</Text>
-			<Text style={styles.step}>
-				Bước 3: Dưỡng ẩm với kem dưỡng nhẹ, không gây nhờn dính.
+			<Text style={styles.sectionTitle}>Dấu Hiệu</Text>
+			<Text style={styles.text}>
+				- Da bóng nhờn.
+				{"\n"}- Lỗ chân lông to.
+				{"\n"}- Dễ bị mụn.
 			</Text>
-			<Text style={styles.step}>
-				Bước 4: Sử dụng mặt nạ đất sét để hút dầu thừa và làm sạch sâu
+			<Text style={styles.sectionTitle}>Cách Chăm Sóc</Text>
+			<Text style={styles.text}>
+				- Sử dụng sữa rửa mặt kiềm dầu.
+				{"\n"}- Sử dụng toner để làm sạch sâu và se khít lỗ chân lông.
+				{"\n"}- Dưỡng ẩm với kem dưỡng nhẹ, không gây nhờn dính.
+				{"\n"}- Sử dụng mặt nạ đất sét để hút dầu thừa và làm sạch sâu
 				mỗi tuần.
-			</Text>
-			<Text style={styles.step}>
-				Bước 5: Sử dụng kem chống nắng không dầu để bảo vệ da khỏi tác
+				{"\n"}- Sử dụng kem chống nắng không dầu để bảo vệ da khỏi tác
 				hại của tia UV.
 			</Text>
+			<Text style={styles.sectionTitle}>Cách Ăn Uống</Text>
+			<Text style={styles.text}>
+				- Uống đủ nước mỗi ngày.
+				{"\n"}- Ăn nhiều rau xanh và trái cây.
+				{"\n"}- Hạn chế đồ ăn nhiều dầu mỡ và đường.
+			</Text>
+			<View style={styles.buttonContainer}>
+				<TouchableOpacity
+					style={styles.button}
+					onPress={() =>
+						navigation.navigate("MainTabNavigator", {
+							screen: "Trang chủ",
+						})
+					}
+				>
+					<Text style={styles.buttonText}>Quay Lại Trang Chủ</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={styles.button}
+					onPress={() =>
+						navigation.navigate("MainTabNavigator", {
+							screen: "Lộ trình",
+						})
+					}
+				>
+					<Text style={styles.buttonText}>
+						Đi Tới Lộ Trình Sản Phẩm
+					</Text>
+				</TouchableOpacity>
+			</View>
 		</View>
 	);
 };
@@ -38,10 +82,40 @@ const styles = StyleSheet.create({
 		fontSize: 24,
 		fontWeight: "bold",
 		marginBottom: 20,
+		textAlign: "center",
 	},
-	step: {
+	image: {
+		width: "100%",
+		height: 200,
+		resizeMode: "contain",
+		marginBottom: 20,
+	},
+	sectionTitle: {
+		fontSize: 20,
+		fontWeight: "bold",
+		marginBottom: 10,
+	},
+	text: {
 		fontSize: 16,
 		marginBottom: 10,
+	},
+	buttonContainer: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		marginTop: 20,
+	},
+	button: {
+		flex: 1,
+		backgroundColor: "#1E3A5F",
+		padding: 15,
+		borderRadius: 10,
+		alignItems: "center",
+		marginHorizontal: 5,
+	},
+	buttonText: {
+		color: "white",
+		fontSize: 16,
+		fontWeight: "bold",
 	},
 });
 
