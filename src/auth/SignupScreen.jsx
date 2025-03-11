@@ -12,8 +12,13 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import * as Google from "expo-auth-session/providers/google";
 
 const SignupScreen = ({ navigation }) => {
+	const [username, setUsername] = useState("");
 	const [phoneNumber, setPhoneNumber] = useState("");
+	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
 	const [isChecked, setIsChecked] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 	const [request, response, promptAsync] = Google.useAuthRequest({
 		expoClientId: "YOUR_EXPO_CLIENT_ID",
@@ -23,6 +28,30 @@ const SignupScreen = ({ navigation }) => {
 
 	const handleGoogleSignup = async () => {
 		await promptAsync();
+	};
+
+	const handleSignup = () => {
+		// Handle signup logic here
+		if (password === confirmPassword) {
+			// Proceed with signup
+			console.log("Signup successful");
+			navigation.reset({
+				index: 0,
+				routes: [{ name: "MainTabNavigator" }],
+			});
+		} else {
+			console.log("Passwords do not match");
+		}
+	};
+
+	const isFormValid = () => {
+		return (
+			username.trim() !== "" &&
+			phoneNumber.trim() !== "" &&
+			password.trim() !== "" &&
+			confirmPassword.trim() !== "" &&
+			isChecked
+		);
 	};
 
 	return (
@@ -46,6 +75,21 @@ const SignupScreen = ({ navigation }) => {
 
 					<View style={styles.inputWrapper}>
 						<Text style={styles.infoText}>
+							Vui lòng nhập tên người dùng của bạn
+						</Text>
+						<View style={styles.inputContainer}>
+							<TextInput
+								style={styles.input}
+								placeholder="Nhập tên người dùng"
+								placeholderTextColor="#888"
+								value={username}
+								onChangeText={setUsername}
+							/>
+						</View>
+					</View>
+
+					<View style={styles.inputWrapper}>
+						<Text style={styles.infoText}>
 							Vui lòng nhập số điện thoại của bạn
 						</Text>
 						<View style={styles.inputContainer}>
@@ -60,14 +104,64 @@ const SignupScreen = ({ navigation }) => {
 						</View>
 					</View>
 
+					<View style={styles.inputWrapper}>
+						<Text style={styles.infoText}>
+							Vui lòng nhập mật khẩu
+						</Text>
+						<View style={styles.inputContainer}>
+							<TextInput
+								style={styles.input}
+								placeholder="Nhập mật khẩu"
+								placeholderTextColor="#888"
+								secureTextEntry={!showPassword}
+								value={password}
+								onChangeText={setPassword}
+							/>
+							<TouchableOpacity
+								onPress={() => setShowPassword(!showPassword)}
+							>
+								<Ionicons
+									name={showPassword ? "eye-off" : "eye"}
+									size={20}
+									color="#888"
+								/>
+							</TouchableOpacity>
+						</View>
+					</View>
+
+					<View style={styles.inputWrapper}>
+						<Text style={styles.infoText}>
+							Vui lòng nhập lại mật khẩu
+						</Text>
+						<View style={styles.inputContainer}>
+							<TextInput
+								style={styles.input}
+								placeholder="Nhập lại mật khẩu"
+								placeholderTextColor="#888"
+								secureTextEntry={!showConfirmPassword}
+								value={confirmPassword}
+								onChangeText={setConfirmPassword}
+							/>
+							<TouchableOpacity
+								onPress={() =>
+									setShowConfirmPassword(!showConfirmPassword)
+								}
+							>
+								<Ionicons
+									name={
+										showConfirmPassword ? "eye-off" : "eye"
+									}
+									size={20}
+									color="#888"
+								/>
+							</TouchableOpacity>
+						</View>
+					</View>
+
 					<View style={styles.termsContainer}>
 						<Checkbox.Android
 							status={isChecked ? "checked" : "unchecked"}
-							onPress={() => {
-								if (phoneNumber.trim() !== "") {
-									setIsChecked(!isChecked);
-								}
-							}}
+							onPress={() => setIsChecked(!isChecked)}
 							color="#1E3A5F"
 						/>
 						<Text style={styles.termsText}>
@@ -77,16 +171,13 @@ const SignupScreen = ({ navigation }) => {
 
 					<TouchableOpacity
 						style={[
-							styles.otpButton,
-							{ opacity: isChecked ? 1 : 0.5 },
+							styles.signupButton,
+							{ opacity: isFormValid() ? 1 : 0.5 },
 						]}
-						onPress={() =>
-							isChecked &&
-							navigation.navigate("OtpScreen", { phoneNumber })
-						}
-						disabled={!isChecked}
+						onPress={handleSignup}
+						disabled={!isFormValid()}
 					>
-						<Text style={styles.buttonText}>Gửi OTP</Text>
+						<Text style={styles.buttonText}>Đăng Ký</Text>
 						<Ionicons
 							name="arrow-forward"
 							size={20}
@@ -183,7 +274,7 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		color: "#1E3A5F",
 	},
-	otpButton: {
+	signupButton: {
 		width: "50%",
 		backgroundColor: "#1E3A5F",
 		padding: 15,

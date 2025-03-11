@@ -14,7 +14,6 @@ const LoginScreen = ({ navigation }) => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
-
 	const isFormValid = username.trim() !== "" && password.trim() !== "";
 
 	const handleLogin = () => {
