@@ -1,11 +1,11 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import HomeScreen from "../HomeScreen";
 import SuggestScreen from "../SuggestScreen";
 import RoadmapScreen from "../RoadmapScreen";
 import NotificationScreen from "../NotificationScreen";
 import ProfileStack from "../stack/profile/ProfileStack";
+import HomeStack from "../stack/home/HomeStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -52,7 +52,7 @@ const MainTabNavigator = () => {
 		>
 			<Tab.Screen
 				name="Trang chủ"
-				component={HomeScreen}
+				component={HomeStack}
 				options={{ headerShown: false }}
 			/>
 			<Tab.Screen
