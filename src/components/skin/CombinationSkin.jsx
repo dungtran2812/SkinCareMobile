@@ -43,22 +43,6 @@ const CombinationSkin = () => {
 				{"\n"}- Ăn nhiều rau xanh và trái cây.
 				{"\n"}- Hạn chế đồ ăn nhiều dầu mỡ và đường.
 			</Text>
-			<View style={styles.buttonContainer}>
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() => navigation.navigate("HomeScreen")}
-				>
-					<Text style={styles.buttonText}>Quay Lại Trang Chủ</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() => navigation.navigate("ProductRoadmapScreen")}
-				>
-					<Text style={styles.buttonText}>
-						Đi Tới Lộ Trình Sản Phẩm
-					</Text>
-				</TouchableOpacity>
-			</View>
 		</View>
 	);
 };

@@ -52,30 +52,6 @@ const NormalSkin = () => {
 				{"\n"}- Ăn nhiều rau xanh và trái cây.
 				{"\n"}- Hạn chế đồ ăn nhiều dầu mỡ và đường.
 			</Text>
-			<View style={styles.buttonContainer}>
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() =>
-						navigation.navigate("MainTabNavigator", {
-							screen: "Trang Chủ",
-						})
-					}
-				>
-					<Text style={styles.buttonText}>Quay Lại Trang Chủ</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() =>
-						navigation.navigate("MainTabNavigator", {
-							screen: "Lộ trình",
-						})
-					}
-				>
-					<Text style={styles.buttonText}>
-						Đi Tới Lộ Trình Sản Phẩm
-					</Text>
-				</TouchableOpacity>
-			</View>
 		</ScrollView>
 	);
 };

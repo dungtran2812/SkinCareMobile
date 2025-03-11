@@ -13,11 +13,11 @@ const ProfileStack = () => {
 				component={HomeScreen}
 				options={{ headerShown: false }}
 			/>
-			<Stack.Screen
+			{/* <Stack.Screen
 				name="QuizzScreen"
 				component={QuizzScreen}
 				options={{ headerShown: false }}
-			/>
+			/> */}
 		</Stack.Navigator>
 	);
 };

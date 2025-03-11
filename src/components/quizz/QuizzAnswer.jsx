@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import CombinationSkin from "./../skin/CombinationSkin";
 import DrySkin from "./../skin/DrySkin";
 import NormalSkin from "./../skin/NormalSkin";
@@ -7,6 +8,7 @@ import OilySkin from "./../skin/OilySkin";
 
 const QuizzAnswer = ({ route }) => {
 	const { skinType } = route.params;
+	const navigation = useNavigation();
 
 	let SkinComponent;
 	switch (skinType) {
@@ -31,6 +33,27 @@ const QuizzAnswer = ({ route }) => {
 	return (
 		<View style={styles.container}>
 			<SkinComponent />
+			<TouchableOpacity
+				style={styles.button}
+				onPress={() =>
+					navigation.navigate("MainTabNavigator", {
+						screen: "HomeScreen",
+					})
+				}
+			>
+				<Text style={styles.buttonText}>Quay Lại Trang Chủ</Text>
+			</TouchableOpacity>
+			<TouchableOpacity
+				style={styles.button}
+				onPress={() =>
+					navigation.navigate("MainTabNavigator", {
+						screen: "Lộ trình",
+						params: { skinType },
+					})
+				}
+			>
+				<Text style={styles.buttonText}>Lộ Trình Sản Phẩm</Text>
+			</TouchableOpacity>
 		</View>
 	);
 };
@@ -46,6 +69,18 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		fontWeight: "bold",
 		color: "#1E3A5F",
+	},
+	button: {
+		marginTop: 20,
+		backgroundColor: "#1E3A5F",
+		padding: 15,
+		borderRadius: 10,
+		alignItems: "center",
+	},
+	buttonText: {
+		color: "white",
+		fontSize: 16,
+		fontWeight: "bold",
 	},
 });
 

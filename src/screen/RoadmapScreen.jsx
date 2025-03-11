@@ -2,8 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 const RoadmapScreen = ({ route }) => {
-	// Get the skinType passed from QuizzScreen
-	const { skinType } = route.params;
+	// Get the skinType passed from QuizzAnswer
+	const { skinType } = route.params || {};
 
 	return (
 		<View style={styles.container}>
