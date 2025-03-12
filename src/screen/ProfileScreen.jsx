@@ -4,6 +4,7 @@ import ProfileHeader from "../components/profile/ProfileHeader"; // Import Profi
 import OrderHeader from "../components/order/OrderHeader";
 import Logout from "../auth/Logout";
 import Beaute from "../components/info/Beaute";
+import GiftHeader from "../components/gift/GiftHeader";
 
 export default function ProfileScreen({ navigation }) {
 	// Giả sử dữ liệu người dùng
@@ -19,6 +20,10 @@ export default function ProfileScreen({ navigation }) {
 			<ProfileHeader user={user} navigation={navigation} />
 			<View>
 				<OrderHeader />
+				<View style={styles.separator} />
+			</View>
+			<View>
+				<GiftHeader />
 				<View style={styles.separator} />
 			</View>
 			<Logout />
