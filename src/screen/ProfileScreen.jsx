@@ -1,4 +1,3 @@
-// ProfileScreen.js
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import ProfileHeader from "../components/profile/ProfileHeader"; // Import ProfileHeader
@@ -16,7 +15,10 @@ export default function ProfileScreen({ navigation }) {
 	return (
 		<ScrollView style={styles.container}>
 			<ProfileHeader user={user} navigation={navigation} />
-			<OrderHeader />
+			<View>
+				<OrderHeader />
+				<View style={styles.separator} />
+			</View>
 		</ScrollView>
 	);
 }
@@ -25,5 +27,10 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#fff",
+	},
+	separator: {
+		borderBottomWidth: 1,
+		borderBottomColor: "#ddd",
+		marginVertical: 10,
 	},
 });
