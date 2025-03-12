@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import StepIndicator from "react-native-step-indicator";
 import Ionicons from "react-native-vector-icons/Ionicons"; // Import Ionicons
-import OrderHeader from "./OrderHeader"; // Import OrderHeader
 import OrderCard from "./OrderCard"; // Import OrderCard
 
 // Giả sử dữ liệu cho các đơn hàng của từng trạng thái
@@ -201,8 +200,14 @@ const renderStepIndicator = (params) => (
 	<Ionicons {...getStepIndicatorIconConfig(params)} />
 );
 
-const OrderStatusScreen = () => {
+const OrderStatusScreen = ({ route }) => {
 	const [currentPosition, setCurrentPosition] = useState(0);
+
+	useEffect(() => {
+		if (route.params?.position !== undefined) {
+			setCurrentPosition(route.params.position);
+		}
+	}, [route.params]);
 
 	const handleStepPress = (position) => {
 		setCurrentPosition(position);

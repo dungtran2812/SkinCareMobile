@@ -1,13 +1,30 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Ionicons } from "react-native-vector-icons"; // Icon thư viện Ionicons
+import Ionicons from "react-native-vector-icons/Ionicons"; // Icon thư viện Ionicons
 import { useNavigation } from "@react-navigation/native";
 
-export default function OrderHeader({ setStatus }) {
+export default function OrderHeader() {
 	const navigation = useNavigation();
-	// Chuyển đến màn hình OrderStatusScreen và truyền tham số trạng thái đơn hàng
+
 	const handleNavigate = (status) => {
-		navigation.navigate("OrderStatus", { status }); // Truyền trạng thái đơn hàng vào params
+		let position;
+		switch (status) {
+			case "newOrders":
+				position = 0;
+				break;
+			case "processingOrders":
+				position = 1;
+				break;
+			case "successOrders":
+				position = 2;
+				break;
+			case "canceledOrders":
+				position = 3;
+				break;
+			default:
+				position = 0;
+		}
+		navigation.navigate("OrderStatus", { position });
 	};
 
 	return (
