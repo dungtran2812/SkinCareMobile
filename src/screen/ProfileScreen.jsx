@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import ProfileHeader from "../components/profile/ProfileHeader"; // Import ProfileHeader
 import OrderHeader from "../components/order/OrderHeader";
+import Logout from "../auth/Logout";
 
 export default function ProfileScreen({ navigation }) {
 	// Giả sử dữ liệu người dùng
@@ -19,6 +20,7 @@ export default function ProfileScreen({ navigation }) {
 				<OrderHeader />
 				<View style={styles.separator} />
 			</View>
+			<Logout />
 		</ScrollView>
 	);
 }
