@@ -4,6 +4,7 @@ import ProfileScreen from "../../ProfileScreen";
 import ProfileUser from "../../../components/profile/ProfileUser";
 import ProfilePoint from "../../../components/profile/ProfilePoint";
 import OrderStatus from "../../../components/order/OrderStatus";
+import GiftChange from "../../../components/gift/GiftChange";
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,11 @@ const ProfileStack = () => {
 				name="OrderStatus"
 				component={OrderStatus}
 				options={{ headerShown: false, title: "Trạng thái đơn hàng" }}
+			/>
+			<Stack.Screen
+				name="GiftChange"
+				component={GiftChange}
+				options={{ headerShown: false, title: "Đổi quà" }}
 			/>
 		</Stack.Navigator>
 	);
