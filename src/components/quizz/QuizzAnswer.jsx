@@ -33,27 +33,29 @@ const QuizzAnswer = ({ route }) => {
 	return (
 		<View style={styles.container}>
 			<SkinComponent />
-			<TouchableOpacity
-				style={styles.button}
-				onPress={() =>
-					navigation.navigate("MainTabNavigator", {
-						screen: "HomeScreen",
-					})
-				}
-			>
-				<Text style={styles.buttonText}>Quay Lại Trang Chủ</Text>
-			</TouchableOpacity>
-			<TouchableOpacity
-				style={styles.button}
-				onPress={() =>
-					navigation.navigate("MainTabNavigator", {
-						screen: "Lộ trình",
-						params: { skinType },
-					})
-				}
-			>
-				<Text style={styles.buttonText}>Lộ Trình Sản Phẩm</Text>
-			</TouchableOpacity>
+			<View style={styles.buttonContainer}>
+				<TouchableOpacity
+					style={styles.button}
+					onPress={() =>
+						navigation.navigate("MainTabNavigator", {
+							screen: "HomeScreen",
+						})
+					}
+				>
+					<Text style={styles.buttonText}>Quay Lại Trang Chủ</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={styles.button}
+					onPress={() =>
+						navigation.navigate("MainTabNavigator", {
+							screen: "Lộ trình",
+							params: { skinType },
+						})
+					}
+				>
+					<Text style={styles.buttonText}>Lộ Trình Sản Phẩm</Text>
+				</TouchableOpacity>
+			</View>
 		</View>
 	);
 };
@@ -70,12 +72,16 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		color: "#1E3A5F",
 	},
-	button: {
+	buttonContainer: {
+		flexDirection: "row",
 		marginTop: 20,
+	},
+	button: {
 		backgroundColor: "#1E3A5F",
 		padding: 15,
 		borderRadius: 10,
 		alignItems: "center",
+		marginHorizontal: 10,
 	},
 	buttonText: {
 		color: "white",

@@ -1,12 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 const CombinationSkin = () => {
 	const navigation = useNavigation();
 
 	return (
-		<View style={styles.container}>
+		<ScrollView style={styles.container}>
 			<Text style={styles.title}>Da Hỗn Hợp</Text>
 			<Image
 				source={require("../../../assets/images/skin/combination.png")}
@@ -43,7 +43,7 @@ const CombinationSkin = () => {
 				{"\n"}- Ăn nhiều rau xanh và trái cây.
 				{"\n"}- Hạn chế đồ ăn nhiều dầu mỡ và đường.
 			</Text>
-		</View>
+		</ScrollView>
 	);
 };
 

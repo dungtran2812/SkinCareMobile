@@ -1,12 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 const DrySkin = () => {
 	const navigation = useNavigation();
 
 	return (
-		<View style={styles.container}>
+		<ScrollView style={styles.container}>
 			<Text style={styles.title}>Da Khô</Text>
 			<Image
 				source={require("../../../assets/images/skin/dry.jpg")}
@@ -43,7 +43,7 @@ const DrySkin = () => {
 				{"\n"}- Ăn nhiều rau xanh và trái cây.
 				{"\n"}- Hạn chế đồ ăn nhiều dầu mỡ và đường.
 			</Text>
-		</View>
+		</ScrollView>
 	);
 };
 
