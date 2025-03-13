@@ -202,6 +202,7 @@ const renderStepIndicator = (params) => (
 );
 
 const OrderStatusScreen = ({ route }) => {
+	const navigation = useNavigation();
 	const [currentPosition, setCurrentPosition] = useState(0);
 
 	useEffect(() => {
