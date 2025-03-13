@@ -7,8 +7,11 @@ import {
 	StyleSheet,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native"; // Import useNavigation
 
 const Header = () => {
+	const navigation = useNavigation(); // Sử dụng useNavigation để điều hướng
+
 	return (
 		<View style={styles.headerContainer}>
 			{/* Logo của App */}
@@ -33,7 +36,10 @@ const Header = () => {
 			</View>
 
 			{/* Icon giỏ hàng */}
-			<TouchableOpacity style={styles.cartButton}>
+			<TouchableOpacity
+				style={styles.cartButton}
+				onPress={() => navigation.navigate("MyCart")} // Điều hướng đến MyCart
+			>
 				<Ionicons name="cart-outline" size={28} color="#fff" />
 			</TouchableOpacity>
 		</View>
