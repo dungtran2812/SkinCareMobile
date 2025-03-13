@@ -44,11 +44,6 @@ export default function App() {
 						options={{ headerShown: false }}
 					/>
 					<Stack.Screen
-						name="OtpScreen"
-						component={OtpScreen}
-						options={{ headerShown: false }}
-					/>
-					<Stack.Screen
 						name="MainTabNavigator"
 						component={MainTabNavigator}
 						options={{ headerShown: false }}

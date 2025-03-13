@@ -1,11 +1,20 @@
-// Suggest.js
 import React from "react";
-import { View, Text, StyleSheet, FlatList, Dimensions } from "react-native";
+import {
+	View,
+	Text,
+	StyleSheet,
+	FlatList,
+	TouchableOpacity,
+	Dimensions,
+} from "react-native";
 import ProductItem from "./item/ProductItem"; // Import ProductItem component
+import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 
 const Suggest = () => {
+	const navigation = useNavigation();
+
 	// Dữ liệu giả cho các sản phẩm
 	const products = [
 		{
@@ -110,6 +119,15 @@ const Suggest = () => {
 		<View style={styles.container}>
 			<View style={styles.header}>
 				<Text style={styles.title}>Gợi ý</Text>
+				<TouchableOpacity
+					onPress={() =>
+						navigation.navigate("MainTabNavigator", {
+							screen: "Đề xuất",
+						})
+					}
+				>
+					<Text style={styles.viewAllText}>Xem tất cả</Text>
+				</TouchableOpacity>
 			</View>
 
 			{/* Hiển thị danh sách sản phẩm */}
@@ -133,9 +151,17 @@ const styles = StyleSheet.create({
 	header: {
 		paddingHorizontal: 20,
 		paddingVertical: 10,
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
 	},
 	title: {
 		fontSize: 20,
+		fontWeight: "bold",
+	},
+	viewAllText: {
+		fontSize: 14,
+		color: "#1E90FF",
 		fontWeight: "bold",
 	},
 	productList: {
