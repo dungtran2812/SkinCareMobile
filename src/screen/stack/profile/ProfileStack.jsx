@@ -39,11 +39,6 @@ const ProfileStack = () => {
 				options={{ headerShown: false, title: "Đổi quà" }}
 			/>
 			<Stack.Screen
-				name="MyCart"
-				component={MyCart}
-				options={{ headerShown: false, title: "Giỏ hàng" }}
-			/>
-			<Stack.Screen
 				name="ProductFavourite"
 				component={ProductFavourite}
 				options={{ headerShown: false, title: "Yêu thích" }}
