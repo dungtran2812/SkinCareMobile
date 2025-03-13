@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import StepIndicator from "react-native-step-indicator";
 import Ionicons from "react-native-vector-icons/Ionicons"; // Import Ionicons
 import OrderCard from "./OrderCard"; // Import OrderCard
+import { useNavigation } from "@react-navigation/native";
 
 // Giả sử dữ liệu cho các đơn hàng của từng trạng thái
 const orderData = {
@@ -222,6 +223,16 @@ const OrderStatusScreen = ({ route }) => {
 
 	return (
 		<View style={styles.container}>
+			<View style={styles.header}>
+				<TouchableOpacity onPress={() => navigation.goBack()}>
+					<Ionicons
+						name="arrow-back-outline"
+						size={24}
+						color="#000"
+					/>
+				</TouchableOpacity>
+				<Text style={styles.title}>Đơn hàng</Text>
+			</View>
 			<StepIndicator
 				customStyles={customStyles}
 				currentPosition={currentPosition}
@@ -250,6 +261,17 @@ const OrderStatusScreen = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+	header: {
+		flexDirection: "row",
+		alignItems: "center",
+		marginBottom: 20,
+	},
+	title: {
+		fontSize: 24,
+		fontWeight: "bold",
+		color: "#000",
+		marginLeft: 10,
+	},
 	container: {
 		flex: 1,
 		backgroundColor: "#fff",
