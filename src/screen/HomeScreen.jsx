@@ -9,7 +9,7 @@ import {
 import Header from "../components/Header";
 import Carousel from "../components/Carousel";
 import QuickAccess from "../components/QuickAccess";
-import FlashDeals from "../components/FlashDeals";
+import FlashDeals from "../components/deals/FlashDeals";
 import CategoryHeader from "../components/category/CategoryHeader";
 import BrandHeader from "../components/brand/BrandHeader";
 import Suggest from "../components/Suggest";

@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 // Màu sắc cho các loại da
 const leatherColors = {
@@ -10,6 +11,12 @@ const leatherColors = {
 };
 
 const ProductCard = ({ product }) => {
+	const navigation = useNavigation();
+
+	const handlePress = () => {
+		navigation.navigate("ProductItemDetail", { product });
+	};
+
 	// Tính giá sau khi giảm
 	const discountedPrice = (
 		product.originalPrice *
@@ -17,10 +24,13 @@ const ProductCard = ({ product }) => {
 	).toFixed(0);
 
 	return (
-		<View style={styles.card}>
+		<TouchableOpacity style={styles.card} onPress={handlePress}>
 			{/* Nửa trên của card: Hình ảnh sản phẩm và giảm giá */}
 			<View style={styles.imageContainer}>
-				<Image source={{ uri: product.image }} style={styles.image} />
+				<Image
+					source={{ uri: product.image.uri }}
+					style={styles.image}
+				/>
 				<Text style={styles.discount}>{`-${product.discount}%`}</Text>
 			</View>
 
@@ -52,7 +62,7 @@ const ProductCard = ({ product }) => {
 					<Text style={styles.tagText}>{product.tag}</Text>
 				</View>
 			</View>
-		</View>
+		</TouchableOpacity>
 	);
 };
 
