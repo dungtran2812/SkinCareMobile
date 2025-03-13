@@ -1,16 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
 	View,
 	TextInput,
 	TouchableOpacity,
 	Image,
 	StyleSheet,
+	Text,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Import AsyncStorage
 
 const Header = () => {
 	const navigation = useNavigation(); // Sử dụng useNavigation để điều hướng
+	const [cartItemCount, setCartItemCount] = useState(0);
+
+	useEffect(() => {
+		const fetchCartItems = async () => {
+			try {
+				let cartItems = await AsyncStorage.getItem("cartItems");
+				cartItems = cartItems ? JSON.parse(cartItems) : [];
+				setCartItemCount(cartItems.length);
+			} catch (error) {
+				console.error("Error fetching cart items", error);
+			}
+		};
+
+		fetchCartItems();
+	}, []);
 
 	return (
 		<View style={styles.headerContainer}>
@@ -41,6 +58,13 @@ const Header = () => {
 				onPress={() => navigation.navigate("MyCart")} // Điều hướng đến MyCart
 			>
 				<Ionicons name="cart-outline" size={28} color="#fff" />
+				{cartItemCount > 0 && (
+					<View style={styles.cartBadge}>
+						<Text style={styles.cartBadgeText}>
+							{cartItemCount}
+						</Text>
+					</View>
+				)}
 			</TouchableOpacity>
 		</View>
 	);
@@ -80,6 +104,21 @@ const styles = StyleSheet.create({
 	},
 	cartButton: {
 		padding: 5,
+		position: "relative",
+	},
+	cartBadge: {
+		position: "absolute",
+		top: -5,
+		right: -5,
+		backgroundColor: "red",
+		borderRadius: 10,
+		paddingHorizontal: 5,
+		paddingVertical: 2,
+	},
+	cartBadgeText: {
+		color: "#fff",
+		fontSize: 12,
+		fontWeight: "bold",
 	},
 });
 
