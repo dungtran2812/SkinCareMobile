@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const ProductItem = ({ product }) => {
-	const [discountedPrice, setDiscountedPrice] = useState(
-		product.originalPrice * (1 - product.discount / 100)
-	);
+	const navigation = useNavigation();
+	const discountedPrice =
+		product.originalPrice * (1 - product.discount / 100);
+
+	const handlePress = () => {
+		navigation.navigate("ProductItemDetail", { product });
+	};
 
 	return (
-		<View style={styles.card}>
+		<TouchableOpacity style={styles.card} onPress={handlePress}>
 			{/* Phần trên của card: Hình ảnh và tag giảm giá */}
 			<View style={styles.imageContainer}>
-				<Image source={product.image} style={styles.image} />
+				<Image
+					source={{ uri: product.image.uri }}
+					style={styles.image}
+					onError={(e) => console.log(e.nativeEvent.error)}
+				/>
 				<Text style={styles.discountTag}>-{product.discount}%</Text>
 			</View>
 
@@ -18,10 +27,13 @@ const ProductItem = ({ product }) => {
 			<View style={styles.infoContainer}>
 				<View style={styles.priceContainer}>
 					<Text style={styles.discountedPrice}>
-						{discountedPrice} VNĐ
+						{parseInt(discountedPrice).toLocaleString("vi-VN")} VNĐ
 					</Text>
 					<Text style={styles.originalPrice}>
-						{product.originalPrice} VNĐ
+						{parseInt(product.originalPrice).toLocaleString(
+							"vi-VN"
+						)}{" "}
+						VNĐ
 					</Text>
 				</View>
 				<Text style={styles.brandName}>{product.brand}</Text>
@@ -36,7 +48,7 @@ const ProductItem = ({ product }) => {
 					</View>
 				</View>
 			</View>
-		</View>
+		</TouchableOpacity>
 	);
 };
 
