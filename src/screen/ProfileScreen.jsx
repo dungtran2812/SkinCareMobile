@@ -24,7 +24,6 @@ export default function ProfileScreen({ navigation }) {
 			</View>
 			<View>
 				<GiftHeader />
-				<View style={styles.separator} />
 			</View>
 			<Logout />
 			<Beaute />
