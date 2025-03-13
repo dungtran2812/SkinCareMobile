@@ -5,6 +5,8 @@ import ProfileUser from "../../../components/profile/ProfileUser";
 import ProfilePoint from "../../../components/profile/ProfilePoint";
 import OrderStatus from "../../../components/order/OrderStatus";
 import GiftChange from "../../../components/gift/GiftChange";
+import MyCart from "../../../components/cart/MyCart";
+import ProductFavourite from "../../../components/favourite/ProductFavourite";
 
 const Stack = createStackNavigator();
 
@@ -35,6 +37,16 @@ const ProfileStack = () => {
 				name="GiftChange"
 				component={GiftChange}
 				options={{ headerShown: false, title: "Đổi quà" }}
+			/>
+			<Stack.Screen
+				name="MyCart"
+				component={MyCart}
+				options={{ headerShown: false, title: "Giỏ hàng" }}
+			/>
+			<Stack.Screen
+				name="ProductFavourite"
+				component={ProductFavourite}
+				options={{ headerShown: false, title: "Yêu thích" }}
 			/>
 		</Stack.Navigator>
 	);
