@@ -24,11 +24,12 @@ export default function ProfileScreen({ navigation }) {
 				<View style={styles.separator} />
 			</View>
 			<View>
-				<GiftHeader />
-			</View>
-			<View>
 				<CartHeader />
 			</View>
+			<View>
+				<GiftHeader />
+			</View>
+
 			<Logout />
 			<Beaute />
 		</ScrollView>

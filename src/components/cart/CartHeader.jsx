@@ -31,15 +31,15 @@ const CartHeader = () => {
 
 const styles = StyleSheet.create({
 	container: {
-		padding: 20,
+		padding: 15,
 		backgroundColor: "#fff",
 		borderBottomWidth: 1,
 		borderBottomColor: "#ddd",
 	},
 	title: {
-		fontSize: 24,
+		fontSize: 20,
 		fontWeight: "bold",
-		textAlign: "center",
+		textAlign: "left",
 		marginBottom: 20,
 	},
 	buttonContainer: {
