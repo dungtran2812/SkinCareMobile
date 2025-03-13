@@ -13,6 +13,7 @@ import MainTabNavigator from "../src/screen/navigation/MainTabNavigator";
 import QuizzScreen from "../src/components/quizz/QuizzScreen";
 import QuizzAnswer from "../src/components/quizz/QuizzAnswer";
 import ProductItemDetail from "../src/components/item/ProductItemDetail";
+import SkinResult from "../src/components/skin/SkinResult";
 
 LogBox.ignoreLogs([
 	"Non-serializable values were found in the navigation state",
@@ -65,6 +66,11 @@ export default function App() {
 					<Stack.Screen
 						name="ProductItemDetail"
 						component={ProductItemDetail}
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name="SkinResult"
+						component={SkinResult}
 						options={{ headerShown: false }}
 					/>
 				</Stack.Navigator>
