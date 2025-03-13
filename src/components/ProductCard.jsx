@@ -1,4 +1,3 @@
-// ProductCard.js
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
@@ -29,11 +28,12 @@ const ProductCard = ({ product }) => {
 			<View style={styles.infoContainer}>
 				{/* Giá sau khi giảm */}
 				<Text style={styles.discountedPrice}>
-					{discountedPrice} VNĐ
+					{parseInt(discountedPrice).toLocaleString("vi-VN")} VNĐ
 				</Text>
 				{/* Giá gốc */}
 				<Text style={styles.originalPrice}>
-					{product.originalPrice} VNĐ
+					{parseInt(product.originalPrice).toLocaleString("vi-VN")}{" "}
+					VNĐ
 				</Text>
 
 				{/* Tên sản phẩm */}

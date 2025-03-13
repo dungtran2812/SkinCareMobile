@@ -25,42 +25,58 @@ const FlashDeals = () => {
 		{
 			id: 1,
 			name: "Bioderma Cicabio Creme",
-			originalPrice: 70000,
+			originalPrice: 385000,
 			discount: 20,
 			image: "https://bizweb.dktcdn.net/100/443/867/products/kem-duong-phuc-hoi-bioderma-cicabio-40ml.png?v=1695090777257",
 			tag: "Da dầu", // Thử với loại da "Da dầu"
 		},
 		{
 			id: 2,
-			name: "Product 2",
-			originalPrice: 50,
+			name: "Uriage Thermal Water 300ml",
+			originalPrice: 305000,
 			discount: 10,
-			image: "https://via.placeholder.com/150",
+			image: "https://product.hstatic.net/200000551679/product/untitled_design__1__3e45e226b2514d6883fdfa77830913c9.png",
 			tag: "Da khô", // Thử với loại da "Da khô"
 		},
 		{
 			id: 3,
-			name: "Product 2",
-			originalPrice: 50,
-			discount: 10,
-			image: "https://via.placeholder.com/150",
-			tag: "Da khô", // Thử với loại da "Da khô"
+			name: "La Roche-Posay Anthelios Gel-Cream",
+			originalPrice: 320000,
+			discount: 15,
+			image: "https://file.hstatic.net/200000868185/file/1_9a98b940f78a476890550d392bd4aeac.png",
+			tag: "Da dầu", // Thử với loại da "Da khô"
 		},
 		{
 			id: 4,
-			name: "Product 2",
-			originalPrice: 50,
+			name: "Kem Chống Nắng d'Alba Nâng Tông Tím  ",
+			originalPrice: 485000,
 			discount: 10,
-			image: "https://via.placeholder.com/150",
-			tag: "Da khô", // Thử với loại da "Da khô"
+			image: "https://product.hstatic.net/200000150709/product/4_73363329a10c4195aa66439eb8827039.png",
+			tag: "Da thường", // Thử với loại da "Da khô"
 		},
 		{
 			id: 5,
-			name: "Product 2",
+			name: "Kem Dưỡng La Roche-Posay",
 			originalPrice: 50,
 			discount: 10,
-			image: "https://via.placeholder.com/150",
+			image: "https://product.hstatic.net/200000775601/product/screen_shot_2023-11-21_at_17.25.39_f2f48f8023f74601a3d7e04a2052d325.png",
 			tag: "Da khô", // Thử với loại da "Da khô"
+		},
+		{
+			id: 6,
+			name: "Nước Hoa Hồng Dr.Pepti",
+			originalPrice: 270000,
+			discount: 15,
+			image: "https://hasaki.vn/_next/image?url=https%3A%2F%2Fmedia.hcdn.vn%2Fcatalog%2Fproduct%2Fn%2Fu%2Fnuoc-hoa-hong-dr-pepti-cap-am-cang-bong-da-180ml-3-1720150702.jpg&w=3840&q=75",
+			tag: "Da thường", // Thử với loại da "Da khô"
+		},
+		{
+			id: 7,
+			name: "Tẩy Tế Bào Chết Eucerin ",
+			originalPrice: 320000,
+			discount: 10,
+			image: "https://bizweb.dktcdn.net/thumb/1024x1024/100/482/555/products/thiet-ke-chua-co-ten-25-040b26a7-35a5-403f-af81-9dadf5aacf45.png?v=1719570833297",
+			tag: "Da dầu", // Thử với loại da "Da khô"
 		},
 	];
 
