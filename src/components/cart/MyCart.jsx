@@ -138,7 +138,12 @@ const MyCart = () => {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>Giỏ hàng của tôi</Text>
+			<View style={styles.header}>
+				<TouchableOpacity onPress={() => navigation.goBack()}>
+					<FontAwesome name="arrow-left" size={24} color="black" />
+				</TouchableOpacity>
+				<Text style={styles.title}>Giỏ hàng của tôi</Text>
+			</View>
 			<FlatList
 				data={cartItems}
 				renderItem={renderItem}
@@ -188,11 +193,17 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		paddingTop: 20,
 	},
+	header: {
+		flexDirection: "row",
+		alignItems: "center",
+		paddingHorizontal: 20,
+		marginBottom: 20,
+	},
 	title: {
 		fontSize: 24,
 		fontWeight: "bold",
 		textAlign: "center",
-		marginBottom: 20,
+		flex: 1,
 	},
 	cartList: {
 		paddingHorizontal: 20,
