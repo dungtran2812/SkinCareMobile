@@ -39,20 +39,28 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 20,
 		fontWeight: "bold",
-		textAlign: "left",
-		marginBottom: 20,
+		color: "#000",
+		marginBottom: 10,
 	},
 	buttonContainer: {
 		flexDirection: "row",
-		justifyContent: "space-around",
+		justifyContent: "flex-start",
 	},
 	button: {
 		flexDirection: "row",
 		alignItems: "center",
+		paddingVertical: 8,
+		paddingHorizontal: 12,
+		borderWidth: 0.2,
+		borderColor: "#000",
+		borderRadius: 15,
+		marginRight: 15,
 	},
 	buttonText: {
+		color: "#000",
 		fontSize: 16,
-		marginLeft: 10,
+		marginLeft: 5,
+		fontWeight: "bold",
 	},
 });
 

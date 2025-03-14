@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons"; // Import Ionicons
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 
 const GiftHeader = () => {
@@ -14,7 +14,7 @@ const GiftHeader = () => {
 		<View style={styles.container}>
 			<Text style={styles.title}>Quà tặng</Text>
 			<TouchableOpacity style={styles.button} onPress={handleNavigate}>
-				<Ionicons name="gift-outline" size={24} color="#fff" />
+				<Ionicons name="gift-outline" size={24} color="#000" />
 				<Text style={styles.buttonText}>Đổi quà</Text>
 			</TouchableOpacity>
 		</View>
@@ -37,14 +37,18 @@ const styles = StyleSheet.create({
 	button: {
 		flexDirection: "row",
 		alignItems: "center",
-		backgroundColor: "#1E90FF",
-		padding: 10,
-		borderRadius: 8,
+		paddingVertical: 8,
+		paddingHorizontal: 12,
+		borderWidth: 0.2,
+		borderColor: "#000",
+		borderRadius: 15,
+		alignSelf: "flex-start",
 	},
 	buttonText: {
-		color: "#fff",
+		color: "#000",
 		fontSize: 16,
 		marginLeft: 5,
+		fontWeight: "bold",
 	},
 });
 
