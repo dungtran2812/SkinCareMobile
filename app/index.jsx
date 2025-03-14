@@ -8,13 +8,14 @@ import { setUpInterceptor } from "../src/services/api.service";
 import IntroScreen from "../src/screen/IntroScreen";
 import LoginScreen from "../src/auth/LoginScreen";
 import SignupScreen from "../src/auth/SignupScreen";
-import OtpScreen from "../src/auth/OtpScreen";
 import MainTabNavigator from "../src/screen/navigation/MainTabNavigator";
 import QuizzScreen from "../src/components/quizz/QuizzScreen";
 import QuizzAnswer from "../src/components/quizz/QuizzAnswer";
 import ProductItemDetail from "../src/components/item/ProductItemDetail";
 import SkinResult from "../src/components/skin/SkinResult";
 import MyCart from "../src/components/cart/MyCart";
+import Checkout from "../src/components/cart/Checkout";
+import OrderSuccess from "../src/components/order/OrderSuccess";
 
 LogBox.ignoreLogs([
 	"Non-serializable values were found in the navigation state",
@@ -72,6 +73,16 @@ export default function App() {
 					<Stack.Screen
 						name="MyCart"
 						component={MyCart}
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name="Checkout"
+						component={Checkout}
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name="OrderSuccess"
+						component={OrderSuccess}
 						options={{ headerShown: false }}
 					/>
 				</Stack.Navigator>
