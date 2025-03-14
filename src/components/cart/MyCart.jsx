@@ -7,9 +7,11 @@ import {
 	Image,
 	TouchableOpacity,
 	Dimensions,
+	Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
+import { SwipeListView } from "react-native-swipe-list-view";
 
 const { width } = Dimensions.get("window");
 
@@ -65,6 +67,28 @@ const MyCart = () => {
 					? { ...item, quantity: Math.max(1, item.quantity + delta) }
 					: item
 			)
+		);
+	};
+
+	const handleDeleteItem = (id) => {
+		Alert.alert(
+			"Xóa sản phẩm",
+			"Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?",
+			[
+				{
+					text: "Hủy",
+					style: "cancel",
+				},
+				{
+					text: "Xóa",
+					onPress: () => {
+						setCartItems((prevItems) =>
+							prevItems.filter((item) => item.id !== id)
+						);
+					},
+					style: "destructive",
+				},
+			]
 		);
 	};
 
@@ -126,6 +150,17 @@ const MyCart = () => {
 		</View>
 	);
 
+	const renderHiddenItem = ({ item }) => (
+		<View style={styles.hiddenItem}>
+			<TouchableOpacity
+				style={styles.deleteButton}
+				onPress={() => handleDeleteItem(item.id)}
+			>
+				<FontAwesome name="trash" size={24} color="#fff" />
+			</TouchableOpacity>
+		</View>
+	);
+
 	const totalAmount = cartItems
 		.filter((item) => item.selected)
 		.reduce(
@@ -146,10 +181,12 @@ const MyCart = () => {
 				</TouchableOpacity>
 				<Text style={styles.title}>Giỏ hàng của tôi</Text>
 			</View>
-			<FlatList
+			<SwipeListView
 				data={cartItems}
 				renderItem={renderItem}
+				renderHiddenItem={renderHiddenItem}
 				keyExtractor={(item) => item.id.toString()}
+				rightOpenValue={-75}
 				contentContainerStyle={styles.cartList}
 			/>
 			<View style={styles.footer}>
@@ -214,6 +251,9 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		marginBottom: 20,
+		backgroundColor: "#fff",
+		padding: 10,
+		borderRadius: 10,
 	},
 	productImageContainer: {
 		marginLeft: 10,
@@ -307,6 +347,22 @@ const styles = StyleSheet.create({
 		color: "#fff",
 		fontSize: 16,
 		fontWeight: "bold",
+	},
+	hiddenItem: {
+		alignItems: "flex-end",
+		backgroundColor: "#fff",
+		flex: 1,
+		marginBottom: 20,
+		paddingRight: 15,
+		borderRadius: 10,
+	},
+	deleteButton: {
+		backgroundColor: "#FF3B30",
+		justifyContent: "center",
+		alignItems: "center",
+		width: 75,
+		height: "100%",
+		borderRadius: 10,
 	},
 });
 

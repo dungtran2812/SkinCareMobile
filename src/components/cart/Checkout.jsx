@@ -32,6 +32,14 @@ const Checkout = ({ route }) => {
 		navigation.navigate("OrderSuccess");
 	};
 
+	const isFormValid = () => {
+		return (
+			customerName.trim() !== "" &&
+			phoneNumber.trim() !== "" &&
+			address.trim() !== ""
+		);
+	};
+
 	return (
 		<ScrollView style={styles.container}>
 			<View style={styles.header}>
@@ -114,8 +122,12 @@ const Checkout = ({ route }) => {
 					{totalAmount.toLocaleString("vi-VN")}đ
 				</Text>
 				<TouchableOpacity
-					style={styles.placeOrderButton}
+					style={[
+						styles.placeOrderButton,
+						{ backgroundColor: isFormValid() ? "#1E90FF" : "#ccc" },
+					]}
 					onPress={handlePlaceOrder}
+					disabled={!isFormValid()}
 				>
 					<Text style={styles.placeOrderButtonText}>Đặt đơn</Text>
 				</TouchableOpacity>
@@ -217,7 +229,6 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 	},
 	placeOrderButton: {
-		backgroundColor: "#1E90FF",
 		paddingVertical: 10,
 		paddingHorizontal: 20,
 		borderRadius: 5,
