@@ -113,35 +113,68 @@ const BlogData = [
 	},
 	{
 		id: 2,
-		title: "Tầm quan trọng của kem dưỡng ẩm",
+		title: "Kem dưỡng ẩm có tác dụng gì?\nCó cần thiết không?",
 		description: "Lý do bạn nên sử dụng kem dưỡng ẩm mỗi ngày.",
-		image: "https://example.com/image2.jpg",
+		image: "https://cocolux.com/images/cdn_images/2023/06/images/products/1686731088882-kem-duong-am-la-gi-tac-dung.jpeg",
 		detail: [
 			{
-				type: "h2",
-				content: "Tầm quan trọng của kem dưỡng ẩm",
+				type: "p",
+				content:
+					"Vào mùa đông, sản phẩm dưỡng ẩm dường như được xem là vật bất ly thân của hầu hết chị em phụ nữ. Nhưng không phải bất cứ sản phẩm nào cũng hiệu quả, điều quan trọng là bạn cần biết cách để dưỡng ẩm sao cho đúng và đủ. Vậy dưỡng ẩm để làm gì và tại sao dưỡng ẩm lại quan trọng như vậy?",
+			},
+			{
+				type: "h3",
+				content: "Kem dưỡng ẩm là gì? Dưỡng ẩm có cần thiết không",
 			},
 			{
 				type: "p",
 				content:
-					"Kem dưỡng ẩm giúp duy trì độ ẩm cho làn da, ngăn ngừa tình trạng khô ráp và lão hóa sớm. Việc sử dụng kem dưỡng ẩm hàng ngày cũng giúp củng cố hàng rào bảo vệ da, giữ cho làn da luôn mềm mại và căng mịn.",
+					"Kem dưỡng ẩm hay còn gọi là kem làm mềm da. Kem dưỡng ẩm cho da mặt là một loại kem dưỡng da, có ba thành phần chính là nước, dầu và chất nhũ tương. Nước chính là một thành phần quan trọng trong cơ thể chúng ta, góp phần tạo nên độ ẩm cho da. Giúp cho lớp biểu bì mềm hơn từ đó giúp giảm tình trạng bốc hơi trên da, khóa độ ẩm và chất dinh dưỡng, đồng thời bảo vệ da khỏi các tác nhân gây kích ứng từ môi trường.\n\nVậy dưỡng ẩm có cần thiết không? Cũng giống như tất cả các quy trình chăm sóc da khác, dưỡng ẩm là một thói quen hết sức cần thiết đối với tất cả chúng ta. Khi môi trường ngày càng ô nhiễm, khói bụi, cộng với áp lực công việc, chế độ sinh hoạt không hợp lý… sẽ khiến làn da bạn có xu hướng ngày càng xấu đi. Theo thời gian, da sẽ mất dần độ đàn hồi vốn có. Và để cải thiện tình trạng này, bạn cần phải có một chế độ chăm sóc da đặc biệt.\n\nĐó là lý do tại sao các sản phẩm kem dưỡng da được ra đời. Kem dưỡng chính là cách đơn giản nhất để nuôi dưỡng, cấp ẩm, bảo vệ da khỏi các tác động bất lợi từ môi trường và hỗ trợ ngăn ngừa các vấn đề thường gặp như lão hóa, khô sạm… để lấy lại làn da căng mịn, tươi trẻ đầy sức sống.",
 			},
 			{
 				type: "h3",
-				content: "Lợi ích của kem dưỡng ẩm",
+				content:
+					"Dưỡng ẩm để làm gì?\nLợi ích khi dưỡng ẩm cho da mỗi ngày",
 			},
 			{
 				type: "ul",
 				content: [
-					"Duy trì độ ẩm cho da.",
-					"Ngăn ngừa tình trạng khô ráp và lão hóa sớm.",
-					"Củng cố hàng rào bảo vệ da.",
+					"- Ngăn ngừa khô da",
+					"- Làm chậm tiến trình lão hóa",
+					"- Ngăn ngừa và hỗ trợ điều trị mụn",
+					"- Bảo vệ da khỏi các tác nhân bên ngoài",
+					"- Ngăn ngừa kích ứng da",
+					"- Kiểm soát dầu thừa hiệu quả",
 				],
 			},
 			{
 				type: "img",
-				src: "https://example.com/moisturizer_benefits.jpg",
-				alt: "Lợi ích của kem dưỡng ẩm",
+				src: "https://www.bioderma.com.vn/sites/vn/files/styles/ultrawide_image_text/public/duong-am-de-lam-gi-4.png?itok=kWQRPKW1",
+				alt: "dưỡng ẩm",
+			},
+			{
+				type: "h3",
+				content:
+					"Da nào cũng cần kem dưỡng ẩm?\nDùng gì để cấp ẩm cho da",
+			},
+			{
+				type: "p",
+				content:
+					"Hầu hết, các loại kem dưỡng thường có những thành phần khác nhau, nhưng thường sẽ có 2 thành phần chính là các chất làm mềm và các chất làm ẩm da. Chất làm mềm da thường có gốc dầu hoặc nước, giúp bổ sung độ ẩm cho mặt, làm cho da có cảm giác mềm và mịn. Các chất làm ẩm giúp hút nước từ môi trường cũng như từ lớp da giữa ra lớp da phía ngoài cùng. Các loại kem dưỡng ẩm đặc biệt rất phù hợp để chăm sóc da khô. Với da nhạy cảm, kem dưỡng ẩm cũng giúp bảo vệ da, cải thiện tông màu và kết cấu bề mặt da. Ngay cả khi bạn có làn da dầu, bạn cũng cần sử dụng kem dưỡng ẩm. Vì thế, bất kỳ loại da nào cũng cần được dưỡng ẩm và đều có những sản phẩm dành riêng cho từng loại da.\n\nVậy nên dùng gì để dưỡng ẩm da mặt? Câu trả lời sẽ là kem dưỡng ẩm. Hãy nhớ lựa chọn các sản phẩm phù hợp cho từng loại da như sau:",
+			},
+			{
+				type: "ul",
+				content: [
+					"- Da khô: Là làn da có độ ẩm trên da thấp, bạn nên chọn kem dưỡng loại đặc, chứa nhiều độ ẩm nhất.",
+					"- Da dầu: Sử dụng sữa dưỡng (lotion), vì đỡ gây bết dính trên da.",
+					"- Da nhạy cảm: Hãy lựa chọn các sản phẩm kem dưỡng ẩm cho da nhạy cảm. Không sử dụng kem dưỡng ẩm có quá nhiều hương thơm và màu sắc để tránh gây tổn thương cho da.",
+					"- Da mụn: Cần tìm hiểu kỹ trước khi sử dụng kem dưỡng da cho da mụn, tốt hơn hết là nghe theo sự tư vấn của các chuyên gia để tránh làm trầm trọng tình trạng mụn trên da bạn nhé.",
+				],
+			},
+			{
+				type: "img",
+				src: "https://www.bioderma.com.vn/sites/vn/files/styles/ultrawide_image_text/public/duong-am-de-lam-gi-3.png?itok=_gxXLCDm",
+				alt: "dưỡng ẩm",
 			},
 		],
 	},
