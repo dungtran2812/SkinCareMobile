@@ -17,8 +17,8 @@ const QuickAccess = () => {
 	// Mảng chứa tên các màn hình, nút, tên icon và màu sắc cho mỗi icon
 	const buttons = [
 		{
-			title: "Cẩm nang",
-			screen: "Guide",
+			title: "Blog",
+			screen: "Blog",
 			icon: "book",
 			iconColor: "#8A2BE2",
 		}, // Màu tím
