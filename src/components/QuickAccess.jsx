@@ -34,12 +34,6 @@ const QuickAccess = () => {
 			icon: "headphones",
 			iconColor: "#20B2AA",
 		}, // Màu xanh ngọc
-		{
-			title: "Chu trình",
-			screen: "Process",
-			icon: "cogs",
-			iconColor: "#A52A2A",
-		}, // Màu nâu
 	];
 
 	const handlePress = (screen) => {
