@@ -136,6 +136,7 @@ const MyCart = () => {
 		);
 
 	const allSelected = cartItems.every((item) => item.selected);
+	const anySelected = cartItems.some((item) => item.selected);
 
 	return (
 		<View style={styles.container}>
@@ -172,13 +173,13 @@ const MyCart = () => {
 						style={[
 							styles.purchaseButton,
 							{
-								backgroundColor: allSelected
+								backgroundColor: anySelected
 									? "#1E90FF"
 									: "#ccc",
 							},
 						]}
 						onPress={handlePurchase}
-						disabled={!allSelected}
+						disabled={!anySelected}
 					>
 						<Text style={styles.purchaseButtonText}>Mua hàng</Text>
 					</TouchableOpacity>
