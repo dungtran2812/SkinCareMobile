@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons"; // Import Ionicons
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Import AsyncStorage
 
 const ProductItemDetail = ({ route }) => {
 	const navigation = useNavigation();
@@ -17,14 +18,26 @@ const ProductItemDetail = ({ route }) => {
 		product.originalPrice * (1 - product.discount / 100);
 	const [isFavorite, setIsFavorite] = useState(false);
 
-	const handleFavoritePress = () => {
+	const handleFavoritePress = async () => {
 		setIsFavorite(!isFavorite);
-		if (!isFavorite) {
-			// Thêm sản phẩm vào danh sách yêu thích
-			navigation.navigate("ProductFavourite", { product });
-		} else {
-			// Xóa sản phẩm khỏi danh sách yêu thích
-			// Thêm logic xóa sản phẩm khỏi danh sách yêu thích nếu cần
+		try {
+			let favourites = await AsyncStorage.getItem("favourites");
+			favourites = favourites ? JSON.parse(favourites) : [];
+			if (!isFavorite) {
+				// Thêm sản phẩm vào danh sách yêu thích
+				favourites.push(product);
+			} else {
+				// Xóa sản phẩm khỏi danh sách yêu thích
+				favourites = favourites.filter(
+					(item) => item.id !== product.id
+				);
+			}
+			await AsyncStorage.setItem(
+				"favourites",
+				JSON.stringify(favourites)
+			);
+		} catch (error) {
+			console.error("Error handling favourites", error);
 		}
 	};
 

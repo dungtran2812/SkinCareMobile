@@ -8,7 +8,7 @@ import {
 	Dimensions,
 } from "react-native";
 import Header from "../components/Header";
-import ProductItem from "../components/item/ProductItem";
+import ProductCard from "../components/deals/ProductCard"; // Import ProductCard
 import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
@@ -67,14 +67,12 @@ export default function SuggestScreen() {
 	});
 
 	const renderProduct = ({ item }) => (
-		<TouchableOpacity
-			style={styles.productContainer}
+		<ProductCard
+			product={item}
 			onPress={() =>
 				navigation.navigate("ProductItemDetail", { product: item })
 			}
-		>
-			<ProductItem product={item} />
-		</TouchableOpacity>
+		/>
 	);
 
 	return (
@@ -181,10 +179,6 @@ const styles = StyleSheet.create({
 	},
 	productList: {
 		paddingHorizontal: 10,
-	},
-	productContainer: {
-		flex: 1,
-		margin: 5,
 	},
 	row: {
 		justifyContent: "space-between",
