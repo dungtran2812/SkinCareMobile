@@ -16,6 +16,7 @@ import SkinResult from "../src/components/skin/SkinResult";
 import MyCart from "../src/components/cart/MyCart";
 import Checkout from "../src/components/cart/Checkout";
 import OrderSuccess from "../src/components/order/OrderSuccess";
+import Consult from "../src/components/consult/Consult";
 
 LogBox.ignoreLogs([
 	"Non-serializable values were found in the navigation state",
@@ -83,6 +84,11 @@ export default function App() {
 					<Stack.Screen
 						name="OrderSuccess"
 						component={OrderSuccess}
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name="Consult"
+						component={Consult}
 						options={{ headerShown: false }}
 					/>
 				</Stack.Navigator>
