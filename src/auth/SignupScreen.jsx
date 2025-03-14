@@ -37,7 +37,12 @@ const SignupScreen = ({ navigation }) => {
 			console.log("Signup successful");
 			navigation.reset({
 				index: 0,
-				routes: [{ name: "MainTabNavigator" }],
+				routes: [
+					{
+						name: "MainTabNavigator",
+						params: { screen: "HomeScreen" },
+					},
+				],
 			});
 		} else {
 			console.log("Passwords do not match");
