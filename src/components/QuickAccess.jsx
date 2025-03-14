@@ -17,30 +17,6 @@ const QuickAccess = () => {
 	// Mảng chứa tên các màn hình, nút, tên icon và màu sắc cho mỗi icon
 	const buttons = [
 		{
-			title: "Hàng mới về",
-			screen: "NewArrivals",
-			icon: "gift",
-			iconColor: "#FF5733",
-		},
-		{
-			title: "Giao 2h",
-			screen: "Delivery2h",
-			icon: "clock-o",
-			iconColor: "#1E90FF",
-		}, // Màu xanh dương
-		{
-			title: "Xem đơn hàng",
-			screen: "TrackOrder",
-			icon: "search",
-			iconColor: "#32CD32",
-		}, // Màu xanh lá
-		{
-			title: "Bán chạy",
-			screen: "BestSellers",
-			icon: "star",
-			iconColor: "#FFD700",
-		}, // Màu vàng
-		{
 			title: "Cẩm nang",
 			screen: "Guide",
 			icon: "book",
@@ -126,7 +102,6 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		width: width - 20, // Set width to fit screen with some padding
-		marginBottom: 10, // Giảm khoảng cách giữa các hàng
 	},
 	button: {
 		flex: 1,
