@@ -69,7 +69,8 @@ const MyCart = () => {
 	};
 
 	const handlePurchase = () => {
-		// Xử lý logic mua hàng
+		const selectedItems = cartItems.filter((item) => item.selected);
+		navigation.navigate("Checkout", { cartItems: selectedItems });
 	};
 
 	const renderItem = ({ item }) => (
