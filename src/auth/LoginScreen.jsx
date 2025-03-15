@@ -21,20 +21,19 @@ import { useLoginMutation } from "../services/skincare.service";
 
 const LoginScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
+	const [values, setValues] = useState({ username: "", password: "" });
 	const [showPassword, setShowPassword] = useState(false);
-	const isFormValid = username.trim() !== "" && password.trim() !== "";
+	const isFormValid = values.username.trim() !== "" && values.password.trim() !== "";
 	const [login, { isLoading }] = useLoginMutation();
 
 	const handleLogin = async () => {
-		if (!username || !password) {
+		if (!values.username || !values.password) {
 			alert("Please enter both username and password.");
 			return;
 		}
 
 		try {
-			const userData = await login({ username, password }).unwrap();
+			const userData = await login({ username: values.username, password: values.password }).unwrap();
 			dispatch(setAccessToken(userData?.access_token));
 			dispatch(setUsername(userData?.user?.username));
 			dispatch(setName(userData?.user?.username));
@@ -55,6 +54,13 @@ const LoginScreen = ({ navigation }) => {
 
 	const toggleSecureTextEntry = () => {
 		setShowPassword((prev) => !prev);
+	};
+
+	const handleChange = (name, value) => {
+		setValues((prevValues) => ({
+			...prevValues,
+			[name]: value,
+		}));
 	};
 
 	return (
@@ -81,8 +87,8 @@ const LoginScreen = ({ navigation }) => {
 							style={styles.input}
 							placeholder="Email hoặc số điện thoại"
 							placeholderTextColor="#888"
-							value={username}
-							onChangeText={setUsername}
+							value={values.username}
+							onChangeText={(text) => handleChange("username", text)}
 						/>
 					</View>
 
@@ -92,8 +98,8 @@ const LoginScreen = ({ navigation }) => {
 							placeholder="Mật khẩu"
 							placeholderTextColor="#888"
 							secureTextEntry={!showPassword}
-							value={password}
-							onChangeText={setPassword}
+							value={values.password}
+							onChangeText={(text) => handleChange("password", text)}
 						/>
 						<TouchableOpacity onPress={toggleSecureTextEntry}>
 							<Ionicons
