@@ -6,23 +6,55 @@ import {
 	TouchableOpacity,
 	StyleSheet,
 	ImageBackground,
+	Alert,
+	ActivityIndicator,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import MainTabNavigator from "../screen/navigation/MainTabNavigator"; // Thêm dòng này
+import { useDispatch } from "react-redux";
+import {
+	setAccessToken,
+	setName,
+	setPhoneNumber,
+	setUsername,
+} from "../feature/authentication";
+import { useLoginMutation } from "../services/skincare.service";
 
 const LoginScreen = ({ navigation }) => {
+	const dispatch = useDispatch();
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const isFormValid = username.trim() !== "" && password.trim() !== "";
+	const [login, { isLoading }] = useLoginMutation();
 
-	const handleLogin = () => {
-		if (isFormValid) {
+	const handleLogin = async () => {
+		if (!username || !password) {
+			alert("Please enter both username and password.");
+			return;
+		}
+
+		try {
+			const userData = await login({ username, password }).unwrap();
+			dispatch(setAccessToken(userData?.access_token));
+			dispatch(setUsername(userData?.user?.username));
+			dispatch(setName(userData?.user?.username));
+			dispatch(setPhoneNumber(userData?.user?.phone));
+
+			Alert.alert("Thông báo", "Đăng nhập thành công!");
 			navigation.reset({
 				index: 0,
 				routes: [{ name: "MainTabNavigator" }],
 			});
+		} catch (loginError) {
+			console.error("Login error:", loginError);
+			alert(
+				loginError.data?.message || "Login failed. Please try again."
+			);
 		}
+	};
+
+	const toggleSecureTextEntry = () => {
+		setShowPassword((prev) => !prev);
 	};
 
 	return (
@@ -63,9 +95,7 @@ const LoginScreen = ({ navigation }) => {
 							value={password}
 							onChangeText={setPassword}
 						/>
-						<TouchableOpacity
-							onPress={() => setShowPassword(!showPassword)}
-						>
+						<TouchableOpacity onPress={toggleSecureTextEntry}>
 							<Ionicons
 								name={showPassword ? "eye" : "eye-off"}
 								size={24}
@@ -88,9 +118,15 @@ const LoginScreen = ({ navigation }) => {
 							{ opacity: isFormValid ? 1 : 0.5 },
 						]}
 						onPress={handleLogin}
-						disabled={!isFormValid}
+						disabled={!isFormValid || isLoading}
 					>
-						<Text style={styles.loginButtonText}>Đăng nhập</Text>
+						{isLoading ? (
+							<ActivityIndicator color="white" />
+						) : (
+							<Text style={styles.loginButtonText}>
+								Đăng nhập
+							</Text>
+						)}
 					</TouchableOpacity>
 				</View>
 			</View>
