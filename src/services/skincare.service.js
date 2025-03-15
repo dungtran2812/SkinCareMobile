@@ -15,48 +15,44 @@ const skincareApi = createApi({
 			}),
 		}),
 
-		// Template for POST mutation
-		samplePostMutation: builder.mutation({
-			query: (data) => ({
-				url: endpoints.SAMPLE_ENDPOINT,
-				method: "POST",
-				data: data,
-			}),
-		}),
+		// // Template for POST mutation
+		// samplePostMutation: builder.mutation({
+		// 	query: (data) => ({
+		// 		url: endpoints.SAMPLE_ENDPOINT,
+		// 		method: "POST",
+		// 		data: data,
+		// 	}),
+		// }),
 
-		// Template for GET query
-		sampleGetQuery: builder.query({
-			query: () => ({
-				url: endpoints.SAMPLE_ENDPOINT,
-				method: "GET",
-			}),
-		}),
+		// // Template for GET query
+		// sampleGetQuery: builder.query({
+		// 	query: () => ({
+		// 		url: endpoints.SAMPLE_ENDPOINT,
+		// 		method: "GET",
+		// 	}),
+		// }),
 
-		// Template for PUT mutation with ID parameter
-		samplePutMutation: builder.mutation({
-			query: ({ id, data }) => ({
-				url: `${endpoints.SAMPLE_ENDPOINT}/${id}`,
-				method: "PUT",
-				data: data,
-			}),
-		}),
+		// // Template for PUT mutation with ID parameter
+		// samplePutMutation: builder.mutation({
+		// 	query: ({ id, data }) => ({
+		// 		url: `${endpoints.SAMPLE_ENDPOINT}/${id}`,
+		// 		method: "PUT",
+		// 		data: data,
+		// 	}),
+		// }),
 
-		// Template for DELETE mutation
-		sampleDeleteMutation: builder.mutation({
-			query: (id) => ({
-				url: `${endpoints.SAMPLE_ENDPOINT}/${id}`,
-				method: "DELETE",
-			}),
-		}),
+		// // Template for DELETE mutation
+		// sampleDeleteMutation: builder.mutation({
+		// 	query: (id) => ({
+		// 		url: `${endpoints.SAMPLE_ENDPOINT}/${id}`,
+		// 		method: "DELETE",
+		// 	}),
+		// }),
 	}),
 });
 
 export const {
 	useLoginMutation,
-	useSamplePostMutation,
-	useSampleGetQuery,
-	useSamplePutMutation,
-	useSampleDeleteMutation,
 } = skincareApi;
 
 export default skincareApi;

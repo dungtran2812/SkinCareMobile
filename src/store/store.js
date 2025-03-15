@@ -8,7 +8,7 @@ const store = configureStore({
 		rootReducer,
 		[skincareApi.reducerPath]: skincareApi.reducer,
 	},
-	middleware: (getDefaultMiddleware) =>
+	middleware: getDefaultMiddleware =>
 		getDefaultMiddleware({
 			serializableCheck: false,
 		}).concat(skincareApi.middleware),
