@@ -19,8 +19,8 @@ const ProductCard = ({ product }) => {
 
 	// Tính giá sau khi giảm
 	const discountedPrice = (
-		product.originalPrice *
-		(1 - product.discount / 100)
+		product.price *
+		(1 - product.productDiscount / 100)
 	).toFixed(0);
 
 	return (
@@ -28,10 +28,10 @@ const ProductCard = ({ product }) => {
 			{/* Nửa trên của card: Hình ảnh sản phẩm và giảm giá */}
 			<View style={styles.imageContainer}>
 				<Image
-					source={{ uri: product.image.uri }}
+					source={{ uri: product.image }}
 					style={styles.image}
 				/>
-				<Text style={styles.discount}>{`-${product.discount}%`}</Text>
+				<Text style={styles.discount}>{`-${product.productDiscount}%`}</Text>
 			</View>
 
 			{/* Nửa dưới của card: Giá và tên sản phẩm */}
@@ -42,7 +42,7 @@ const ProductCard = ({ product }) => {
 				</Text>
 				{/* Giá gốc */}
 				<Text style={styles.originalPrice}>
-					{parseInt(product.originalPrice).toLocaleString("vi-VN")}{" "}
+					{parseInt(product.price).toLocaleString("vi-VN")}{" "}
 					VNĐ
 				</Text>
 
@@ -59,7 +59,7 @@ const ProductCard = ({ product }) => {
 						},
 					]}
 				>
-					<Text style={styles.tagText}>{product.tag}</Text>
+					<Text style={styles.tagText}>{product.category.name}</Text>
 				</View>
 			</View>
 		</TouchableOpacity>

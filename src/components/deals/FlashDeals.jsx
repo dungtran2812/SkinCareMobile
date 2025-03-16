@@ -10,89 +10,33 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Countdown from "react-native-countdown-component";
 import ProductCard from "./ProductCard";
+import { useGetProductsByDiscountRangeQuery } from "../../services/skincare.service";
 
 const { width } = Dimensions.get("window");
 
 const FlashDeals = () => {
 	const navigation = useNavigation();
+	const { data: products, isLoading, isError } = useGetProductsByDiscountRangeQuery({minDiscount:'20', maxDiscount:'50'});
 
 	const handlePress = () => {
 		navigation.navigate("FlashDeals");
 	};
 
-	// Dữ liệu giả cho sản phẩm
-	const products = [
-		{
-			id: 1,
-			name: "Bioderma Cicabio Creme",
-			originalPrice: 385000,
-			discount: 20,
-			image: {
-				uri: "https://bizweb.dktcdn.net/100/443/867/products/kem-duong-phuc-hoi-bioderma-cicabio-40ml.png?v=1695090777257",
-			},
-			tag: "Da dầu",
-		},
-		{
-			id: 2,
-			name: "Uriage Thermal Water 300ml",
-			originalPrice: 305000,
-			discount: 10,
-			image: {
-				uri: "https://product.hstatic.net/200000551679/product/untitled_design__1__3e45e226b2514d6883fdfa77830913c9.png",
-			},
-			tag: "Da khô",
-		},
-		{
-			id: 3,
-			name: "La Roche-Posay Anthelios Gel-Cream",
-			originalPrice: 320000,
-			discount: 15,
-			image: {
-				uri: "https://file.hstatic.net/200000868185/file/1_9a98b940f78a476890550d392bd4aeac.png",
-			},
-			tag: "Da dầu",
-		},
-		{
-			id: 4,
-			name: "Kem Chống Nắng d'Alba Nâng Tông Tím  ",
-			originalPrice: 485000,
-			discount: 10,
-			image: {
-				uri: "https://product.hstatic.net/200000150709/product/4_73363329a10c4195aa66439eb8827039.png",
-			},
-			tag: "Da thường",
-		},
-		{
-			id: 5,
-			name: "Kem Dưỡng La Roche-Posay",
-			originalPrice: 50,
-			discount: 10,
-			image: {
-				uri: "https://product.hstatic.net/200000775601/product/screen_shot_2023-11-21_at_17.25.39_f2f48f8023f74601a3d7e04a2052d325.png",
-			},
-			tag: "Da khô",
-		},
-		{
-			id: 6,
-			name: "Nước Hoa Hồng Dr.Pepti",
-			originalPrice: 270000,
-			discount: 15,
-			image: {
-				uri: "https://hasaki.vn/_next/image?url=https%3A%2F%2Fmedia.hcdn.vn%2Fcatalog%2Fproduct%2Fn%2Fu%2Fnuoc-hoa-hong-dr-pepti-cap-am-cang-bong-da-180ml-3-1720150702.jpg&w=3840&q=75",
-			},
-			tag: "Da thường",
-		},
-		{
-			id: 7,
-			name: "Tẩy Tế Bào Chết Eucerin ",
-			originalPrice: 320000,
-			discount: 10,
-			image: {
-				uri: "https://bizweb.dktcdn.net/thumb/1024x1024/100/482/555/products/thiet-ke-chua-co-ten-25-040b26a7-35a5-403f-af81-9dadf5aacf45.png?v=1719570833297",
-			},
-			tag: "Da dầu",
-		},
-	];
+	if (isLoading) {
+		return (
+			<View style={styles.container}>
+				<Text>Loading...</Text>
+			</View>
+		);
+	}
+
+	if (isError) {
+		return (
+			<View style={styles.container}>
+				<Text>Error loading products.</Text>
+			</View>
+		);
+	}
 
 	return (
 		<View style={styles.container}>
@@ -124,12 +68,12 @@ const FlashDeals = () => {
 					<Text style={styles.viewAll}>Xem tất cả</Text>
 				</TouchableOpacity>
 			</View>
-
+						{console.log(products)}
 			{/* Danh sách sản phẩm */}
 			<FlatList
 				data={products}
 				renderItem={({ item }) => <ProductCard product={item} />}
-				keyExtractor={(item) => item.id.toString()}
+				keyExtractor={(item) => item._id.toString()}
 				horizontal // Hiển thị theo dạng cuộn ngang
 				showsHorizontalScrollIndicator={false}
 			/>
