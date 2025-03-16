@@ -6,6 +6,7 @@ const endpoints = {
   CATEGORY: "/category",
   PRODUCT: "/product",
   SKINTYPE: "/skin-types",
+  Cart: "/cart",
 };
 
 export default endpoints;

@@ -6,38 +6,33 @@ import {
 	Image,
 	TouchableOpacity,
 	ScrollView,
+	Alert,
+	ActivityIndicator,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons"; // Import Ionicons
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage"; // Import AsyncStorage
+import { useAddToCartMutation } from "../../services/skincare.service";
 
 const ProductItemDetail = ({ route }) => {
 	const navigation = useNavigation();
+	const [addToCart, { isLoading }] = useAddToCartMutation();
 	const { product } = route.params;
 	const discountedPrice =
-		product.originalPrice * (1 - product.discount / 100);
-	const [isFavorite, setIsFavorite] = useState(false);
+		product.price * (1 - product.productDiscount / 100);
 
-	const handleFavoritePress = async () => {
-		setIsFavorite(!isFavorite);
+	const handleAddToCart = async () => {
+		const cartItem = {
+			productId: product._id,
+			quantity: 1, // Default quantity
+		};
+
 		try {
-			let favourites = await AsyncStorage.getItem("favourites");
-			favourites = favourites ? JSON.parse(favourites) : [];
-			if (!isFavorite) {
-				// Thêm sản phẩm vào danh sách yêu thích
-				favourites.push(product);
-			} else {
-				// Xóa sản phẩm khỏi danh sách yêu thích
-				favourites = favourites.filter(
-					(item) => item.id !== product.id
-				);
-			}
-			await AsyncStorage.setItem(
-				"favourites",
-				JSON.stringify(favourites)
-			);
+			console.log(cartItem)
+			await addToCart(cartItem).unwrap();
+			Alert.alert("Thông báo", "Sản phẩm đã được thêm vào giỏ hàng!");
 		} catch (error) {
-			console.error("Error handling favourites", error);
+			console.error("Add to cart error:", error);
+			Alert.alert("Thông báo", "Thêm sản phẩm vào giỏ hàng thất bại!");
 		}
 	};
 
@@ -63,11 +58,11 @@ const ProductItemDetail = ({ route }) => {
 				</View>
 				<View style={styles.imageContainer}>
 					<Image
-						source={{ uri: product.image.uri }}
+						source={{ uri: product.image }}
 						style={styles.productImage}
 						onError={(e) => console.log(e.nativeEvent.error)}
 					/>
-					<Text style={styles.discountTag}>-{product.discount}%</Text>
+					<Text style={styles.discountTag}>-{product.productDiscount}%</Text>
 				</View>
 				<View style={styles.infoContainer}>
 					<View style={styles.priceContainer}>
@@ -76,7 +71,7 @@ const ProductItemDetail = ({ route }) => {
 							VNĐ
 						</Text>
 						<Text style={styles.originalPrice}>
-							{parseInt(product.originalPrice).toLocaleString(
+							{parseInt(product.price).toLocaleString(
 								"vi-VN"
 							)}{" "}
 							VNĐ
@@ -90,38 +85,20 @@ const ProductItemDetail = ({ route }) => {
 						Xuất sứ thương hiệu: {product.origin}
 					</Text>
 					<Text style={styles.productDetail}>
-						Loại da: {product.skinType}
-					</Text>
-					<Text style={styles.productDetail}>
-						Hướng dẫn sử dụng: {product.usageInstructions}
+						Hướng dẫn sử dụng: {product.usage}
 					</Text>
 					<Text style={styles.productDetail}>
 						Thành phần: {product.ingredients}
 					</Text>
-					<View style={styles.ratingContainer}>
-						<Text style={styles.rating}>{product.rating} ★</Text>
-						<View style={styles.salesContainer}>
-							<Text style={styles.sales}>
-								<Text style={styles.cartIcon}>🛒</Text>{" "}
-								{product.monthlySales}/tháng
-							</Text>
-						</View>
-					</View>
 				</View>
 			</ScrollView>
 			<View style={styles.buttonContainer}>
-				<TouchableOpacity
-					style={styles.favoriteButton}
-					onPress={handleFavoritePress}
-				>
-					<Ionicons
-						name={isFavorite ? "heart" : "heart-outline"}
-						size={24}
-						color={isFavorite ? "#E53935" : "#000"}
-					/>
-				</TouchableOpacity>
-				<TouchableOpacity style={styles.addButton}>
-					<Text style={styles.buttonText}>Thêm vào giỏ hàng</Text>
+				<TouchableOpacity style={styles.addButton} onPress={handleAddToCart} disabled={isLoading}>
+					{isLoading ? (
+						<ActivityIndicator color="white" />
+					) : (
+						<Text style={styles.buttonText}>Thêm vào giỏ hàng</Text>
+					)}
 				</TouchableOpacity>
 			</View>
 		</View>
