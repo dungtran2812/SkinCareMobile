@@ -15,7 +15,7 @@ const skincareApi = createApi({
 				data: data,
 			}),
 		}),
-
+		// Endpoint for register
 		register: builder.mutation({
       query: (userData) => ({
         url: `/auth/${endpoints.REGISTER}`,
@@ -141,7 +141,7 @@ export const {
 	useGetAllQuizQuestionQuery,
 	useGetAllQuizAnswerByQuestionIdQuery,
 	useGetAllProductsQuery,
-  useGetProductsByDiscountRangeQuery,
+	useGetProductsByDiscountRangeQuery,
 	useCreateProductMutation,
 	useUpdateProductMutation,
 	useDeleteProductMutation,
