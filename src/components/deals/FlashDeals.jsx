@@ -68,7 +68,6 @@ const FlashDeals = () => {
 					<Text style={styles.viewAll}>Xem tất cả</Text>
 				</TouchableOpacity>
 			</View>
-						{console.log(products)}
 			{/* Danh sách sản phẩm */}
 			<FlatList
 				data={products}

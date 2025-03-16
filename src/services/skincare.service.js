@@ -109,6 +109,19 @@ const skincareApi = createApi({
         method: "GET",
       }),
     }),
+    addToCart: builder.mutation({
+      query: (cartItem) => ({
+        url: `${endpoints.Cart}/addToCart`,
+        data: cartItem,
+        method: "POST",
+      }),
+    }),
+    getCartInfor: builder.query({
+      query: () => ({
+        url: `${endpoints.Cart}/getCartInfor`,
+        method: "GET",
+      }),
+    }),
 	}),
 });
 
@@ -128,6 +141,8 @@ export const {
 	useDeleteQuizQuestionMutation,
 	useDeleteQuizAnswerMutation,
 	useGetAllSkinTypesQuery,
+  useAddToCartMutation,
+  useGetCartInforQuery,
 } = skincareApi;
 
 export default skincareApi;

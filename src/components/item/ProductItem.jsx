@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 const ProductItem = ({ product }) => {
 	const navigation = useNavigation();
 	const discountedPrice =
-		product.originalPrice * (1 - product.discount / 100);
+		product.price * (1 - product.productDiscount / 100);
 
 	const handlePress = () => {
 		navigation.navigate("ProductItemDetail", { product });
@@ -16,11 +16,11 @@ const ProductItem = ({ product }) => {
 			{/* Phần trên của card: Hình ảnh và tag giảm giá */}
 			<View style={styles.imageContainer}>
 				<Image
-					source={{ uri: product.image.uri }}
+					source={{ uri: product.image }}
 					style={styles.image}
 					onError={(e) => console.log(e.nativeEvent.error)}
 				/>
-				<Text style={styles.discountTag}>-{product.discount}%</Text>
+				<Text style={styles.discountTag}>-{product.productDiscount}%</Text>
 			</View>
 
 			{/* Phần dưới của card: Thông tin sản phẩm */}
@@ -30,7 +30,7 @@ const ProductItem = ({ product }) => {
 						{parseInt(discountedPrice).toLocaleString("vi-VN")} VNĐ
 					</Text>
 					<Text style={styles.originalPrice}>
-						{parseInt(product.originalPrice).toLocaleString(
+						{parseInt(product.price).toLocaleString(
 							"vi-VN"
 						)}{" "}
 						VNĐ
@@ -39,13 +39,6 @@ const ProductItem = ({ product }) => {
 				<Text style={styles.brandName}>{product.brand}</Text>
 				<Text style={styles.productName}>{product.name}</Text>
 				<View style={styles.ratingContainer}>
-					<Text style={styles.rating}>{product.rating} ★</Text>
-					<View style={styles.salesContainer}>
-						<Text style={styles.sales}>
-							<Text style={styles.cartIcon}>🛒</Text>{" "}
-							{product.monthlySales}/tháng
-						</Text>
-					</View>
 				</View>
 			</View>
 		</TouchableOpacity>

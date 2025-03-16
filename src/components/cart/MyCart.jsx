@@ -3,146 +3,68 @@ import {
 	View,
 	Text,
 	StyleSheet,
-	FlatList,
 	Image,
 	TouchableOpacity,
-	Dimensions,
 	Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
 import { SwipeListView } from "react-native-swipe-list-view";
-
-const { width } = Dimensions.get("window");
+import { useGetCartInforQuery } from "../../services/skincare.service";
 
 const MyCart = () => {
 	const navigation = useNavigation();
+	const { data: cardData = [], isLoading, isError } = useGetCartInforQuery(); 
+	const [selectedItems, setSelectedItems] = useState({});
+	const cartItems = cardData.data?.products;
 
-	// Dữ liệu giả cho các sản phẩm trong giỏ hàng
-	const [cartItems, setCartItems] = useState([
-		{
-			id: 1,
-			name: "Kem Chống Nắng Vichy Thoáng Nhẹ Không Bóng Dầu SPF 50",
-			originalPrice: 369000,
-			discount: 20,
-			image: {
-				uri: "https://media.hcdn.vn/catalog/product/g/o/google-shopping-kem-chong-nang-vichy-thoang-nhe-khong-bong-dau-spf-50-50ml-1721901209.jpg",
-			},
-			quantity: 1,
-			selected: false,
-		},
-		{
-			id: 2,
-			name: "Sữa Rửa Mặt Cocoon Chiết Xuất Từ Nghệ Hưng Yên 310ml",
-			originalPrice: 236000,
-			discount: 15,
-			image: {
-				uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1tUWyim4_BX4oCefE60oKl3razi12Vo8PXg&s",
-			},
-			quantity: 2,
-			selected: false,
-		},
-		// Thêm các sản phẩm khác
-	]);
+	// Placeholder for future item selection logic
+	// const handleSelectItem = (id) => {
+	// 	setSelectedItems((prev) => ({ ...prev, [id]: !prev[id] }));
+	// };
 
-	const handleSelectItem = (id) => {
-		setCartItems((prevItems) =>
-			prevItems.map((item) =>
-				item.id === id ? { ...item, selected: !item.selected } : item
-			)
-		);
-	};
-
-	const handleSelectAll = () => {
-		const allSelected = cartItems.every((item) => item.selected);
-		setCartItems((prevItems) =>
-			prevItems.map((item) => ({ ...item, selected: !allSelected }))
-		);
-	};
-
-	const handleQuantityChange = (id, delta) => {
-		setCartItems((prevItems) =>
-			prevItems.map((item) =>
-				item.id === id
-					? { ...item, quantity: Math.max(1, item.quantity + delta) }
-					: item
-			)
-		);
-	};
+	// Placeholder for future select all logic
+	// const handleSelectAll = () => {
+	// 	// Logic to select or deselect all items
+	// };
 
 	const handleDeleteItem = (id) => {
 		Alert.alert(
 			"Xóa sản phẩm",
 			"Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?",
 			[
-				{
-					text: "Hủy",
-					style: "cancel",
-				},
-				{
-					text: "Xóa",
-					onPress: () => {
-						setCartItems((prevItems) =>
-							prevItems.filter((item) => item.id !== id)
-						);
-					},
-					style: "destructive",
-				},
+				{ text: "Hủy", style: "cancel" },
+				{ text: "Xóa", onPress: () => {/* Implement delete logic here */}, style: "destructive" },
 			]
 		);
 	};
 
 	const handlePurchase = () => {
-		const selectedItems = cartItems.filter((item) => item.selected);
-		navigation.navigate("Checkout", { cartItems: selectedItems });
+		// Logic for handling purchase of selected items
+		const selectedItemsArray = cartItems.filter((item) => selectedItems[item.id]);
+		navigation.navigate("Checkout", { cartItems: selectedItemsArray });
 	};
 
 	const renderItem = ({ item }) => (
 		<View style={styles.cartItem}>
-			<TouchableOpacity onPress={() => handleSelectItem(item.id)}>
-				<FontAwesome
-					name={item.selected ? "check-square" : "square-o"}
-					size={24}
-					color="black"
-				/>
+			<TouchableOpacity onPress={() => {/* Future selection logic */}}>
+				<FontAwesome name={selectedItems[item.productId] ? "check-square" : "square-o"} size={24} color="black" />
 			</TouchableOpacity>
-			<TouchableOpacity
-				style={styles.productImageContainer}
-				onPress={() =>
-					navigation.navigate("ProductItemDetail", { product: item })
-				}
-			>
-				<Image
-					source={{ uri: item.image.uri }}
-					style={styles.productImage}
-				/>
+			<TouchableOpacity style={styles.productImageContainer} onPress={() => navigation.navigate("ProductItemDetail", { product: item })}>
+				<Image source={{ uri: item.image }} style={styles.productImage} />
 			</TouchableOpacity>
 			<View style={styles.productInfo}>
 				<Text style={styles.productName}>{item.name}</Text>
 				<View style={styles.priceContainer}>
-					<Text style={styles.discountedPrice}>
-						{(
-							item.originalPrice *
-							(1 - item.discount / 100)
-						).toLocaleString("vi-VN")}
-						đ
-					</Text>
-					<Text style={styles.originalPrice}>
-						{item.originalPrice.toLocaleString("vi-VN")}đ
-					</Text>
+					<Text style={styles.discountedPrice}>{(item.price * (1 - item.discount / 100)).toLocaleString("vi-VN")}đ</Text>
+					<Text style={styles.originalPrice}>{item.price.toLocaleString("vi-VN")}đ</Text>
 				</View>
 				<View style={styles.quantityContainer}>
-					<TouchableOpacity
-						style={styles.quantityButton}
-						onPress={() => handleQuantityChange(item.id, -1)}
-					>
+					<TouchableOpacity style={styles.quantityButton} onPress={() => {/* Future quantity change logic */}}>
 						<Text style={styles.quantityButtonText}>-</Text>
 					</TouchableOpacity>
 					<Text style={styles.quantityText}>{item.quantity}</Text>
-					<TouchableOpacity
-						style={styles.quantityButton}
-						onPress={() => handleQuantityChange(item.id, 1)}
-					>
+					<TouchableOpacity style={styles.quantityButton} onPress={() => {/* Future quantity change logic */}}>
 						<Text style={styles.quantityButtonText}>+</Text>
 					</TouchableOpacity>
 				</View>
@@ -152,26 +74,18 @@ const MyCart = () => {
 
 	const renderHiddenItem = ({ item }) => (
 		<View style={styles.hiddenItem}>
-			<TouchableOpacity
-				style={styles.deleteButton}
-				onPress={() => handleDeleteItem(item.id)}
-			>
+			<TouchableOpacity style={styles.deleteButton} onPress={() => handleDeleteItem(item.id)}>
 				<FontAwesome name="trash" size={24} color="#fff" />
 			</TouchableOpacity>
 		</View>
 	);
 
-	const totalAmount = cartItems
-		.filter((item) => item.selected)
-		.reduce(
-			(sum, item) =>
-				sum +
-				item.quantity * item.originalPrice * (1 - item.discount / 100),
-			0
-		);
+	// const totalAmount = cartItems.data.filter((item) => selectedItems[item.id]).reduce((sum, item) => sum + item.quantity * item.originalPrice * (1 - item.discount / 100), 0);
+	// const allSelected = Object.keys(selectedItems).length === cartItems.data.length && Object.values(selectedItems).every(Boolean);
+	const anySelected = Object.values(selectedItems).some(Boolean);
 
-	const allSelected = cartItems.every((item) => item.selected);
-	const anySelected = cartItems.some((item) => item.selected);
+	if (isLoading) return <View style={styles.container}><Text>Loading...</Text></View>;
+	if (isError) return <View style={styles.container}><Text>There was an error loading your cart.</Text></View>;
 
 	return (
 		<View style={styles.container}>
@@ -185,36 +99,21 @@ const MyCart = () => {
 				data={cartItems}
 				renderItem={renderItem}
 				renderHiddenItem={renderHiddenItem}
-				keyExtractor={(item) => item.id.toString()}
+				keyExtractor={(item) => item.productId}
 				rightOpenValue={-75}
 				contentContainerStyle={styles.cartList}
 			/>
 			<View style={styles.footer}>
-				<TouchableOpacity
-					style={styles.selectAllContainer}
-					onPress={handleSelectAll}
-				>
-					<FontAwesome
-						name={allSelected ? "check-square" : "square-o"}
-						size={24}
-						color="black"
-					/>
+				{/* Placeholder for future select all button */}
+				{/* <TouchableOpacity style={styles.selectAllContainer} onPress={handleSelectAll}>
+					<FontAwesome name={allSelected ? "check-square" : "square-o"} size={24} color="black" />
 					<Text style={styles.selectAllText}>Chọn tất cả</Text>
-				</TouchableOpacity>
+				</TouchableOpacity> */}
 				<View style={styles.totalContainer}>
 					<Text style={styles.totalText}>Tổng thanh toán:</Text>
-					<Text style={styles.totalAmount}>
-						{totalAmount.toLocaleString("vi-VN")}đ
-					</Text>
+					<Text style={styles.totalAmount}>{cardData.data.totalPrice.toLocaleString("vi-VN")}đ</Text>
 					<TouchableOpacity
-						style={[
-							styles.purchaseButton,
-							{
-								backgroundColor: anySelected
-									? "#1E90FF"
-									: "#ccc",
-							},
-						]}
+						style={[styles.purchaseButton, { backgroundColor: anySelected ? "#1E90FF" : "#ccc" }]}
 						onPress={handlePurchase}
 						disabled={!anySelected}
 					>
@@ -227,143 +126,32 @@ const MyCart = () => {
 };
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		paddingTop: 20,
-	},
-	header: {
-		flexDirection: "row",
-		alignItems: "center",
-		paddingHorizontal: 20,
-		marginBottom: 20,
-	},
-	title: {
-		fontSize: 24,
-		fontWeight: "bold",
-		textAlign: "center",
-		flex: 1,
-	},
-	cartList: {
-		paddingHorizontal: 20,
-	},
-	cartItem: {
-		flexDirection: "row",
-		alignItems: "center",
-		marginBottom: 20,
-		backgroundColor: "#fff",
-		padding: 10,
-		borderRadius: 10,
-	},
-	productImageContainer: {
-		marginLeft: 10,
-	},
-	productImage: {
-		width: 80,
-		height: 80,
-		borderRadius: 10,
-	},
-	productInfo: {
-		flex: 1,
-		marginLeft: 10,
-	},
-	productName: {
-		fontSize: 16,
-		fontWeight: "bold",
-	},
-	priceContainer: {
-		flexDirection: "row",
-		alignItems: "center",
-		marginTop: 5,
-	},
-	originalPrice: {
-		fontSize: 14,
-		color: "#888",
-		textDecorationLine: "line-through",
-		marginRight: 5,
-	},
-	discountedPrice: {
-		fontSize: 16,
-		fontWeight: "bold",
-		color: "#E53935",
-	},
-	quantityContainer: {
-		flexDirection: "row",
-		alignItems: "center",
-		marginTop: 10,
-	},
-	quantityButton: {
-		width: 30,
-		height: 30,
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "#f0f0f0",
-		borderRadius: 5,
-	},
-	quantityButtonText: {
-		fontSize: 18,
-		fontWeight: "bold",
-	},
-	quantityText: {
-		fontSize: 16,
-		marginHorizontal: 10,
-	},
-	footer: {
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between",
-		paddingHorizontal: 20,
-		paddingVertical: 10,
-		borderTopWidth: 1,
-		borderTopColor: "#ddd",
-	},
-	selectAllContainer: {
-		flexDirection: "row",
-		alignItems: "center",
-	},
-	selectAllText: {
-		fontSize: 16,
-		marginLeft: 10,
-	},
-	totalContainer: {
-		alignItems: "flex-end",
-	},
-	totalText: {
-		fontSize: 16,
-		fontWeight: "bold",
-	},
-	totalAmount: {
-		fontSize: 18,
-		fontWeight: "bold",
-		color: "#E53935",
-		marginVertical: 5,
-	},
-	purchaseButton: {
-		paddingVertical: 10,
-		paddingHorizontal: 20,
-		borderRadius: 5,
-	},
-	purchaseButtonText: {
-		color: "#fff",
-		fontSize: 16,
-		fontWeight: "bold",
-	},
-	hiddenItem: {
-		alignItems: "flex-end",
-		backgroundColor: "#fff",
-		flex: 1,
-		marginBottom: 20,
-		paddingRight: 15,
-		borderRadius: 10,
-	},
-	deleteButton: {
-		backgroundColor: "#FF3B30",
-		justifyContent: "center",
-		alignItems: "center",
-		width: 75,
-		height: "100%",
-		borderRadius: 10,
-	},
+	container: { flex: 1, backgroundColor: "#fff", paddingTop: 20 },
+	header: { flexDirection: "row", alignItems: "center", paddingHorizontal: 20, marginBottom: 20 },
+	title: { fontSize: 24, fontWeight: "bold", textAlign: "center", flex: 1 },
+	cartList: { paddingHorizontal: 20 },
+	cartItem: { flexDirection: "row", alignItems: "center", marginBottom: 20, backgroundColor: "#fff", padding: 10, borderRadius: 10 },
+	productImageContainer: { marginLeft: 10 },
+	productImage: { width: 80, height: 80, borderRadius: 10 },
+	productInfo: { flex: 1, marginLeft: 10 },
+	productName: { fontSize: 16, fontWeight: "bold" },
+	priceContainer: { flexDirection: "row", alignItems: "center", marginTop: 5 },
+	originalPrice: { fontSize: 14, color: "#888", textDecorationLine: "line-through", marginRight: 5 },
+	discountedPrice: { fontSize: 16, fontWeight: "bold", color: "#E53935" },
+	quantityContainer: { flexDirection: "row", alignItems: "center", marginTop: 10 },
+	quantityButton: { width: 30, height: 30, justifyContent: "center", alignItems: "center", backgroundColor: "#f0f0f0", borderRadius: 5 },
+	quantityButtonText: { fontSize: 18, fontWeight: "bold" },
+	quantityText: { fontSize: 16, marginHorizontal: 10 },
+	footer: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 20, paddingVertical: 10, borderTopWidth: 1, borderTopColor: "#ddd" },
+	selectAllContainer: { flexDirection: "row", alignItems: "center" },
+	selectAllText: { fontSize: 16, marginLeft: 10 },
+	totalContainer: { alignItems: "flex-end" },
+	totalText: { fontSize: 16, fontWeight: "bold" },
+	totalAmount: { fontSize: 18, fontWeight: "bold", color: "#E53935", marginVertical: 5 },
+	purchaseButton: { paddingVertical: 10, paddingHorizontal: 20, borderRadius: 5 },
+	purchaseButtonText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
+	hiddenItem: { alignItems: "flex-end", backgroundColor: "#fff", flex: 1, marginBottom: 20, paddingRight: 15, borderRadius: 10 },
+	deleteButton: { backgroundColor: "#FF3B30", justifyContent: "center", alignItems: "center", width: 75, height: "100%", borderRadius: 10 },
 });
 
 export default MyCart;
