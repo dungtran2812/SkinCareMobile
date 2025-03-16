@@ -14,114 +14,115 @@ const skincareApi = createApi({
 				data: data,
 			}),
 		}),
-
+		// Endpoint for register
 		register: builder.mutation({
-      query: (userData) => ({
-        url: `/auth/${endpoints.REGISTER}`,
-        method: "POST",
-        data: userData,
-      }),
-    }),
-    getAllQuizQuestion: builder.query({
-      query: () => ({
-        url: endpoints.QUIZ_QUESTION,
-        method: "GET",
-      }),
-      providesTags: ['QuizQuestion'],
-    }),
-    getAllQuizAnswerByQuestionId: builder.query({
-      query: (id) => ({
-        url: `${endpoints.QUIZ_ANSWER}/question/${id}`,
-        method: "GET",
-      }),
-    }),
-    getAllProducts: builder.query({
-      query: () => ({
-        url: `${endpoints.PRODUCT}`,
-        method: "GET",
-      }),
-    }),
-    getProductsByDiscountRange: builder.query({
-      query: ({minDiscount, maxDiscount}) => ({
-        url: `${endpoints.PRODUCT}/flashsale?minDiscount=${minDiscount}&maxDiscount=${maxDiscount}`,
-        method: "GET",
-      }),
-    }),
-    createProduct: builder.mutation({
-      query: (product) => ({
-        url: `${endpoints.PRODUCT}`,
-        data: product,
-        method: "POST",
-      }),
-    }),
-    updateProduct: builder.mutation({
-      query: ({ id, data }) => ({
-        url: `${endpoints.PRODUCT}/${id}`,
-        data,
-        method: "PUT",
-      }),
-    }),
-    deleteProduct: builder.mutation({
-      query: (id) => ({
-        url: `${endpoints.PRODUCT}/${id}`,
-        method: "DELETE",
-      }),
-    }),
-    getAllCategories: builder.query({
-      query: () => ({
-        url: `${endpoints.CATEGORY}`,
-        method: "GET",
-      }),
-    }),
-    addQuizQuestion: builder.mutation({
-      query: (quiz) => ({
-        url: `${endpoints.QUIZ_QUESTION}`,
-        data: quiz,
-        method: "POST",
-      }),
-      invalidatesTags: ['QuizQuestion'],
-    }),
-    updateQuizQuestion: builder.mutation({
-      query: ({ id, data }) => ({
-        url: `${endpoints.QUIZ_QUESTION}/${id}`,
-        data,
-        method: "PUT",
-      }),
-      invalidatesTags: ['QuizQuestion'],
-    }),
-    deleteQuizQuestion: builder.mutation({
-      query: (id) => ({
-        url: `${endpoints.QUIZ_QUESTION}/${id}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: ['QuizQuestion'],
-    }),
-    deleteQuizAnswer: builder.mutation({
-      query: (id) => ({
-        url: `${endpoints.QUIZ_ANSWER}/${id}`,
-        method: "DELETE",
-      }),
-    invalidatesTags: ['QuizQuestion'],
-    }),
-    getAllSkinTypes: builder.query({
-      query: () => ({
-        url: `${endpoints.SKINTYPE}`,
-        method: "GET",
-      }),
-    }),
-    addToCart: builder.mutation({
-      query: (cartItem) => ({
-        url: `${endpoints.Cart}/addToCart`,
-        data: cartItem,
-        method: "POST",
-      }),
-    }),
-    getCartInfor: builder.query({
-      query: () => ({
-        url: `${endpoints.Cart}/getCartInfor`,
-        method: "GET",
-      }),
-    }),
+			query: (userData) => ({
+				url: endpoints.REGISTER,
+				method: "POST",
+				data: userData,
+			}),
+		}),
+
+		getAllQuizQuestion: builder.query({
+			query: () => ({
+				url: endpoints.QUIZ_QUESTION,
+				method: "GET",
+			}),
+			providesTags: ["QuizQuestion"],
+		}),
+		getAllQuizAnswerByQuestionId: builder.query({
+			query: (id) => ({
+				url: `${endpoints.QUIZ_ANSWER}/question/${id}`,
+				method: "GET",
+			}),
+		}),
+		getAllProducts: builder.query({
+			query: () => ({
+				url: `${endpoints.PRODUCT}`,
+				method: "GET",
+			}),
+		}),
+		getProductsByDiscountRange: builder.query({
+			query: ({ minDiscount, maxDiscount }) => ({
+				url: `${endpoints.PRODUCT}/flashsale?minDiscount=${minDiscount}&maxDiscount=${maxDiscount}`,
+				method: "GET",
+			}),
+		}),
+		createProduct: builder.mutation({
+			query: (product) => ({
+				url: `${endpoints.PRODUCT}`,
+				data: product,
+				method: "POST",
+			}),
+		}),
+		updateProduct: builder.mutation({
+			query: ({ id, data }) => ({
+				url: `${endpoints.PRODUCT}/${id}`,
+				data,
+				method: "PUT",
+			}),
+		}),
+		deleteProduct: builder.mutation({
+			query: (id) => ({
+				url: `${endpoints.PRODUCT}/${id}`,
+				method: "DELETE",
+			}),
+		}),
+		getAllCategories: builder.query({
+			query: () => ({
+				url: `${endpoints.CATEGORY}`,
+				method: "GET",
+			}),
+		}),
+		addQuizQuestion: builder.mutation({
+			query: (quiz) => ({
+				url: `${endpoints.QUIZ_QUESTION}`,
+				data: quiz,
+				method: "POST",
+			}),
+			invalidatesTags: ["QuizQuestion"],
+		}),
+		updateQuizQuestion: builder.mutation({
+			query: ({ id, data }) => ({
+				url: `${endpoints.QUIZ_QUESTION}/${id}`,
+				data,
+				method: "PUT",
+			}),
+			invalidatesTags: ["QuizQuestion"],
+		}),
+		deleteQuizQuestion: builder.mutation({
+			query: (id) => ({
+				url: `${endpoints.QUIZ_QUESTION}/${id}`,
+				method: "DELETE",
+			}),
+			invalidatesTags: ["QuizQuestion"],
+		}),
+		deleteQuizAnswer: builder.mutation({
+			query: (id) => ({
+				url: `${endpoints.QUIZ_ANSWER}/${id}`,
+				method: "DELETE",
+			}),
+			invalidatesTags: ["QuizQuestion"],
+		}),
+		getAllSkinTypes: builder.query({
+			query: () => ({
+				url: `${endpoints.SKINTYPE}`,
+				method: "GET",
+			}),
+		}),
+		addToCart: builder.mutation({
+			query: (cartItem) => ({
+				url: `${endpoints.Cart}/addToCart`,
+				data: cartItem,
+				method: "POST",
+			}),
+		}),
+		getCartInfor: builder.query({
+			query: () => ({
+				url: `${endpoints.Cart}/getCartInfor`,
+				method: "GET",
+			}),
+		}),
 	}),
 });
 
@@ -131,7 +132,7 @@ export const {
 	useGetAllQuizQuestionQuery,
 	useGetAllQuizAnswerByQuestionIdQuery,
 	useGetAllProductsQuery,
-  useGetProductsByDiscountRangeQuery,
+	useGetProductsByDiscountRangeQuery,
 	useCreateProductMutation,
 	useUpdateProductMutation,
 	useDeleteProductMutation,
@@ -141,8 +142,8 @@ export const {
 	useDeleteQuizQuestionMutation,
 	useDeleteQuizAnswerMutation,
 	useGetAllSkinTypesQuery,
-  useAddToCartMutation,
-  useGetCartInforQuery,
+	useAddToCartMutation,
+	useGetCartInforQuery,
 } = skincareApi;
 
 export default skincareApi;
