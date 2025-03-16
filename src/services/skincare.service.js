@@ -4,6 +4,7 @@ import endpoints from "../constants/endpoint";
 
 const skincareApi = createApi({
 	reducerPath: "skincareApi",
+  tagTypes: ['QuizQuestion', 'CartItem'],
 	baseQuery: axiosBaseQuery(),
 	endpoints: (builder) => ({
 		// Endpoint for login
@@ -16,113 +17,121 @@ const skincareApi = createApi({
 		}),
 		// Endpoint for register
 		register: builder.mutation({
-			query: (userData) => ({
-				url: endpoints.REGISTER,
-				method: "POST",
-				data: userData,
-			}),
-		}),
-
-		getAllQuizQuestion: builder.query({
-			query: () => ({
-				url: endpoints.QUIZ_QUESTION,
-				method: "GET",
-			}),
-			providesTags: ["QuizQuestion"],
-		}),
-		getAllQuizAnswerByQuestionId: builder.query({
-			query: (id) => ({
-				url: `${endpoints.QUIZ_ANSWER}/question/${id}`,
-				method: "GET",
-			}),
-		}),
-		getAllProducts: builder.query({
-			query: () => ({
-				url: `${endpoints.PRODUCT}`,
-				method: "GET",
-			}),
-		}),
-		getProductsByDiscountRange: builder.query({
-			query: ({ minDiscount, maxDiscount }) => ({
-				url: `${endpoints.PRODUCT}/flashsale?minDiscount=${minDiscount}&maxDiscount=${maxDiscount}`,
-				method: "GET",
-			}),
-		}),
-		createProduct: builder.mutation({
-			query: (product) => ({
-				url: `${endpoints.PRODUCT}`,
-				data: product,
-				method: "POST",
-			}),
-		}),
-		updateProduct: builder.mutation({
-			query: ({ id, data }) => ({
-				url: `${endpoints.PRODUCT}/${id}`,
-				data,
-				method: "PUT",
-			}),
-		}),
-		deleteProduct: builder.mutation({
-			query: (id) => ({
-				url: `${endpoints.PRODUCT}/${id}`,
-				method: "DELETE",
-			}),
-		}),
-		getAllCategories: builder.query({
-			query: () => ({
-				url: `${endpoints.CATEGORY}`,
-				method: "GET",
-			}),
-		}),
-		addQuizQuestion: builder.mutation({
-			query: (quiz) => ({
-				url: `${endpoints.QUIZ_QUESTION}`,
-				data: quiz,
-				method: "POST",
-			}),
-			invalidatesTags: ["QuizQuestion"],
-		}),
-		updateQuizQuestion: builder.mutation({
-			query: ({ id, data }) => ({
-				url: `${endpoints.QUIZ_QUESTION}/${id}`,
-				data,
-				method: "PUT",
-			}),
-			invalidatesTags: ["QuizQuestion"],
-		}),
-		deleteQuizQuestion: builder.mutation({
-			query: (id) => ({
-				url: `${endpoints.QUIZ_QUESTION}/${id}`,
-				method: "DELETE",
-			}),
-			invalidatesTags: ["QuizQuestion"],
-		}),
-		deleteQuizAnswer: builder.mutation({
-			query: (id) => ({
-				url: `${endpoints.QUIZ_ANSWER}/${id}`,
-				method: "DELETE",
-			}),
-			invalidatesTags: ["QuizQuestion"],
-		}),
-		getAllSkinTypes: builder.query({
-			query: () => ({
-				url: `${endpoints.SKINTYPE}`,
-				method: "GET",
-			}),
-		}),
-		addToCart: builder.mutation({
-			query: (cartItem) => ({
-				url: `${endpoints.Cart}/addToCart`,
-				data: cartItem,
-				method: "POST",
-			}),
-		}),
-		getCartInfor: builder.query({
-			query: () => ({
-				url: `${endpoints.Cart}/getCartInfor`,
-				method: "GET",
-			}),
-		}),
+      query: (userData) => ({
+        url: `/auth/${endpoints.REGISTER}`,
+        method: "POST",
+        data: userData,
+      }),
+    }),
+    getAllQuizQuestion: builder.query({
+      query: () => ({
+        url: endpoints.QUIZ_QUESTION,
+        method: "GET",
+      }),
+      providesTags: ['QuizQuestion'],
+    }),
+    getAllQuizAnswerByQuestionId: builder.query({
+      query: (id) => ({
+        url: `${endpoints.QUIZ_ANSWER}/question/${id}`,
+        method: "GET",
+      }),
+    }),
+    getAllProducts: builder.query({
+      query: () => ({
+        url: `${endpoints.PRODUCT}`,
+        method: "GET",
+      }),
+    }),
+    getProductsByDiscountRange: builder.query({
+      query: ({minDiscount, maxDiscount}) => ({
+        url: `${endpoints.PRODUCT}/flashsale?minDiscount=${minDiscount}&maxDiscount=${maxDiscount}`,
+        method: "GET",
+      }),
+    }),
+    createProduct: builder.mutation({
+      query: (product) => ({
+        url: `${endpoints.PRODUCT}`,
+        data: product,
+        method: "POST",
+      }),
+    }),
+    updateProduct: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `${endpoints.PRODUCT}/${id}`,
+        data,
+        method: "PUT",
+      }),
+    }),
+    deleteProduct: builder.mutation({
+      query: (id) => ({
+        url: `${endpoints.PRODUCT}/${id}`,
+        method: "DELETE",
+      }),
+    }),
+    getAllCategories: builder.query({
+      query: () => ({
+        url: `${endpoints.CATEGORY}`,
+        method: "GET",
+      }),
+    }),
+    addQuizQuestion: builder.mutation({
+      query: (quiz) => ({
+        url: `${endpoints.QUIZ_QUESTION}`,
+        data: quiz,
+        method: "POST",
+      }),
+      invalidatesTags: ['QuizQuestion'],
+    }),
+    updateQuizQuestion: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `${endpoints.QUIZ_QUESTION}/${id}`,
+        data,
+        method: "PUT",
+      }),
+      invalidatesTags: ['QuizQuestion'],
+    }),
+    deleteQuizQuestion: builder.mutation({
+      query: (id) => ({
+        url: `${endpoints.QUIZ_QUESTION}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ['QuizQuestion'],
+    }),
+    deleteQuizAnswer: builder.mutation({
+      query: (id) => ({
+        url: `${endpoints.QUIZ_ANSWER}/${id}`,
+        method: "DELETE",
+      }),
+    invalidatesTags: ['QuizQuestion'],
+    }),
+    getAllSkinTypes: builder.query({
+      query: () => ({
+        url: `${endpoints.SKINTYPE}`,
+        method: "GET",
+      }),
+    }),
+    addToCart: builder.mutation({
+      query: (cartItem) => ({
+        url: `${endpoints.Cart}/addToCart`,
+        data: cartItem,
+        method: "POST",
+      }),
+    }),
+    getCartInfor: builder.query({
+      query: () => ({
+        url: `${endpoints.Cart}/getCartInfor`,
+        method: "GET",
+      }),
+      providesTags: ['CartItem'],
+    }),
+    removeCartItem: builder.mutation({
+      query: (data) => ({
+        url: `${endpoints.Cart}/remove`,
+        data: data,
+        method: "DELETE",
+      }),
+      invalidatesTags: ['CartItem'],
+    }),
 	}),
 });
 
@@ -142,8 +151,9 @@ export const {
 	useDeleteQuizQuestionMutation,
 	useDeleteQuizAnswerMutation,
 	useGetAllSkinTypesQuery,
-	useAddToCartMutation,
-	useGetCartInforQuery,
+  useAddToCartMutation,
+  useGetCartInforQuery,
+  useRemoveCartItemMutation,
 } = skincareApi;
 
 export default skincareApi;
