@@ -10,46 +10,31 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
 import { SwipeListView } from "react-native-swipe-list-view";
-import { useGetCartInforQuery } from "../../services/skincare.service";
+import { useGetCartInforQuery, useRemoveCartItemMutation } from "../../services/skincare.service";
 
 const MyCart = () => {
 	const navigation = useNavigation();
 	const { data: cardData = [], isLoading, isError } = useGetCartInforQuery(); 
-	const [selectedItems, setSelectedItems] = useState({});
+	const [removeCartItem] = useRemoveCartItemMutation();
 	const cartItems = cardData.data?.products;
 
-	// Placeholder for future item selection logic
-	// const handleSelectItem = (id) => {
-	// 	setSelectedItems((prev) => ({ ...prev, [id]: !prev[id] }));
-	// };
-
-	// Placeholder for future select all logic
-	// const handleSelectAll = () => {
-	// 	// Logic to select or deselect all items
-	// };
-
-	const handleDeleteItem = (id) => {
+	const handleDeleteItem = async(id) => {
 		Alert.alert(
 			"Xóa sản phẩm",
 			"Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?",
 			[
 				{ text: "Hủy", style: "cancel" },
-				{ text: "Xóa", onPress: () => {/* Implement delete logic here */}, style: "destructive" },
+				{ text: "Xóa", onPress: async() => { await removeCartItem({ productIds: id}) }, style: "destructive" },
 			]
 		);
 	};
 
 	const handlePurchase = () => {
 		// Logic for handling purchase of selected items
-		const selectedItemsArray = cartItems.filter((item) => selectedItems[item.id]);
-		navigation.navigate("Checkout", { cartItems: selectedItemsArray });
 	};
 
 	const renderItem = ({ item }) => (
 		<View style={styles.cartItem}>
-			<TouchableOpacity onPress={() => {/* Future selection logic */}}>
-				<FontAwesome name={selectedItems[item.productId] ? "check-square" : "square-o"} size={24} color="black" />
-			</TouchableOpacity>
 			<TouchableOpacity style={styles.productImageContainer} onPress={() => navigation.navigate("ProductItemDetail", { product: item })}>
 				<Image source={{ uri: item.image }} style={styles.productImage} />
 			</TouchableOpacity>
@@ -68,21 +53,18 @@ const MyCart = () => {
 						<Text style={styles.quantityButtonText}>+</Text>
 					</TouchableOpacity>
 				</View>
+				<Text style={styles.swipeHint}>Swipe left to delete</Text>
 			</View>
 		</View>
 	);
 
 	const renderHiddenItem = ({ item }) => (
 		<View style={styles.hiddenItem}>
-			<TouchableOpacity style={styles.deleteButton} onPress={() => handleDeleteItem(item.id)}>
+			<TouchableOpacity style={styles.deleteButton} onPress={() => handleDeleteItem(item.productId)}>
 				<FontAwesome name="trash" size={24} color="#fff" />
 			</TouchableOpacity>
 		</View>
 	);
-
-	// const totalAmount = cartItems.data.filter((item) => selectedItems[item.id]).reduce((sum, item) => sum + item.quantity * item.originalPrice * (1 - item.discount / 100), 0);
-	// const allSelected = Object.keys(selectedItems).length === cartItems.data.length && Object.values(selectedItems).every(Boolean);
-	const anySelected = Object.values(selectedItems).some(Boolean);
 
 	if (isLoading) return <View style={styles.container}><Text>Loading...</Text></View>;
 	if (isError) return <View style={styles.container}><Text>There was an error loading your cart.</Text></View>;
@@ -113,9 +95,8 @@ const MyCart = () => {
 					<Text style={styles.totalText}>Tổng thanh toán:</Text>
 					<Text style={styles.totalAmount}>{cardData.data.totalPrice.toLocaleString("vi-VN")}đ</Text>
 					<TouchableOpacity
-						style={[styles.purchaseButton, { backgroundColor: anySelected ? "#1E90FF" : "#ccc" }]}
+						style={[styles.purchaseButton, { backgroundColor: "#1E90FF"}]}
 						onPress={handlePurchase}
-						disabled={!anySelected}
 					>
 						<Text style={styles.purchaseButtonText}>Mua hàng</Text>
 					</TouchableOpacity>
@@ -152,6 +133,7 @@ const styles = StyleSheet.create({
 	purchaseButtonText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
 	hiddenItem: { alignItems: "flex-end", backgroundColor: "#fff", flex: 1, marginBottom: 20, paddingRight: 15, borderRadius: 10 },
 	deleteButton: { backgroundColor: "#FF3B30", justifyContent: "center", alignItems: "center", width: 75, height: "100%", borderRadius: 10 },
+	swipeHint: { fontSize: 12, color: "#888", marginTop: 5 },
 });
 
 export default MyCart;

@@ -4,6 +4,7 @@ import endpoints from "../constants/endpoint";
 
 const skincareApi = createApi({
 	reducerPath: "skincareApi",
+  tagTypes: ['QuizQuestion', 'CartItem'],
 	baseQuery: axiosBaseQuery(),
 	endpoints: (builder) => ({
 		// Endpoint for login
@@ -121,6 +122,15 @@ const skincareApi = createApi({
         url: `${endpoints.Cart}/getCartInfor`,
         method: "GET",
       }),
+      providesTags: ['CartItem'],
+    }),
+    removeCartItem: builder.mutation({
+      query: (data) => ({
+        url: `${endpoints.Cart}/remove`,
+        data: data,
+        method: "DELETE",
+      }),
+      invalidatesTags: ['CartItem'],
     }),
 	}),
 });
@@ -143,6 +153,7 @@ export const {
 	useGetAllSkinTypesQuery,
   useAddToCartMutation,
   useGetCartInforQuery,
+  useRemoveCartItemMutation,
 } = skincareApi;
 
 export default skincareApi;
