@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const skinData = {
+const skinskinType = {
 	oily: {
 		title: "Da Dầu",
 		image: require("../../../assets/images/skin/oily.jpg"),
@@ -50,26 +50,23 @@ const skinData = {
 
 const SkinResult = ({ route }) => {
 	const navigation = useNavigation();
-	const { skinType } = route.params;
-	const data = skinData[skinType];
+	const skinType = route.params;
 
 	return (
 		<View style={styles.container}>
 			<ScrollView contentContainerStyle={styles.scrollContainer}>
-				<Text style={styles.title}>{data.title}</Text>
-				<Image source={data.image} style={styles.image} />
+				<Text style={styles.title}>{skinType.type}</Text>
+				<Image source={skinType.image} style={styles.image} />
 				<Text style={styles.sectionTitle}>
-					Thông Tin Về {data.title}
+					Thông Tin Về {skinType.type}
 				</Text>
-				<Text style={styles.text}>{data.info}</Text>
+				<Text style={styles.text}>{skinType.info}</Text>
 				<Text style={styles.sectionTitle}>Nguyên Nhân</Text>
-				<Text style={styles.text}>{data.causes}</Text>
+				<Text style={styles.text}>{skinType.description}</Text>
 				<Text style={styles.sectionTitle}>Dấu Hiệu</Text>
-				<Text style={styles.text}>{data.signs}</Text>
+				<Text style={styles.text}>{skinType.symptom}</Text>
 				<Text style={styles.sectionTitle}>Cách Chăm Sóc</Text>
-				<Text style={styles.text}>{data.care}</Text>
-				<Text style={styles.sectionTitle}>Cách Ăn Uống</Text>
-				<Text style={styles.text}>{data.diet}</Text>
+				<Text style={styles.text}>{skinType.treatment}</Text>
 			</ScrollView>
 			<View style={styles.buttonContainer}>
 				<TouchableOpacity

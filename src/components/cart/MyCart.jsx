@@ -10,12 +10,13 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
 import { SwipeListView } from "react-native-swipe-list-view";
-import { useGetCartInforQuery, useRemoveCartItemMutation } from "../../services/skincare.service";
+import { useGetCartInforQuery, useRemoveCartItemMutation, useUpdateQuantityMutation } from "../../services/skincare.service";
 
 const MyCart = () => {
 	const navigation = useNavigation();
 	const { data: cardData = [], isLoading, isError } = useGetCartInforQuery(); 
 	const [removeCartItem] = useRemoveCartItemMutation();
+	const [updateQuantity] = useUpdateQuantityMutation();
 	const cartItems = cardData.data?.products;
 
 	const handleDeleteItem = async(id) => {
@@ -45,11 +46,11 @@ const MyCart = () => {
 					<Text style={styles.originalPrice}>{item.price.toLocaleString("vi-VN")}đ</Text>
 				</View>
 				<View style={styles.quantityContainer}>
-					<TouchableOpacity style={styles.quantityButton} onPress={() => {/* Future quantity change logic */}}>
+					<TouchableOpacity style={styles.quantityButton} onPress={() => {updateQuantity({ productId: item.productId, quantity: item.quantity - 1 })}}>
 						<Text style={styles.quantityButtonText}>-</Text>
 					</TouchableOpacity>
 					<Text style={styles.quantityText}>{item.quantity}</Text>
-					<TouchableOpacity style={styles.quantityButton} onPress={() => {/* Future quantity change logic */}}>
+					<TouchableOpacity style={styles.quantityButton} onPress={() => {updateQuantity({ productId: item.productId, quantity: item.quantity + 1 })}}>
 						<Text style={styles.quantityButtonText}>+</Text>
 					</TouchableOpacity>
 				</View>
@@ -86,11 +87,6 @@ const MyCart = () => {
 				contentContainerStyle={styles.cartList}
 			/>
 			<View style={styles.footer}>
-				{/* Placeholder for future select all button */}
-				{/* <TouchableOpacity style={styles.selectAllContainer} onPress={handleSelectAll}>
-					<FontAwesome name={allSelected ? "check-square" : "square-o"} size={24} color="black" />
-					<Text style={styles.selectAllText}>Chọn tất cả</Text>
-				</TouchableOpacity> */}
 				<View style={styles.totalContainer}>
 					<Text style={styles.totalText}>Tổng thanh toán:</Text>
 					<Text style={styles.totalAmount}>{cardData.data.totalPrice.toLocaleString("vi-VN")}đ</Text>

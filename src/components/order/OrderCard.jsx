@@ -1,7 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
-const OrderCard = ({ order, status }) => {
+const OrderCard = ({ order }) => {
+	const { status, products } = order; // Destructuring products array
+
 	const renderStatusOrButtons = () => {
 		switch (status) {
 			case "newOrders":
@@ -32,34 +34,36 @@ const OrderCard = ({ order, status }) => {
 			<Text style={styles.appName}>Beauté</Text>
 
 			{/* Thông tin sản phẩm */}
-			<View style={styles.productInfoContainer}>
-				<Image
-					source={{ uri: order.productImage }}
-					style={styles.productImage}
-				/>
-				<View style={styles.productDetails}>
-					<Text style={styles.productName}>{order.productName}</Text>
-					<Text style={styles.productBrand}>
-						{order.productBrand}
-					</Text>
-					<Text style={styles.productQuantity}>
-						Số lượng: {order.quantity}
-					</Text>
-					<View style={styles.priceContainer}>
-						<Text style={styles.oldPrice}>
-							{order.oldPrice.toLocaleString()} VNĐ
+			{products.map((product) => (
+				<View key={product?._id} style={styles.productInfoContainer}>
+					<Image
+						source={{ uri: product?.productImage }}
+						style={styles.productImage}
+					/>
+					<View style={styles.productDetails}>
+						<Text style={styles.productName}>{product?.productName}</Text>
+						<Text style={styles.productBrand}>
+							{product?.productBrand}
 						</Text>
-						<Text style={styles.newPrice}>
-							{order.newPrice.toLocaleString()} VNĐ
+						<Text style={styles.productQuantity}>
+							Số lượng: {product?.quantity}
 						</Text>
+						<View style={styles.priceContainer}>
+							<Text style={styles.oldPrice}>
+								{product?.price?.toLocaleString()} VNĐ
+							</Text>
+							<Text style={styles.newPrice}>
+								{(product?.price * (1 - (product?.productDiscount / 100)))?.toLocaleString()} VNĐ
+							</Text>
+						</View>
 					</View>
 				</View>
-			</View>
+			))}
 
 			{/* Tổng số tiền */}
 			<View style={styles.totalContainer}>
 				<Text style={styles.totalText}>
-					Tổng số tiền: {order.totalAmount.toLocaleString()} VNĐ
+					Tổng số tiền: {order?.totalPriceAfterDiscount?.toLocaleString()} VNĐ
 				</Text>
 			</View>
 
