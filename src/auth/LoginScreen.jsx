@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	View,
 	Text,
@@ -19,12 +19,22 @@ import {
 } from "../feature/authentication";
 import { useLoginMutation } from "../services/skincare.service";
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation, route }) => {
 	const dispatch = useDispatch();
 	const [values, setValues] = useState({ username: "", password: "" });
 	const [showPassword, setShowPassword] = useState(false);
-	const isFormValid = values.username.trim() !== "" && values.password.trim() !== "";
+	const isFormValid =
+		values.username.trim() !== "" && values.password.trim() !== "";
 	const [login, { isLoading }] = useLoginMutation();
+
+	useEffect(() => {
+		if (route.params?.username && route.params?.password) {
+			setValues({
+				username: route.params.username,
+				password: route.params.password,
+			});
+		}
+	}, [route.params]);
 
 	const handleLogin = async () => {
 		if (!values.username || !values.password) {
@@ -33,7 +43,10 @@ const LoginScreen = ({ navigation }) => {
 		}
 
 		try {
-			const userData = await login({ username: values.username, password: values.password }).unwrap();
+			const userData = await login({
+				username: values.username,
+				password: values.password,
+			}).unwrap();
 			dispatch(setAccessToken(userData?.access_token));
 			dispatch(setUsername(userData?.user?.username));
 			dispatch(setName(userData?.user?.username));
@@ -88,7 +101,9 @@ const LoginScreen = ({ navigation }) => {
 							placeholder="Email hoặc số điện thoại"
 							placeholderTextColor="#888"
 							value={values.username}
-							onChangeText={(text) => handleChange("username", text)}
+							onChangeText={(text) =>
+								handleChange("username", text)
+							}
 						/>
 					</View>
 
@@ -99,7 +114,9 @@ const LoginScreen = ({ navigation }) => {
 							placeholderTextColor="#888"
 							secureTextEntry={!showPassword}
 							value={values.password}
-							onChangeText={(text) => handleChange("password", text)}
+							onChangeText={(text) =>
+								handleChange("password", text)
+							}
 						/>
 						<TouchableOpacity onPress={toggleSecureTextEntry}>
 							<Ionicons

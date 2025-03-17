@@ -6,10 +6,12 @@ import {
 	TouchableOpacity,
 	StyleSheet,
 	ImageBackground,
+	Alert,
 } from "react-native";
 import { Checkbox } from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import * as Google from "expo-auth-session/providers/google";
+import { useRegisterMutation } from "../services/skincare.service";
 
 const SignupScreen = ({ navigation }) => {
 	const [username, setUsername] = useState("");
@@ -19,6 +21,7 @@ const SignupScreen = ({ navigation }) => {
 	const [isChecked, setIsChecked] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+	const [email, setEmail] = useState("");
 
 	const [request, response, promptAsync] = Google.useAuthRequest({
 		expoClientId: "YOUR_EXPO_CLIENT_ID",
@@ -26,26 +29,47 @@ const SignupScreen = ({ navigation }) => {
 		androidClientId: "YOUR_ANDROID_CLIENT_ID",
 	});
 
+	const [register, { isLoading }] = useRegisterMutation();
+
 	const handleGoogleSignup = async () => {
 		await promptAsync();
 	};
 
-	const handleSignup = () => {
-		// Handle signup logic here
-		if (password === confirmPassword) {
-			// Proceed with signup
-			console.log("Signup successful");
-			navigation.reset({
-				index: 0,
-				routes: [
+	const handleSignup = async () => {
+		if (password !== confirmPassword) {
+			Alert.alert("Lỗi", "Mật khẩu không khớp!");
+			return;
+		}
+
+		try {
+			const userData = {
+				username: username,
+				password: password,
+				email: email,
+				phone: phoneNumber,
+			};
+
+			const response = await register(userData).unwrap();
+			Alert.alert(
+				"Thành công",
+				"Đăng ký thành công! Vui lòng đăng nhập.",
+				[
 					{
-						name: "MainTabNavigator",
-						params: { screen: "HomeScreen" },
+						text: "OK",
+						onPress: () => {
+							navigation.navigate("LoginScreen", {
+								username: username,
+								password: password,
+							});
+						},
 					},
-				],
-			});
-		} else {
-			console.log("Passwords do not match");
+				]
+			);
+		} catch (error) {
+			Alert.alert(
+				"Lỗi",
+				error.data?.message || "Đăng ký thất bại. Vui lòng thử lại!"
+			);
 		}
 	};
 
@@ -53,11 +77,28 @@ const SignupScreen = ({ navigation }) => {
 		return (
 			username.trim() !== "" &&
 			phoneNumber.trim() !== "" &&
+			email.trim() !== "" &&
 			password.trim() !== "" &&
 			confirmPassword.trim() !== "" &&
 			isChecked
 		);
 	};
+
+	const emailInput = (
+		<View style={styles.inputWrapper}>
+			<Text style={styles.infoText}>Vui lòng nhập email của bạn</Text>
+			<View style={styles.inputContainer}>
+				<TextInput
+					style={styles.input}
+					placeholder="Nhập email"
+					placeholderTextColor="#888"
+					keyboardType="email-address"
+					value={email}
+					onChangeText={setEmail}
+				/>
+			</View>
+		</View>
+	);
 
 	return (
 		<ImageBackground
@@ -108,6 +149,8 @@ const SignupScreen = ({ navigation }) => {
 							/>
 						</View>
 					</View>
+
+					{emailInput}
 
 					<View style={styles.inputWrapper}>
 						<Text style={styles.infoText}>
