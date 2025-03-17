@@ -1,145 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, ScrollView } from "react-native";
 import StepIndicator from "react-native-step-indicator";
 import Ionicons from "react-native-vector-icons/Ionicons"; // Import Ionicons
 import OrderCard from "./OrderCard"; // Import OrderCard
 import { useNavigation } from "@react-navigation/native";
-
-// Giả sử dữ liệu cho các đơn hàng của từng trạng thái
-const orderData = {
-	newOrders: [
-		{
-			id: "1",
-			orderAmount: 320000,
-			points: 32,
-			productImage:
-				"https://www.guardian.com.vn/media/catalog/product/cache/30b2b44eba57cd45fd3ef9287600968e/b/a/bao_bi_3004658-21111.jpg",
-			productName:
-				"Kem Dưỡng Giúp Làm Dịu, Phục Hồi Da La Roche-Posay Cicaplast Baume B5 Từ Công Nghệ Vi Sinh 40ml",
-			productBrand: "LA ROCHE-POSAY",
-			quantity: 1,
-			oldPrice: 350000,
-			newPrice: 320000,
-			totalAmount: 320000,
-		},
-		{
-			id: "2",
-			orderAmount: 150000,
-			points: 15,
-			productImage: "https://via.placeholder.com/100",
-			productName: "Sản phẩm B",
-			productBrand: "Thương hiệu B",
-			quantity: 1,
-			oldPrice: 180000,
-			newPrice: 150000,
-			totalAmount: 150000,
-		},
-	],
-	processingOrders: [
-		{
-			id: "3",
-			orderAmount: 500000,
-			points: 50,
-			productImage: "https://via.placeholder.com/100",
-			productName: "Sản phẩm C",
-			productBrand: "Thương hiệu C",
-			quantity: 1,
-			oldPrice: 550000,
-			newPrice: 500000,
-			totalAmount: 500000,
-		},
-	],
-	successOrders: [
-		{
-			id: "4",
-			orderAmount: 200000,
-			points: 20,
-			productImage: "https://via.placeholder.com/100",
-			productName: "Sản phẩm D",
-			productBrand: "Thương hiệu D",
-			quantity: 1,
-			oldPrice: 250000,
-			newPrice: 200000,
-			totalAmount: 200000,
-		},
-	],
-	canceledOrders: [
-		{
-			id: "5",
-			orderAmount: 450000,
-			points: 45,
-			productImage: "https://via.placeholder.com/100",
-			productName: "Sản phẩm E",
-			productBrand: "Thương hiệu E",
-			quantity: 1,
-			oldPrice: 500000,
-			newPrice: 450000,
-			totalAmount: 450000,
-		},
-	],
-	allOrders: [
-		{
-			id: "1",
-			orderAmount: 320000,
-			points: 32,
-			productImage: "https://via.placeholder.com/100",
-			productName: "Sản phẩm A",
-			productBrand: "Thương hiệu A",
-			quantity: 1,
-			oldPrice: 350000,
-			newPrice: 320000,
-			totalAmount: 320000,
-		},
-		{
-			id: "2",
-			orderAmount: 150000,
-			points: 15,
-			productImage: "https://via.placeholder.com/100",
-			productName: "Sản phẩm B",
-			productBrand: "Thương hiệu B",
-			quantity: 1,
-			oldPrice: 180000,
-			newPrice: 150000,
-			totalAmount: 150000,
-		},
-		{
-			id: "3",
-			orderAmount: 500000,
-			points: 50,
-			productImage: "https://via.placeholder.com/100",
-			productName: "Sản phẩm C",
-			productBrand: "Thương hiệu C",
-			quantity: 1,
-			oldPrice: 550000,
-			newPrice: 500000,
-			totalAmount: 500000,
-		},
-		{
-			id: "4",
-			orderAmount: 200000,
-			points: 20,
-			productImage: "https://via.placeholder.com/100",
-			productName: "Sản phẩm D",
-			productBrand: "Thương hiệu D",
-			quantity: 1,
-			oldPrice: 250000,
-			newPrice: 200000,
-			totalAmount: 200000,
-		},
-		{
-			id: "5",
-			orderAmount: 450000,
-			points: 45,
-			productImage: "https://via.placeholder.com/100",
-			productName: "Sản phẩm E",
-			productBrand: "Thương hiệu E",
-			quantity: 1,
-			oldPrice: 500000,
-			newPrice: 450000,
-			totalAmount: 450000,
-		},
-	],
-};
+import { useGetOrderByStatusQuery, useLazyGetOrderByStatusQuery } from "../../services/skincare.service";
 
 const labels = ["Mới đặt", "Đang xử lý", "Thành công", "Đã huỷ"];
 const customStyles = {
@@ -202,6 +67,7 @@ const renderStepIndicator = (params) => (
 );
 
 const OrderStatusScreen = ({ route }) => {
+	const [refetch, { data: orderData, isLoading, isError }] = useLazyGetOrderByStatusQuery();
 	const navigation = useNavigation();
 	const [currentPosition, setCurrentPosition] = useState(0);
 
@@ -211,19 +77,42 @@ const OrderStatusScreen = ({ route }) => {
 		}
 	}, [route.params]);
 
+	useEffect(() => {
+		// Refetch orders based on the current position
+		switch (currentPosition) {
+			case 0:
+				refetch('Pending');
+				break;
+			case 1:
+				refetch('Approved');
+				break;
+			case 2:
+				refetch('Completed');
+				break;
+			case 3:
+				refetch('Rejected');
+				break;
+			default:
+				break;
+		}
+	}, [currentPosition, refetch]);
+
 	const handleStepPress = (position) => {
 		setCurrentPosition(position);
 	};
 
 	// Hàm render đơn hàng
-	const renderOrderList = (orders, status) => {
+	const renderOrderList = (orders) => {
 		return orders.map((order) => (
-			<OrderCard key={order.id} order={order} status={status} />
+			<OrderCard key={order.id} order={order} />
 		));
 	};
 
+	if (isLoading) return <Text>Loading orders...</Text>;
+	// if (isError) return <Text>Error loading orders.</Text>;
+
 	return (
-		<View style={styles.container}>
+		<ScrollView style={styles.container}>
 			<View style={styles.header}>
 				<TouchableOpacity onPress={() => navigation.goBack()}>
 					<Ionicons
@@ -244,20 +133,15 @@ const OrderStatusScreen = ({ route }) => {
 			/>
 			<View style={styles.orderContainer}>
 				{currentPosition === 0 &&
-					renderOrderList(orderData.newOrders, "newOrders")}
+					renderOrderList(orderData?.orders?.data || [])}
 				{currentPosition === 1 &&
-					renderOrderList(
-						orderData.processingOrders,
-						"processingOrders"
-					)}
+					renderOrderList(orderData?.orders?.data || [])}
 				{currentPosition === 2 &&
-					renderOrderList(orderData.successOrders, "successOrders")}
+					renderOrderList(orderData?.orders?.data || [])}
 				{currentPosition === 3 &&
-					renderOrderList(orderData.canceledOrders, "canceledOrders")}
-				{currentPosition === 4 &&
-					renderOrderList(orderData.allOrders, "allOrders")}
+					renderOrderList(orderData?.orders?.data || [])}
 			</View>
-		</View>
+		</ScrollView>
 	);
 };
 

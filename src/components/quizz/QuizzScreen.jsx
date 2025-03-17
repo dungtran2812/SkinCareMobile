@@ -8,124 +8,73 @@ import {
 	Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
-// Dữ liệu giả lập cho các câu hỏi và câu trả lời
-const questions = [
-	{
-		question:
-			"Câu hỏi 1: Bạn cảm thấy da của mình như thế nào vào buổi sáng?",
-		options: [
-			{ text: "Khô", point: 1 },
-			{ text: "Dầu", point: 3 },
-			{ text: "Bình thường", point: 2 },
-			{ text: "Hỗn hợp", point: 2 },
-		],
-	},
-	{
-		question: "Câu hỏi 2: Bạn có cảm thấy da bị bong tróc không?",
-		options: [
-			{ text: "Có", point: 1 },
-			{ text: "Không", point: 3 },
-			{ text: "Thỉnh thoảng", point: 2 },
-			{ text: "Không rõ", point: 2 },
-		],
-	},
-	{
-		question:
-			"Câu hỏi 3: Vùng nào trên khuôn mặt bạn thường xuyên bị bóng dầu?",
-		options: [
-			{ text: "Chỉ T-zone", point: 2 },
-			{ text: "Cả mặt", point: 3 },
-			{ text: "Chỉ má", point: 1 },
-			{ text: "Không có", point: 2 },
-		],
-	},
-	{
-		question: "Câu hỏi 4: Da của bạn thường xuyên xuất hiện mụn không?",
-		options: [
-			{ text: "Có", point: 3 },
-			{ text: "Không", point: 1 },
-			{ text: "Thỉnh thoảng", point: 2 },
-			{ text: "Không rõ", point: 2 },
-		],
-	},
-	{
-		question:
-			"Câu hỏi 5: Bạn cảm thấy da của mình thế nào sau khi dùng các sản phẩm dưỡng da?",
-		options: [
-			{ text: "Khô", point: 1 },
-			{ text: "Bóng dầu", point: 3 },
-			{ text: "Mịn màng", point: 2 },
-			{ text: "Vẫn cảm giác nặng nề", point: 2 },
-		],
-	},
-];
+import { useAnalysisSkinTypeMutation, useGetAllQuizQuestionQuery } from "../../services/skincare.service";
 
 const QuizzScreen = () => {
+	const { data: quizData, isLoading, isError } = useGetAllQuizQuestionQuery();
+	const [ analysisSkinType, { data: analysisData, isLoading: analysisLoading, isError: analysisError }] = useAnalysisSkinTypeMutation();
 	const navigation = useNavigation();
-	const [currentQuestion, setCurrentQuestion] = useState(0);
-	const [answers, setAnswers] = useState(Array(questions.length).fill(null)); // To store the answers
+	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+	const [answers, setAnswers] = useState({}); // Key-value store for answers
+
+	if (isLoading) return <Text>Loading...</Text>;
+	if (isError) return <Text>There was an error loading the quiz.</Text>;
+
+	const currentQuestion = quizData[currentQuestionIndex];
 
 	// Handle the answer selection
 	const handleSelectAnswer = (index) => {
-		const updatedAnswers = [...answers];
-		updatedAnswers[currentQuestion] = index;
-		setAnswers(updatedAnswers);
+		setAnswers((prevAnswers) => ({
+			...prevAnswers,
+			[currentQuestion._id]: index, // Use question ID as the key
+		}));
 	};
 
 	// Handle the next button click
 	const handleNext = () => {
-		if (answers[currentQuestion] !== null) {
-			setCurrentQuestion(currentQuestion + 1);
+		if (answers[currentQuestion._id] !== undefined) { // Check if an answer is selected
+			setCurrentQuestionIndex(currentQuestionIndex + 1);
 		}
 	};
 
 	// Handle the back button click
 	const handleBack = () => {
-		if (currentQuestion > 0) {
-			setCurrentQuestion(currentQuestion - 1);
+		if (currentQuestionIndex > 0) {
+			setCurrentQuestionIndex(currentQuestionIndex - 1);
 		}
 	};
 
-	const handleFinish = () => {
+	const handleFinish = async() => {
 		// Calculate total points based on the answers
-		const totalPoints = answers.reduce(
-			(sum, answerIndex, questionIndex) => {
-				return (
-					sum + questions[questionIndex].options[answerIndex].point
-				);
-			},
-			0
-		);
+		const totalPoints = Object.keys(answers).reduce((sum, questionId) => {
+			const answerIndex = answers[questionId];
+			if (answerIndex !== undefined) {
+				const question = quizData.find(q => q._id === questionId);
+				return sum + question.answers[answerIndex].point;
+			}
+			return sum; // If no answer is selected, return the current sum
+		}, 0);
 
-		// Tạm thời hiển thị kết quả loại da dựa trên tổng điểm
-		let skinType = "";
-		if (totalPoints <= 5) {
-			skinType = "dry"; // Da khô
-		} else if (totalPoints <= 8) {
-			skinType = "combination"; // Da hỗn hợp
-		} else if (totalPoints <= 11) {
-			skinType = "normal"; // Da thường
-		} else {
-			skinType = "oily"; // Da dầu
-		}
-
-		// Điều hướng đến trang QuizzAnswer và truyền loại da
-		navigation.navigate("QuizzAnswer", { skinType });
+		const { data } = await analysisSkinType({points: totalPoints }).unwrap();
+		console.log(data)
+		// Navigate to the result screen with the determined skin type
+		navigation.navigate("QuizzAnswer", data.skinType);
 	};
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.question}>
-				{questions[currentQuestion].question}
+			<Text style={styles.title}>
+				{currentQuestion.title}
 			</Text>
-			{questions[currentQuestion].options.map((option, index) => (
+			<Text style={styles.description}>
+				{currentQuestion.description}
+			</Text>
+			{currentQuestion.answers.map((option, index) => (
 				<TouchableOpacity
-					key={index}
+					key={option._id}
 					style={[
 						styles.optionButton,
-						answers[currentQuestion] === index &&
-							styles.selectedOption,
+						answers[currentQuestion._id] === index && styles.selectedOption,
 					]}
 					onPress={() => handleSelectAnswer(index)}
 				>
@@ -136,19 +85,19 @@ const QuizzScreen = () => {
 				<Button
 					title="Back"
 					onPress={handleBack}
-					disabled={currentQuestion === 0}
+					disabled={currentQuestionIndex === 0}
 				/>
-				{currentQuestion < questions.length - 1 ? (
+				{currentQuestionIndex < quizData.length - 1 ? (
 					<Button
 						title="Next"
 						onPress={handleNext}
-						disabled={answers[currentQuestion] === null}
+						disabled={answers[currentQuestion._id] === undefined}
 					/>
 				) : (
 					<Button
-						title="Hoàn tất"
+						title="Finish"
 						onPress={handleFinish}
-						disabled={answers[currentQuestion] === null}
+						disabled={answers[currentQuestion._id] === undefined}
 					/>
 				)}
 			</View>
@@ -162,10 +111,14 @@ const styles = StyleSheet.create({
 		padding: 20,
 		backgroundColor: "#f5f5f5",
 	},
-	question: {
+	title: {
 		fontSize: 20,
 		marginBottom: 20,
 		fontWeight: "bold",
+	},
+	description: {
+		fontSize: 16,
+		marginBottom: 20,
 	},
 	optionButton: {
 		padding: 15,
