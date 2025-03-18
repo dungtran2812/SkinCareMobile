@@ -255,10 +255,13 @@ const styles = StyleSheet.create({
 	cartItem: {
 		flexDirection: "row",
 		alignItems: "center",
-		marginBottom: 20,
+		marginBottom: 15,
 		backgroundColor: "#fff",
 		padding: 10,
 		borderRadius: 10,
+		borderBottomWidth: 1,
+		borderBottomColor: "#EEEEEE",
+		paddingVertical: 15,
 	},
 	productImageContainer: {
 		marginLeft: 10,
