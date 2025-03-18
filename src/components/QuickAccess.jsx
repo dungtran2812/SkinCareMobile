@@ -54,8 +54,8 @@ const QuickAccess = () => {
 							<Icon
 								name={button.icon}
 								size={24}
-								color={button.iconColor} // Dùng màu sắc của từng icon
-							/>{" "}
+								color={button.iconColor}
+							/>
 						</View>
 						<Text style={styles.buttonText}>{button.title}</Text>
 					</TouchableOpacity>
@@ -74,8 +74,8 @@ const QuickAccess = () => {
 							<Icon
 								name={button.icon}
 								size={24}
-								color={button.iconColor} // Dùng màu sắc của từng icon
-							/>{" "}
+								color={button.iconColor}
+							/>
 						</View>
 						<Text style={styles.buttonText}>{button.title}</Text>
 					</TouchableOpacity>
