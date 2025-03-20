@@ -4,8 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const ProductItem = ({ product }) => {
 	const navigation = useNavigation();
-	const discountedPrice =
-		product.price * (1 - product.productDiscount / 100);
+	const discountedPrice = product.price * (1 - product.productDiscount / 100);
 
 	const handlePress = () => {
 		navigation.navigate("ProductItemDetail", { product });
@@ -20,7 +19,9 @@ const ProductItem = ({ product }) => {
 					style={styles.image}
 					onError={(e) => console.log(e.nativeEvent.error)}
 				/>
-				<Text style={styles.discountTag}>-{product.productDiscount}%</Text>
+				<Text style={styles.discountTag}>
+					-{product.productDiscount}%
+				</Text>
 			</View>
 
 			{/* Phần dưới của card: Thông tin sản phẩm */}
@@ -30,16 +31,12 @@ const ProductItem = ({ product }) => {
 						{parseInt(discountedPrice).toLocaleString("vi-VN")} VNĐ
 					</Text>
 					<Text style={styles.originalPrice}>
-						{parseInt(product.price).toLocaleString(
-							"vi-VN"
-						)}{" "}
-						VNĐ
+						{parseInt(product.price).toLocaleString("vi-VN")} VNĐ
 					</Text>
 				</View>
 				<Text style={styles.brandName}>{product.brand}</Text>
 				<Text style={styles.productName}>{product.name}</Text>
-				<View style={styles.ratingContainer}>
-				</View>
+				<View style={styles.ratingContainer}></View>
 			</View>
 		</TouchableOpacity>
 	);
@@ -47,8 +44,9 @@ const ProductItem = ({ product }) => {
 
 const styles = StyleSheet.create({
 	card: {
-		width: "48%",
-		margin: "1%",
+		width: 180, // Set width cố định thay vì % để tránh bị giãn quá nhiều
+		marginRight: 10, // Thêm khoảng cách giữa các card (thay vì margin auto)
+		marginBottom: 20,
 		backgroundColor: "white",
 		borderRadius: 10,
 		elevation: 5,
@@ -92,7 +90,7 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 	},
 	originalPrice: {
-		fontSize: 11,
+		fontSize: 10,
 		color: "gray",
 		textDecorationLine: "line-through",
 	},
