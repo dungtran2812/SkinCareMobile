@@ -10,11 +10,12 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
 import { SwipeListView } from "react-native-swipe-list-view";
-import { useGetCartInforQuery, useRemoveCartItemMutation, useUpdateQuantityMutation } from "../../services/skincare.service";
+import { useCreateOrderMutation, useGetCartInforQuery, useRemoveCartItemMutation, useUpdateQuantityMutation } from "../../services/skincare.service";
 
 const MyCart = () => {
 	const navigation = useNavigation();
 	const { data: cardData = [], isLoading, isError } = useGetCartInforQuery(); 
+	const [createOrder, { isLoading: isCreatingOrder }] = useCreateOrderMutation();
 	const [removeCartItem] = useRemoveCartItemMutation();
 	const [updateQuantity] = useUpdateQuantityMutation();
 	const cartItems = cardData.data?.products;
@@ -30,8 +31,17 @@ const MyCart = () => {
 		);
 	};
 
-	const handlePurchase = () => {
-		// Logic for handling purchase of selected items
+	const handlePurchase = async () => {
+		const products = cartItems.map(item => ({ productId: item.productId, quantity: item.quantity }));
+		console.log({ products });
+
+		try {
+			const response = await createOrder({ products: products }).unwrap(); // Use unwrap to handle the promise
+				console.log('success');
+				navigation.navigate("MainTabNavigator", { screen: "HomeScreen" }); // Navigate to HomeScreen on success
+		} catch (error) {
+			Alert.alert("Lỗi", "Có lỗi xảy ra khi tạo đơn hàng. Vui lòng thử lại.");
+		}
 	};
 
 	const renderItem = ({ item }) => (

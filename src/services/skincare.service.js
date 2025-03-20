@@ -154,6 +154,14 @@ const skincareApi = createApi({
         method: "GET",
       }),
     }),
+    createOrder: builder.mutation({
+      query: (data) => ({
+        url: `${endpoints.Order}/createOrder`,
+        data: data,
+        method: "POST",
+      }),
+      invalidatesTags: ['CartItem'],
+    }),
   }),
 });
 
@@ -179,7 +187,8 @@ export const {
   useGetCartInforQuery,
   useRemoveCartItemMutation,
   useUpdateQuantityMutation,
-  useLazyGetOrderByStatusQuery
+  useLazyGetOrderByStatusQuery,
+  useCreateOrderMutation,
 } = skincareApi;
 
 export default skincareApi;

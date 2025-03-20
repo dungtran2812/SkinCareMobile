@@ -35,37 +35,39 @@ const OrderCard = ({ order }) => {
 
 			{/* Thông tin sản phẩm */}
 			{products.map((product) => (
-				<View key={product?._id} style={styles.productInfoContainer}>
-					<Image
-						source={{ uri: product?.productImage }}
-						style={styles.productImage}
-					/>
-					<View style={styles.productDetails}>
-						<Text style={styles.productName}>{product?.productName}</Text>
-						<Text style={styles.productBrand}>
-							{product?.productBrand}
-						</Text>
-						<Text style={styles.productQuantity}>
-							Số lượng: {product?.quantity}
-						</Text>
-						<View style={styles.priceContainer}>
-							<Text style={styles.oldPrice}>
-								{product?.price?.toLocaleString()} VNĐ
+				<>
+					<View key={product?._id} style={styles.productInfoContainer}>
+						<Image
+							source={{ uri: product?.image }}
+							style={styles.productImage}
+						/>
+						<View style={styles.productDetails}>
+							<Text style={styles.productName}>{product?.productName}</Text>
+							<Text style={styles.productBrand}>
+								{product?.productBrand}
 							</Text>
-							<Text style={styles.newPrice}>
-								{(product?.price * (1 - (product?.productDiscount / 100)))?.toLocaleString()} VNĐ
+							<Text style={styles.productQuantity}>
+								Số lượng: {product?.quantity}
 							</Text>
+							<View style={styles.priceContainer}>
+								<Text style={styles.oldPrice}>
+									{product?.price?.toLocaleString()} VNĐ
+								</Text>
+								<Text style={styles.newPrice}>
+									{(product?.price * (1 - (product?.productDiscount / 100)))?.toLocaleString()} VNĐ
+								</Text>
+							</View>
 						</View>
 					</View>
+	
+				{/* Tổng số tiền */}
+				<View style={styles.totalContainer}>
+					<Text style={styles.totalText}>
+						Tổng số tiền: {product?.totalPriceAfterDiscount?.toLocaleString()} VNĐ
+					</Text>
 				</View>
+				</>
 			))}
-
-			{/* Tổng số tiền */}
-			<View style={styles.totalContainer}>
-				<Text style={styles.totalText}>
-					Tổng số tiền: {order?.totalPriceAfterDiscount?.toLocaleString()} VNĐ
-				</Text>
-			</View>
 
 			{/* Nút mua lại và đánh giá hoặc trạng thái */}
 			{renderStatusOrButtons()}
