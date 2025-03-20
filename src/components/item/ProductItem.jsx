@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const ProductItem = ({ product }) => {
+const ProductItem = ({product}) => {
+	console.log("ProductItem -> product", product);
 	const navigation = useNavigation();
 	const discountedPrice = product.price * (1 - product.productDiscount / 100);
 

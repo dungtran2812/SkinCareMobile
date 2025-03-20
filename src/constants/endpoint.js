@@ -8,6 +8,7 @@ const endpoints = {
   SKINTYPE: "/skin-types",
   Cart: "/cart",
   Order: "/order",
+  ROUTINE: "/routine",
 };
 
 export default endpoints;
