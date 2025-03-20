@@ -9,6 +9,7 @@ const initialState = {
 	phoneNumber: "",
 	role: "",
 	accessTokenExpired: false,
+	skinType: "",
 };
 
 const userSlice = createSlice({
@@ -42,6 +43,9 @@ const userSlice = createSlice({
 		setAccessTokenExpired(state, action) {
 			state.accessToken = action.payload;
 		},
+		setSkinType(state, action) {
+			state.skinType = action.payload;
+		},
 		signout(state) {
 			state.isLoggedIn = false;
 			state.isFirstLogin = false;
@@ -62,6 +66,7 @@ export const {
 	signout,
 	setAccessTokenExpired,
 	setName,
+	setSkinType
 } = userSlice.actions;
 
 export default userSlice.reducer;

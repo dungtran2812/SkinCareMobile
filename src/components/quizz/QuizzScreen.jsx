@@ -9,8 +9,11 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useAnalysisSkinTypeMutation, useGetAllQuizQuestionQuery } from "../../services/skincare.service";
+import { useDispatch } from "react-redux";
+import { setSkinType } from "../../feature/authentication";
 
 const QuizzScreen = () => {
+	const dispatch = useDispatch();
 	const { data: quizData, isLoading, isError } = useGetAllQuizQuestionQuery();
 	const [ analysisSkinType, { data: analysisData, isLoading: analysisLoading, isError: analysisError }] = useAnalysisSkinTypeMutation();
 	const navigation = useNavigation();
@@ -56,9 +59,10 @@ const QuizzScreen = () => {
 		}, 0);
 
 		const { data } = await analysisSkinType({points: totalPoints }).unwrap();
-		console.log(data)
+		dispatch(setSkinType(data?.skinType?._id));
+		console.log(data.skinType._id)
 		// Navigate to the result screen with the determined skin type
-		navigation.navigate("QuizzAnswer", data.skinType);
+		navigation.navigate("QuizzAnswer");
 	};
 
 	return (

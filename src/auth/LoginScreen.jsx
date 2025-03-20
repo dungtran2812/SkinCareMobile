@@ -15,6 +15,7 @@ import {
 	setAccessToken,
 	setName,
 	setPhoneNumber,
+	setSkinType,
 	setUsername,
 } from "../feature/authentication";
 import { useLoginMutation } from "../services/skincare.service";
@@ -48,11 +49,11 @@ const LoginScreen = ({ navigation, route }) => {
 				password: values.password,
 			}).unwrap();
 			dispatch(setAccessToken(userData?.access_token));
-			dispatch(setUsername(userData?.user?.username));
-			dispatch(setName(userData?.user?.username));
-			dispatch(setPhoneNumber(userData?.user?.phone));
+			dispatch(setUsername(userData?.data?.username));
+			dispatch(setName(userData?.data?.name));
+			dispatch(setPhoneNumber(userData?.data?.phone));
+			dispatch(setSkinType(userData?.data?.skinType));
 
-			Alert.alert("Thông báo", "Đăng nhập thành công!");
 			navigation.reset({
 				index: 0,
 				routes: [{ name: "MainTabNavigator" }],

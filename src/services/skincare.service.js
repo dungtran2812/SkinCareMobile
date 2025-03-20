@@ -110,6 +110,12 @@ const skincareApi = createApi({
         method: "GET",
       }),
     }),
+    getSkinTypeById: builder.query({
+      query: (id) => ({
+        url: `${endpoints.SKINTYPE}/${id}`,
+        method: "GET",
+      }),
+    }),
     AnalysisSkinType: builder.mutation({
       query: (data) => ({
         url: `${endpoints.SKINTYPE}/skin-analysis`,
@@ -154,6 +160,12 @@ const skincareApi = createApi({
         method: "GET",
       }),
     }),
+    getRoutineBySkinType: builder.query({
+      query: (skinTypeId) => ({
+        url: `${endpoints.ROUTINE}/getRoutineBySkinType/${skinTypeId}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -179,7 +191,9 @@ export const {
   useGetCartInforQuery,
   useRemoveCartItemMutation,
   useUpdateQuantityMutation,
-  useLazyGetOrderByStatusQuery
+  useLazyGetOrderByStatusQuery,
+  useGetRoutineBySkinTypeQuery,
+  useGetSkinTypeByIdQuery
 } = skincareApi;
 
 export default skincareApi;

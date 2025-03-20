@@ -5,9 +5,10 @@ import ProductList from "../item/ProductList";
 const StepCard = ({ step }) => {
 	return (
 		<View style={styles.card}>
-			<Text style={styles.stepName}>{step.name}</Text>
-			<Text style={styles.stepDescription}>{step.description}</Text>
-			<ProductList stepName={step.name} />
+			<Text style={styles.stepName}>{step.stepName}</Text>
+			<Text style={styles.stepName}>Bước {step.stepNumber}</Text>
+			<Text style={styles.stepDescription}>{step.stepDescription}</Text>
+			<ProductList products={step.products} stepNumber={step.stepNumber} />
 		</View>
 	);
 };
