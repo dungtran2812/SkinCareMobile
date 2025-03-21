@@ -8,14 +8,24 @@ import {
 	Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useAnalysisSkinTypeMutation, useGetAllQuizQuestionQuery } from "../../services/skincare.service";
+import {
+	useAnalysisSkinTypeMutation,
+	useGetAllQuizQuestionQuery,
+} from "../../services/skincare.service";
 import { useDispatch } from "react-redux";
 import { setSkinType } from "../../feature/authentication";
 
 const QuizzScreen = () => {
 	const dispatch = useDispatch();
 	const { data: quizData, isLoading, isError } = useGetAllQuizQuestionQuery();
-	const [ analysisSkinType, { data: analysisData, isLoading: analysisLoading, isError: analysisError }] = useAnalysisSkinTypeMutation();
+	const [
+		analysisSkinType,
+		{
+			data: analysisData,
+			isLoading: analysisLoading,
+			isError: analysisError,
+		},
+	] = useAnalysisSkinTypeMutation();
 	const navigation = useNavigation();
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 	const [answers, setAnswers] = useState({}); // Key-value store for answers
@@ -35,7 +45,8 @@ const QuizzScreen = () => {
 
 	// Handle the next button click
 	const handleNext = () => {
-		if (answers[currentQuestion._id] !== undefined) { // Check if an answer is selected
+		if (answers[currentQuestion._id] !== undefined) {
+			// Check if an answer is selected
 			setCurrentQuestionIndex(currentQuestionIndex + 1);
 		}
 	};
@@ -47,29 +58,29 @@ const QuizzScreen = () => {
 		}
 	};
 
-	const handleFinish = async() => {
+	const handleFinish = async () => {
 		// Calculate total points based on the answers
 		const totalPoints = Object.keys(answers).reduce((sum, questionId) => {
 			const answerIndex = answers[questionId];
 			if (answerIndex !== undefined) {
-				const question = quizData.find(q => q._id === questionId);
+				const question = quizData.find((q) => q._id === questionId);
 				return sum + question.answers[answerIndex].point;
 			}
 			return sum; // If no answer is selected, return the current sum
 		}, 0);
 
-		const { data } = await analysisSkinType({points: totalPoints }).unwrap();
+		const { data } = await analysisSkinType({
+			points: totalPoints,
+		}).unwrap();
 		dispatch(setSkinType(data?.skinType?._id));
-		console.log(data.skinType._id)
+		console.log(data.skinType._id);
 		// Navigate to the result screen with the determined skin type
 		navigation.navigate("QuizzAnswer");
 	};
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>
-				{currentQuestion.title}
-			</Text>
+			<Text style={styles.title}>{currentQuestion.title}</Text>
 			<Text style={styles.description}>
 				{currentQuestion.description}
 			</Text>
@@ -78,7 +89,8 @@ const QuizzScreen = () => {
 					key={option._id}
 					style={[
 						styles.optionButton,
-						answers[currentQuestion._id] === index && styles.selectedOption,
+						answers[currentQuestion._id] === index &&
+							styles.selectedOption,
 					]}
 					onPress={() => handleSelectAnswer(index)}
 				>

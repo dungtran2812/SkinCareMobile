@@ -6,7 +6,8 @@ import ProfilePoint from "../../../components/profile/ProfilePoint";
 import OrderStatus from "../../../components/order/OrderStatus";
 import GiftChange from "../../../components/gift/GiftChange";
 import ProductFavourite from "../../../components/favourite/ProductFavourite";
-
+import ProfileQuizzResult from "../../../components/profile/ProfileQuizzResult";
+import QuizzDetail from "../../../components/quizz/QuizzDetail";
 const Stack = createStackNavigator();
 
 const ProfileStack = () => {
@@ -26,6 +27,16 @@ const ProfileStack = () => {
 				name="ProfilePoint"
 				component={ProfilePoint}
 				options={{ headerShown: false, title: "Tích Điểm" }}
+			/>
+			<Stack.Screen
+				name="ProfileQuizzResult"
+				component={ProfileQuizzResult}
+				options={{ headerShown: false, title: "Lịch sử kiểm tra da" }}
+			/>
+			<Stack.Screen
+				name="QuizzDetail"
+				component={QuizzDetail}
+				options={{ headerShown: false, title: "Chi tiết kết quả" }}
 			/>
 			<Stack.Screen
 				name="OrderStatus"
