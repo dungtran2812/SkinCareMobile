@@ -3,9 +3,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import SuggestScreen from "../SuggestScreen";
 import RoadmapScreen from "../RoadmapScreen";
-import NotificationScreen from "../NotificationScreen";
 import ProfileStack from "../stack/profile/ProfileStack";
 import HomeStack from "../stack/home/HomeStack";
+import NotificationStack from "../stack/notification/NotificationStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -67,7 +67,7 @@ const MainTabNavigator = () => {
 			/>
 			<Tab.Screen
 				name="Thông báo"
-				component={NotificationScreen}
+				component={NotificationStack}
 				options={{ headerShown: false }}
 			/>
 			<Tab.Screen

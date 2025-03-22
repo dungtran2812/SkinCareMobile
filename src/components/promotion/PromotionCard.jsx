@@ -1,8 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { useNavigation } from "@react-navigation/native";
 
 const PromotionCard = ({ content }) => {
+	const navigation = useNavigation();
 	// Chuyển đổi ngày tháng từ string sang định dạng cần thiết (nếu cần)
 	const date = new Date(content.date);
 	const formattedDate = `${date.getDate()}/${
@@ -11,8 +13,16 @@ const PromotionCard = ({ content }) => {
 		date.getMinutes()
 	).padStart(2, "0")}`; //cập nhật sao cho số phút vẫn hiện 2 chữ số
 
+	const handlePress = () => {
+		navigation.navigate("PromotionDetail", { promotion: content });
+	};
+
 	return (
-		<TouchableOpacity style={styles.card}>
+		<TouchableOpacity
+			style={styles.card}
+			onPress={handlePress}
+			activeOpacity={0.7}
+		>
 			<Image source={{ uri: content.image }} style={styles.image} />
 			<View style={styles.contentContainer}>
 				<View style={styles.header}>
