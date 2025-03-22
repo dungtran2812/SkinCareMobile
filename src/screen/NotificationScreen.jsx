@@ -6,6 +6,7 @@ import {
 	TouchableOpacity,
 	ScrollView,
 	FlatList,
+	SafeAreaView,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome"; // Import icon thư viện
 import PromotionCard from "../components/promotion/PromotionCard"; // Import component PromotionCard
@@ -18,71 +19,83 @@ export default function NotificationScreen({ navigation }) {
 		setActiveTab(tab);
 	};
 
+	const renderEmptyState = () => (
+		<View style={styles.emptyStateContainer}>
+			<Icon name="bell-slash" size={60} color="#ccc" />
+			<Text style={styles.emptyStateText}>
+				Hiện bạn chưa có thông báo nào
+			</Text>
+			<TouchableOpacity
+				style={styles.continueShoppingButton}
+				onPress={() =>
+					navigation.navigate("MainTabNavigator", {
+						screen: "Trang chủ",
+					})
+				}
+			>
+				<Text style={styles.continueShoppingText}>
+					Tiếp tục mua sắm
+				</Text>
+			</TouchableOpacity>
+		</View>
+	);
+
 	return (
-		<View style={styles.container}>
-			{/* Header */}
+		<SafeAreaView style={styles.container}>
 			<View style={styles.header}>
-				<Text style={styles.title}>Thông báo</Text>
+				<Text style={styles.headerTitle}>Thông báo</Text>
 			</View>
 
-			{/* Tab buttons */}
 			<View style={styles.tabsContainer}>
 				<TouchableOpacity
 					style={[
-						styles.tab,
-						activeTab === "promotions" && styles.activeTab,
+						styles.tabButton,
+						activeTab === "promotions" && styles.activeTabButton,
 					]}
 					onPress={() => handleTabChange("promotions")}
 				>
-					<Text style={styles.tabText}>Khuyến mãi</Text>
+					<Text
+						style={[
+							styles.tabText,
+							activeTab === "promotions" && styles.activeTabText,
+						]}
+					>
+						Khuyến mãi
+					</Text>
 				</TouchableOpacity>
 
 				<TouchableOpacity
 					style={[
-						styles.tab,
-						activeTab === "userNotifications" && styles.activeTab,
+						styles.tabButton,
+						activeTab === "userNotifications" &&
+							styles.activeTabButton,
 					]}
 					onPress={() => handleTabChange("userNotifications")}
 				>
-					<Text style={styles.tabText}>Của bạn</Text>
+					<Text
+						style={[
+							styles.tabText,
+							activeTab === "userNotifications" &&
+								styles.activeTabText,
+						]}
+					>
+						Của bạn
+					</Text>
 				</TouchableOpacity>
 			</View>
 
-			{/* Content */}
-			<ScrollView style={styles.contentContainer}>
-				{activeTab === "promotions" ? (
-					<FlatList
-						data={promotionData}
-						renderItem={({ item }) => (
-							<PromotionCard content={item} />
-						)}
-						keyExtractor={(item) => item.id.toString()}
-					/>
-				) : (
-					<View style={styles.content}>
-						{/* Biểu tượng "Không có thông báo" */}
-						<Icon name="bell-slash" size={50} color="#ccc" />
-						<Text style={styles.noNotificationText}>
-							Hiện bạn chưa có thông báo nào
-						</Text>
-
-						{/* Nút "Tiếp tục mua sắm" */}
-						<TouchableOpacity
-							style={styles.continueShoppingButton}
-							onPress={() =>
-								navigation.navigate("MainTabNavigator", {
-									screen: "Trang chủ",
-								})
-							} // Chuyển qua HomeScreen
-						>
-							<Text style={styles.continueShoppingText}>
-								Tiếp tục mua sắm
-							</Text>
-						</TouchableOpacity>
-					</View>
-				)}
-			</ScrollView>
-		</View>
+			{activeTab === "promotions" ? (
+				<FlatList
+					data={promotionData}
+					renderItem={({ item }) => <PromotionCard content={item} />}
+					keyExtractor={(item) => item.id.toString()}
+					contentContainerStyle={styles.contentContainer}
+					showsVerticalScrollIndicator={false}
+				/>
+			) : (
+				renderEmptyState()
+			)}
+		</SafeAreaView>
 	);
 }
 
@@ -92,65 +105,77 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 	},
 	header: {
-		backgroundColor: "#B3E5FC", // Màu xanh cho header
-		paddingVertical: 20,
-		justifyContent: "center",
-		alignItems: "center",
+		paddingVertical: 15,
+		paddingHorizontal: 20,
+		backgroundColor: "#fff",
+		borderBottomWidth: 1,
+		borderBottomColor: "#f0f0f0",
 	},
-	title: {
-		fontSize: 24,
-		fontWeight: "bold",
-		color: "#000", // Chữ màu đen
+	headerTitle: {
+		fontSize: 20,
+		fontWeight: "600",
+		color: "#1E3A5F",
+		textAlign: "center",
 	},
 	tabsContainer: {
 		flexDirection: "row",
-		justifyContent: "space-between",
 		paddingHorizontal: 20,
-		paddingVertical: 10,
-		backgroundColor: "#fff", // Đổi thành màu trắng
+		paddingVertical: 15,
+		backgroundColor: "#fff",
 		borderBottomWidth: 1,
-		borderBottomColor: "#ddd", // Viền dưới nhẹ cho tabs
+		borderBottomColor: "#f0f0f0",
 	},
-	tab: {
+	tabButton: {
 		flex: 1,
-		alignItems: "center",
 		paddingVertical: 10,
-		borderWidth: 1,
-		borderColor: "#ddd", // Viền nhẹ cho mỗi button
-		borderRadius: 5,
+		marginHorizontal: 5,
+		borderRadius: 8,
+		alignItems: "center",
+		backgroundColor: "#f5f5f5",
+	},
+	activeTabButton: {
+		backgroundColor: "#1E3A5F",
 	},
 	tabText: {
-		fontSize: 16,
-		color: "#000",
+		fontSize: 14,
+		fontWeight: "500",
+		color: "#666",
 	},
-	activeTab: {
-		backgroundColor: "#B3E5FC", // Màu nền khi tab đang được chọn
-		borderRadius: 5,
+	activeTabText: {
+		color: "#fff",
 	},
 	contentContainer: {
-		flex: 1,
-		padding: 20,
+		padding: 15,
 	},
-	content: {
+	emptyStateContainer: {
+		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		paddingVertical: 30,
+		padding: 20,
 	},
-	noNotificationText: {
+	emptyStateText: {
 		fontSize: 16,
-		color: "#888", // Màu xám cho văn bản
-		marginVertical: 10,
+		color: "#666",
+		marginTop: 15,
+		marginBottom: 25,
 	},
 	continueShoppingButton: {
-		marginTop: 20,
-		backgroundColor: "#1E90FF", // Nền xanh cho nút
-		paddingVertical: 10,
-		paddingHorizontal: 50,
-		borderRadius: 5,
+		backgroundColor: "#1E3A5F",
+		paddingVertical: 12,
+		paddingHorizontal: 25,
+		borderRadius: 8,
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.1,
+		shadowRadius: 3,
+		elevation: 3,
 	},
 	continueShoppingText: {
-		fontSize: 16,
-		color: "white",
-		fontWeight: "bold",
+		color: "#fff",
+		fontSize: 15,
+		fontWeight: "600",
 	},
 });
