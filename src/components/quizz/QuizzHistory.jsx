@@ -96,27 +96,38 @@ const QuizzHistory = () => {
 	};
 
 	const renderItem = ({ item }) => (
-		<TouchableOpacity style={styles.historyCard}>
-			<View style={styles.dateContainer}>
-				<Text style={styles.date}>{item.date}</Text>
+		<TouchableOpacity
+			style={styles.historyCard}
+			onPress={() => handleViewDetail(item)}
+		>
+			<View style={styles.cardHeader}>
+				<View style={styles.dateContainer}>
+					<Icon name="calendar-outline" size={16} color="#1E3A5F" />
+					<Text style={styles.date}>{item.date}</Text>
+				</View>
+				<View style={styles.pointsContainer}>
+					<Text style={styles.points}>{item.result.points} điểm</Text>
+				</View>
 			</View>
-			<View style={styles.infoContainer}>
-				<Text style={styles.skinType}>
-					Loại da: {item.result.skinType}
-				</Text>
-				<Text style={styles.points}>
-					Tổng điểm: {item.result.points}
-				</Text>
-				<Text style={styles.answersCount}>
-					Số câu trả lời: {item.answers.length}
-				</Text>
+
+			<View style={styles.cardContent}>
+				<View style={styles.skinTypeContainer}>
+					<Text style={styles.skinTypeLabel}>Loại da của bạn</Text>
+					<Text style={styles.skinType}>{item.result.skinType}</Text>
+				</View>
+
+				<View style={styles.answersInfo}>
+					<Icon name="list-outline" size={16} color="#666" />
+					<Text style={styles.answersCount}>
+						{item.answers.length} câu trả lời
+					</Text>
+				</View>
 			</View>
-			<TouchableOpacity
-				style={styles.viewButton}
-				onPress={() => handleViewDetail(item)}
-			>
+
+			<View style={styles.viewButtonContainer}>
 				<Text style={styles.viewButtonText}>Xem chi tiết</Text>
-			</TouchableOpacity>
+				<Icon name="chevron-forward" size={20} color="#1E3A5F" />
+			</View>
 		</TouchableOpacity>
 	);
 
@@ -129,12 +140,7 @@ const QuizzHistory = () => {
 				>
 					<Icon name="arrow-back" size={24} color="#1E3A5F" />
 				</TouchableOpacity>
-				<View style={styles.headerTextContainer}>
-					<Text style={styles.headerTitle}>Lịch sử kiểm tra da</Text>
-					<Text style={styles.headerSubtitle}>
-						Các kết quả kiểm tra da của bạn
-					</Text>
-				</View>
+				<Text style={styles.headerTitle}>Lịch sử kiểm tra da</Text>
 			</View>
 
 			<FlatList
@@ -154,83 +160,108 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 	},
 	header: {
-		backgroundColor: "#B3E5FC",
-		padding: 20,
 		flexDirection: "row",
 		alignItems: "center",
+		paddingVertical: 15,
+		paddingHorizontal: 20,
+		borderBottomWidth: 1,
+		borderBottomColor: "#f0f0f0",
 	},
 	backButton: {
 		padding: 5,
-		marginRight: 10,
-	},
-	headerTextContainer: {
-		flex: 1,
-		alignItems: "center",
 	},
 	headerTitle: {
-		fontSize: 24,
-		fontWeight: "bold",
+		flex: 1,
+		fontSize: 18,
+		fontWeight: "600",
 		color: "#1E3A5F",
-	},
-	headerSubtitle: {
-		fontSize: 16,
-		color: "#666",
-		marginTop: 5,
+		textAlign: "center",
+		marginRight: 34,
 	},
 	listContainer: {
 		padding: 15,
 	},
 	historyCard: {
-		backgroundColor: "#f5f5f5",
-		borderRadius: 10,
-		padding: 15,
+		backgroundColor: "#fff",
+		borderRadius: 12,
 		marginBottom: 15,
-		elevation: 3,
+		padding: 15,
+		borderWidth: 1,
+		borderColor: "#f0f0f0",
 		shadowColor: "#000",
-		shadowOffset: { width: 0, height: 2 },
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
 		shadowOpacity: 0.1,
-		shadowRadius: 4,
+		shadowRadius: 3,
+		elevation: 3,
+	},
+	cardHeader: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		marginBottom: 15,
 	},
 	dateContainer: {
-		backgroundColor: "#1E3A5F",
-		borderRadius: 5,
-		paddingVertical: 5,
-		paddingHorizontal: 10,
-		alignSelf: "flex-start",
-		marginBottom: 10,
+		flexDirection: "row",
+		alignItems: "center",
+		gap: 5,
 	},
 	date: {
-		color: "#fff",
 		fontSize: 14,
-		fontWeight: "bold",
+		color: "#1E3A5F",
+		fontWeight: "500",
 	},
-	infoContainer: {
+	pointsContainer: {
+		backgroundColor: "#E3F2FD",
+		paddingHorizontal: 12,
+		paddingVertical: 4,
+		borderRadius: 12,
+	},
+	points: {
+		color: "#1E3A5F",
+		fontSize: 14,
+		fontWeight: "500",
+	},
+	cardContent: {
+		marginBottom: 15,
+	},
+	skinTypeContainer: {
 		marginBottom: 10,
+	},
+	skinTypeLabel: {
+		fontSize: 13,
+		color: "#666",
+		marginBottom: 4,
 	},
 	skinType: {
 		fontSize: 16,
-		fontWeight: "bold",
-		color: "#333",
-		marginBottom: 5,
-	},
-	points: {
-		fontSize: 14,
-		color: "#666",
-	},
-	viewButton: {
-		backgroundColor: "#B3E5FC",
-		padding: 8,
-		borderRadius: 5,
-		alignItems: "center",
-	},
-	viewButtonText: {
 		color: "#1E3A5F",
-		fontWeight: "bold",
+		fontWeight: "600",
+	},
+	answersInfo: {
+		flexDirection: "row",
+		alignItems: "center",
+		gap: 5,
 	},
 	answersCount: {
 		fontSize: 14,
 		color: "#666",
-		marginTop: 5,
+	},
+	viewButtonContainer: {
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "flex-end",
+		paddingTop: 10,
+		borderTopWidth: 1,
+		borderTopColor: "#f0f0f0",
+	},
+	viewButtonText: {
+		fontSize: 14,
+		color: "#1E3A5F",
+		fontWeight: "500",
+		marginRight: 5,
 	},
 });
 
