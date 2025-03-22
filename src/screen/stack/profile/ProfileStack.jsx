@@ -2,7 +2,6 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import ProfileScreen from "../../ProfileScreen";
 import ProfileUser from "../../../components/profile/ProfileUser";
-import ProfilePoint from "../../../components/profile/ProfilePoint";
 import OrderStatus from "../../../components/order/OrderStatus";
 import GiftChange from "../../../components/gift/GiftChange";
 import ProductFavourite from "../../../components/favourite/ProductFavourite";
@@ -22,11 +21,6 @@ const ProfileStack = () => {
 				name="ProfileUser"
 				component={ProfileUser}
 				options={{ headerShown: false, title: "Sửa Hồ Sơ" }}
-			/>
-			<Stack.Screen
-				name="ProfilePoint"
-				component={ProfilePoint}
-				options={{ headerShown: false, title: "Tích Điểm" }}
 			/>
 			<Stack.Screen
 				name="ProfileQuizzResult"

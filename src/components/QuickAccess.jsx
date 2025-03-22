@@ -19,58 +19,41 @@ const QuickAccess = () => {
 		{
 			title: "Blog",
 			screen: "Blog",
-			icon: "book",
-			iconColor: "#8A2BE2",
-		}, // Màu tím
+			icon: "newspaper-o",
+			iconColor: "#FF9800",
+			bgColor: "#FFF3E0",
+		},
 		{
-			title: "Kiểm tra loại da",
+			title: "Kiểm tra da",
 			screen: "QuizzScreen",
-			icon: "question-circle",
-			iconColor: "#FF6347",
-		}, // Màu đỏ
+			icon: "check-circle",
+			iconColor: "#4CAF50",
+			bgColor: "#E8F5E9",
+		},
 		{
 			title: "Tư vấn",
 			screen: "Consult",
-			icon: "headphones",
-			iconColor: "#20B2AA",
-		}, // Màu xanh ngọc
+			icon: "comments",
+			iconColor: "#2196F3",
+			bgColor: "#E3F2FD",
+		},
 	];
-
-	const handlePress = (screen) => {
-		navigation.navigate(screen); // Điều hướng đến màn hình tương ứng
-	};
 
 	return (
 		<View style={styles.container}>
-			{/* Hàng đầu tiên với 4 nút */}
-			<View style={styles.row}>
-				{buttons.slice(0, 4).map((button, index) => (
+			<View style={styles.buttonContainer}>
+				{buttons.map((button, index) => (
 					<TouchableOpacity
 						key={index}
 						style={styles.button}
-						onPress={() => handlePress(button.screen)}
+						onPress={() => navigation.navigate(button.screen)}
 					>
-						<View style={styles.iconContainer}>
-							<Icon
-								name={button.icon}
-								size={24}
-								color={button.iconColor}
-							/>
-						</View>
-						<Text style={styles.buttonText}>{button.title}</Text>
-					</TouchableOpacity>
-				))}
-			</View>
-
-			{/* Hàng thứ hai với 4 nút */}
-			<View style={styles.row}>
-				{buttons.slice(4, 8).map((button, index) => (
-					<TouchableOpacity
-						key={index}
-						style={styles.button}
-						onPress={() => handlePress(button.screen)}
-					>
-						<View style={styles.iconContainer}>
+						<View
+							style={[
+								styles.iconContainer,
+								{ backgroundColor: button.bgColor },
+							]}
+						>
 							<Icon
 								name={button.icon}
 								size={24}
@@ -87,44 +70,47 @@ const QuickAccess = () => {
 
 const styles = StyleSheet.create({
 	container: {
-		paddingTop: 25, // Tạo khoảng cách giữa các hàng
-		backgroundColor: "#B3E5FC", // Nền màu cho toàn bộ màn hình
-		justifyContent: "center", // Căn giữa màn hình
-		alignItems: "center",
+		backgroundColor: "#fff",
+		marginHorizontal: 15,
+		marginVertical: 10,
+		borderRadius: 15,
+		padding: 15,
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.1,
+		shadowRadius: 3,
+		elevation: 3,
 	},
-	row: {
+	buttonContainer: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-		width: width - 20, // Set width to fit screen with some padding
+		gap: 10,
 	},
 	button: {
 		flex: 1,
-		height: 60, // Điều chỉnh chiều cao nút
-		justifyContent: "center",
+		backgroundColor: "#fff",
+		borderRadius: 12,
+		padding: 15,
 		alignItems: "center",
-		borderRadius: 8,
-		backgroundColor: "transparent", // Không có nền riêng biệt cho mỗi nút
-		marginBottom: 8, // Giảm khoảng cách dưới nút
-		transform: [{ translateY: -5 }], // Đẩy các button lên
-		elevation: 5, // Hiệu ứng đổ bóng cho Android
-		shadowColor: "#000", // Màu bóng cho iOS
-		shadowOffset: { width: 0, height: 3 }, // Đổ bóng xuống dưới
-		shadowOpacity: 0.1, // Độ mờ của bóng
-		shadowRadius: 5, // Độ lớn của bóng
+		borderWidth: 1,
+		borderColor: "#f0f0f0",
 	},
 	iconContainer: {
-		width: 50, // Đặt kích thước cho vòng tròn chứa icon
-		height: 50, // Đảm bảo chiều cao và chiều rộng bằng nhau
-		borderRadius: 25, // Tạo hình tròn
-		backgroundColor: "white", // Màu nền trắng cho icon
+		width: 50,
+		height: 50,
+		borderRadius: 25,
 		justifyContent: "center",
 		alignItems: "center",
-		marginBottom: 5, // Căn chỉnh khoảng cách giữa icon và title
+		marginBottom: 8,
 	},
 	buttonText: {
-		color: "black", // Màu chữ
-		fontSize: 12,
+		fontSize: 13,
+		color: "#1E3A5F",
 		textAlign: "center",
+		fontWeight: "500",
 	},
 });
 
