@@ -8,8 +8,8 @@ import {
 	Alert,
 	ScrollView,
 	SafeAreaView,
+	Modal,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import { FontAwesome } from "@expo/vector-icons";
 
 const Consult = ({ navigation }) => {
@@ -17,6 +17,20 @@ const Consult = ({ navigation }) => {
 	const [phone, setPhone] = useState("");
 	const [consultType, setConsultType] = useState("Sản phẩm");
 	const [content, setContent] = useState("");
+	const [modalVisible, setModalVisible] = useState(false);
+
+	const consultTypes = [
+		{ label: "Tư vấn sản phẩm", value: "Sản phẩm" },
+		{ label: "Tư vấn lộ trình", value: "Lộ trình" },
+		{ label: "Tư vấn dịch vụ", value: "Dịch vụ" },
+		{ label: "Thông tin giao hàng", value: "Giao hàng" },
+		{ label: "Vấn đề khác", value: "Khác" },
+	];
+
+	const handleSelectType = (type) => {
+		setConsultType(type.value);
+		setModalVisible(false);
+	};
 
 	const handleSubmit = () => {
 		if (!name.trim() || !phone.trim() || !content.trim()) {
@@ -84,40 +98,29 @@ const Consult = ({ navigation }) => {
 
 					<View style={styles.inputGroup}>
 						<Text style={styles.label}>Loại tư vấn</Text>
-						<View style={styles.pickerContainer}>
+						<TouchableOpacity
+							style={styles.selectButton}
+							onPress={() => setModalVisible(true)}
+						>
 							<FontAwesome
 								name="list-ul"
 								size={18}
 								color="#666"
 								style={styles.inputIcon}
 							/>
-							<Picker
-								selectedValue={consultType}
-								onValueChange={(itemValue) =>
-									setConsultType(itemValue)
+							<Text style={styles.selectButtonText}>
+								{
+									consultTypes.find(
+										(type) => type.value === consultType
+									)?.label
 								}
-								style={styles.picker}
-								dropdownIconColor="#666"
-							>
-								<Picker.Item
-									label="Tư vấn sản phẩm"
-									value="Sản phẩm"
-								/>
-								<Picker.Item
-									label="Tư vấn lộ trình"
-									value="Lộ trình"
-								/>
-								<Picker.Item
-									label="Tư vấn dịch vụ"
-									value="Dịch vụ"
-								/>
-								<Picker.Item
-									label="Thông tin giao hàng"
-									value="Giao hàng"
-								/>
-								<Picker.Item label="Vấn đề khác" value="Khác" />
-							</Picker>
-						</View>
+							</Text>
+							<FontAwesome
+								name="angle-down"
+								size={18}
+								color="#666"
+							/>
+						</TouchableOpacity>
 					</View>
 
 					<View style={styles.inputGroup}>
@@ -137,6 +140,61 @@ const Consult = ({ navigation }) => {
 					</View>
 				</View>
 			</ScrollView>
+
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={modalVisible}
+				onRequestClose={() => setModalVisible(false)}
+			>
+				<View style={styles.modalOverlay}>
+					<View style={styles.modalContent}>
+						<View style={styles.modalHeader}>
+							<Text style={styles.modalTitle}>
+								Chọn loại tư vấn
+							</Text>
+							<TouchableOpacity
+								onPress={() => setModalVisible(false)}
+								style={styles.closeButton}
+							>
+								<FontAwesome
+									name="times"
+									size={20}
+									color="#666"
+								/>
+							</TouchableOpacity>
+						</View>
+						{consultTypes.map((type, index) => (
+							<TouchableOpacity
+								key={index}
+								style={[
+									styles.optionItem,
+									type.value === consultType &&
+										styles.selectedOption,
+								]}
+								onPress={() => handleSelectType(type)}
+							>
+								<Text
+									style={[
+										styles.optionText,
+										type.value === consultType &&
+											styles.selectedOptionText,
+									]}
+								>
+									{type.label}
+								</Text>
+								{type.value === consultType && (
+									<FontAwesome
+										name="check"
+										size={18}
+										color="#1E3A5F"
+									/>
+								)}
+							</TouchableOpacity>
+						))}
+					</View>
+				</View>
+			</Modal>
 
 			<TouchableOpacity
 				style={styles.submitButton}
@@ -197,6 +255,7 @@ const styles = StyleSheet.create({
 	},
 	inputIcon: {
 		marginRight: 10,
+		zIndex: 1,
 	},
 	input: {
 		flex: 1,
@@ -204,15 +263,68 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 		color: "#333",
 	},
-	pickerContainer: {
+	selectButton: {
 		flexDirection: "row",
 		alignItems: "center",
 		borderWidth: 1,
 		borderColor: "#E0E0E0",
 		borderRadius: 12,
 		backgroundColor: "#fff",
-		paddingLeft: 15,
-		height: 50,
+		paddingHorizontal: 15,
+		paddingVertical: 12,
+		justifyContent: "space-between",
+	},
+	selectButtonText: {
+		flex: 1,
+		fontSize: 15,
+		color: "#333",
+		marginLeft: 10,
+	},
+	modalOverlay: {
+		flex: 1,
+		backgroundColor: "rgba(0,0,0,0.5)",
+		justifyContent: "flex-end",
+	},
+	modalContent: {
+		backgroundColor: "#fff",
+		borderTopLeftRadius: 20,
+		borderTopRightRadius: 20,
+		paddingBottom: 20,
+	},
+	modalHeader: {
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+		padding: 15,
+		borderBottomWidth: 1,
+		borderBottomColor: "#E0E0E0",
+	},
+	modalTitle: {
+		fontSize: 18,
+		fontWeight: "600",
+		color: "#1E3A5F",
+	},
+	closeButton: {
+		padding: 5,
+	},
+	optionItem: {
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+		padding: 15,
+		borderBottomWidth: 1,
+		borderBottomColor: "#F0F0F0",
+	},
+	selectedOption: {
+		backgroundColor: "#F8F9FA",
+	},
+	optionText: {
+		fontSize: 16,
+		color: "#333",
+	},
+	selectedOptionText: {
+		color: "#1E3A5F",
+		fontWeight: "500",
 	},
 	textAreaWrapper: {
 		borderWidth: 1,
@@ -246,12 +358,6 @@ const styles = StyleSheet.create({
 		color: "#fff",
 		fontSize: 16,
 		fontWeight: "600",
-	},
-	picker: {
-		flex: 1,
-		marginLeft: -10,
-		height: 50,
-		color: "#333",
 	},
 });
 
