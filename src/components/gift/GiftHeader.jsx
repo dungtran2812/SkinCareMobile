@@ -6,16 +6,17 @@ import { useNavigation } from "@react-navigation/native";
 const GiftHeader = () => {
 	const navigation = useNavigation();
 
-	const handleNavigate = () => {
-		navigation.navigate("GiftChange");
-	};
-
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>Quà tặng</Text>
-			<TouchableOpacity style={styles.button} onPress={handleNavigate}>
-				<Ionicons name="gift-outline" size={24} color="#000" />
-				<Text style={styles.buttonText}>Đổi quà</Text>
+			<TouchableOpacity
+				style={styles.button}
+				onPress={() => navigation.navigate("GiftChange")}
+			>
+				<View style={styles.buttonContent}>
+					<Ionicons name="gift-outline" size={24} color="#1E3A5F" />
+					<Text style={styles.buttonText}>Đổi quà</Text>
+				</View>
+				<Ionicons name="chevron-forward" size={24} color="#1E3A5F" />
 			</TouchableOpacity>
 		</View>
 	);
@@ -28,27 +29,34 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		borderBottomColor: "#ddd",
 	},
-	title: {
-		fontSize: 18,
-		fontWeight: "bold",
-		color: "#000",
-		marginBottom: 10,
-	},
 	button: {
 		flexDirection: "row",
 		alignItems: "center",
-		paddingVertical: 8,
-		paddingHorizontal: 12,
-		borderWidth: 0.2,
-		borderColor: "#000",
+		justifyContent: "space-between",
+		paddingVertical: 12,
+		paddingHorizontal: 15,
+		backgroundColor: "#f5f5f5",
 		borderRadius: 15,
-		alignSelf: "flex-start",
+		borderWidth: 0.2,
+		borderColor: "#ddd",
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.1,
+		shadowRadius: 4,
+		elevation: 3,
+	},
+	buttonContent: {
+		flexDirection: "row",
+		alignItems: "center",
 	},
 	buttonText: {
-		color: "#000",
+		color: "#1E3A5F",
 		fontSize: 16,
-		marginLeft: 5,
-		fontWeight: "bold",
+		marginLeft: 10,
+		fontWeight: "500",
 	},
 });
 

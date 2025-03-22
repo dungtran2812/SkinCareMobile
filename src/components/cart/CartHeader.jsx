@@ -8,23 +8,20 @@ const CartHeader = () => {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>Giỏ hàng</Text>
-			<View style={styles.buttonContainer}>
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() => navigation.navigate("MyCart")}
-				>
-					<FontAwesome name="shopping-cart" size={24} color="black" />
+			<TouchableOpacity
+				style={styles.button}
+				onPress={() => navigation.navigate("MyCart")}
+			>
+				<View style={styles.buttonContent}>
+					<FontAwesome
+						name="shopping-cart"
+						size={24}
+						color="#1E3A5F"
+					/>
 					<Text style={styles.buttonText}>Giỏ hàng của tôi</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() => navigation.navigate("ProductFavourite")}
-				>
-					<FontAwesome name="heart" size={24} color="red" />
-					<Text style={styles.buttonText}>Yêu thích</Text>
-				</TouchableOpacity>
-			</View>
+				</View>
+				<FontAwesome name="angle-right" size={24} color="#1E3A5F" />
+			</TouchableOpacity>
 		</View>
 	);
 };
@@ -37,30 +34,39 @@ const styles = StyleSheet.create({
 		borderBottomColor: "#ddd",
 	},
 	title: {
-		fontSize: 20,
+		fontSize: 18,
 		fontWeight: "bold",
-		color: "#000",
+		color: "#1E3A5F",
 		marginBottom: 10,
-	},
-	buttonContainer: {
-		flexDirection: "row",
-		justifyContent: "flex-start",
 	},
 	button: {
 		flexDirection: "row",
 		alignItems: "center",
-		paddingVertical: 8,
-		paddingHorizontal: 12,
-		borderWidth: 0.2,
-		borderColor: "#000",
+		justifyContent: "space-between",
+		paddingVertical: 12,
+		paddingHorizontal: 15,
+		backgroundColor: "#f5f5f5",
 		borderRadius: 15,
-		marginRight: 15,
+		borderWidth: 0.2,
+		borderColor: "#ddd",
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.1,
+		shadowRadius: 4,
+		elevation: 3,
+	},
+	buttonContent: {
+		flexDirection: "row",
+		alignItems: "center",
 	},
 	buttonText: {
-		color: "#000",
+		color: "#1E3A5F",
 		fontSize: 16,
-		marginLeft: 5,
-		fontWeight: "bold",
+		marginLeft: 10,
+		fontWeight: "500",
 	},
 });
 

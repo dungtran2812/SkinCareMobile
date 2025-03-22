@@ -24,11 +24,6 @@ const ProfileStack = () => {
 				options={{ headerShown: false, title: "Sửa Hồ Sơ" }}
 			/>
 			<Stack.Screen
-				name="ProfilePoint"
-				component={ProfilePoint}
-				options={{ headerShown: false, title: "Tích Điểm" }}
-			/>
-			<Stack.Screen
 				name="ProfileQuizzResult"
 				component={ProfileQuizzResult}
 				options={{ headerShown: false, title: "Lịch sử kiểm tra da" }}

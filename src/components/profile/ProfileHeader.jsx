@@ -15,7 +15,6 @@ const ProfileHeader = ({ user, navigation }) => {
 			{/* User info */}
 			<Text style={styles.userName}>{user.name}</Text>
 			<Text style={styles.userEmail}>{user.email}</Text>
-			<Text style={styles.points}>Điểm tích luỹ: {user.points}</Text>
 
 			{/* Buttons */}
 			<View style={styles.buttonsContainer}>
@@ -37,14 +36,6 @@ const ProfileHeader = ({ user, navigation }) => {
 						color="#1E3A5F"
 					/>
 					<Text style={styles.buttonText}>Lịch sử kiểm tra da</Text>
-				</TouchableOpacity>
-
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() => navigation.navigate("ProfilePoint")}
-				>
-					<Icon name="star-outline" size={24} color="#1E3A5F" />
-					<Text style={styles.buttonText}>Tích điểm</Text>
 				</TouchableOpacity>
 			</View>
 		</View>
@@ -85,30 +76,21 @@ const styles = StyleSheet.create({
 	userEmail: {
 		fontSize: 16,
 		color: "#555",
-		marginBottom: 10,
-	},
-	points: {
-		fontSize: 18,
-		color: "#1E3A5F",
-		fontWeight: "bold",
-		marginBottom: 20,
-		backgroundColor: "#fff",
-		paddingHorizontal: 15,
-		paddingVertical: 5,
-		borderRadius: 20,
+		marginBottom: 20, // Tăng marginBottom vì đã xóa phần points
 	},
 	buttonsContainer: {
 		flexDirection: "row",
-		justifyContent: "space-around",
+		justifyContent: "center",
 		width: "100%",
 		paddingHorizontal: 20,
+		gap: 20,
 	},
 	button: {
 		backgroundColor: "#fff", // Nền nút sẽ là trắng để đối lập với nền #B3E5FC
 		padding: 15,
 		borderRadius: 15,
 		alignItems: "center",
-		width: "30%",
+		width: "40%",
 		shadowColor: "#000", // Màu bóng
 		shadowOffset: {
 			width: 0,
@@ -120,7 +102,7 @@ const styles = StyleSheet.create({
 	},
 	buttonText: {
 		color: "#1E3A5F", // Màu chữ của nút
-		fontSize: 12,
+		fontSize: 13,
 		fontWeight: "bold",
 		marginTop: 5,
 		textAlign: "center",

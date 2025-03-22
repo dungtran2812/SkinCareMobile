@@ -19,17 +19,9 @@ export default function ProfileScreen({ navigation }) {
 	return (
 		<ScrollView style={styles.container}>
 			<ProfileHeader user={user} navigation={navigation} />
-			<View>
-				<OrderHeader />
-				<View style={styles.separator} />
-			</View>
-			<View>
-				<CartHeader />
-			</View>
-			<View>
-				<GiftHeader />
-			</View>
-
+			<OrderHeader />
+			<CartHeader />
+			<GiftHeader />
 			<Logout />
 			<Beaute />
 		</ScrollView>
@@ -40,10 +32,5 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#fff",
-	},
-	separator: {
-		borderBottomWidth: 1,
-		borderBottomColor: "#ddd",
-		marginVertical: 10,
 	},
 });
