@@ -8,6 +8,7 @@ import {
 	Alert,
 	ActivityIndicator,
 	SafeAreaView,
+	ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -117,104 +118,114 @@ const QuizzScreen = () => {
 					</View>
 				</View>
 
-				<View style={styles.questionContainer}>
-					<Text style={styles.questionTitle}>
-						{currentQuestion.title}
-					</Text>
-					<Text style={styles.questionDescription}>
-						{currentQuestion.description}
-					</Text>
-				</View>
-
-				<View style={styles.answersContainer}>
-					{currentQuestion.answers.map((option, index) => (
-						<TouchableOpacity
-							key={option._id}
-							style={[
-								styles.optionButton,
-								answers[currentQuestion._id] === index &&
-									styles.selectedOption,
-							]}
-							onPress={() => handleSelectAnswer(index)}
-						>
-							<Text
-								style={[
-									styles.optionText,
-									answers[currentQuestion._id] === index &&
-										styles.selectedOptionText,
-								]}
-							>
-								{option.text}
-							</Text>
-						</TouchableOpacity>
-					))}
-				</View>
-
-				<View style={styles.navigationButtons}>
-					<TouchableOpacity
-						style={[
-							styles.navButton,
-							styles.backButton,
-							currentQuestionIndex === 0 && styles.disabledButton,
-						]}
-						onPress={handleBack}
-						disabled={currentQuestionIndex === 0}
-					>
-						<Text
-							style={[
-								styles.navButtonText,
-								styles.backButtonText,
-							]}
-						>
-							Quay lại
+				<ScrollView
+					style={styles.scrollContent}
+					showsVerticalScrollIndicator={false}
+				>
+					<View style={styles.questionContainer}>
+						<Text style={styles.questionTitle}>
+							{currentQuestion.title}
 						</Text>
-					</TouchableOpacity>
+						<Text style={styles.questionDescription}>
+							{currentQuestion.description}
+						</Text>
+					</View>
 
-					{currentQuestionIndex < quizData.length - 1 ? (
+					<View style={styles.answersContainer}>
+						{currentQuestion.answers.map((option, index) => (
+							<TouchableOpacity
+								key={option._id}
+								style={[
+									styles.optionButton,
+									answers[currentQuestion._id] === index &&
+										styles.selectedOption,
+								]}
+								onPress={() => handleSelectAnswer(index)}
+							>
+								<Text
+									style={[
+										styles.optionText,
+										answers[currentQuestion._id] ===
+											index && styles.selectedOptionText,
+									]}
+								>
+									{option.text}
+								</Text>
+							</TouchableOpacity>
+						))}
+					</View>
+
+					<View style={styles.bottomPadding} />
+				</ScrollView>
+
+				<View style={styles.navigationContainer}>
+					<View style={styles.navigationButtons}>
 						<TouchableOpacity
 							style={[
 								styles.navButton,
-								styles.nextButton,
-								!answers[currentQuestion._id] &&
+								styles.backButton,
+								currentQuestionIndex === 0 &&
 									styles.disabledButton,
 							]}
-							onPress={handleNext}
-							disabled={
-								answers[currentQuestion._id] === undefined
-							}
+							onPress={handleBack}
+							disabled={currentQuestionIndex === 0}
 						>
 							<Text
 								style={[
 									styles.navButtonText,
-									styles.nextButtonText,
+									styles.backButtonText,
 								]}
 							>
-								Tiếp theo
+								Quay lại
 							</Text>
 						</TouchableOpacity>
-					) : (
-						<TouchableOpacity
-							style={[
-								styles.navButton,
-								styles.finishButton,
-								!answers[currentQuestion._id] &&
-									styles.disabledButton,
-							]}
-							onPress={handleFinish}
-							disabled={
-								answers[currentQuestion._id] === undefined
-							}
-						>
-							<Text
+
+						{currentQuestionIndex < quizData.length - 1 ? (
+							<TouchableOpacity
 								style={[
-									styles.navButtonText,
-									styles.nextButtonText,
+									styles.navButton,
+									styles.nextButton,
+									!answers[currentQuestion._id] &&
+										styles.disabledButton,
 								]}
+								onPress={handleNext}
+								disabled={
+									answers[currentQuestion._id] === undefined
+								}
 							>
-								Hoàn thành
-							</Text>
-						</TouchableOpacity>
-					)}
+								<Text
+									style={[
+										styles.navButtonText,
+										styles.nextButtonText,
+									]}
+								>
+									Tiếp theo
+								</Text>
+							</TouchableOpacity>
+						) : (
+							<TouchableOpacity
+								style={[
+									styles.navButton,
+									styles.finishButton,
+									!answers[currentQuestion._id] &&
+										styles.disabledButton,
+								]}
+								onPress={handleFinish}
+								disabled={
+									answers[currentQuestion._id] === undefined
+								}
+							>
+								<Text
+									style={[
+										styles.navButtonText,
+										styles.nextButtonText,
+									]}
+								>
+									Hoàn thành
+								</Text>
+							</TouchableOpacity>
+						)}
+					</View>
 				</View>
 			</View>
 		</SafeAreaView>
@@ -228,7 +239,6 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		flex: 1,
-		padding: 20,
 		backgroundColor: "#fff",
 	},
 	loadingContainer: {
@@ -331,10 +341,23 @@ const styles = StyleSheet.create({
 		color: "#fff",
 		fontWeight: "500",
 	},
+	scrollContent: {
+		flex: 1,
+		padding: 20,
+	},
+	bottomPadding: {
+		height: 20,
+	},
+	navigationContainer: {
+		backgroundColor: "#fff",
+		paddingHorizontal: 20,
+		paddingVertical: 15,
+		borderTopWidth: 1,
+		borderTopColor: "#f0f0f0",
+	},
 	navigationButtons: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-		marginTop: "auto",
 		gap: 12,
 	},
 	navButton: {
