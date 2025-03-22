@@ -19,10 +19,13 @@ const Blog = ({ navigation }) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.header}>
-				<TouchableOpacity onPress={() => navigation.goBack()}>
-					<FontAwesome name="arrow-left" size={20} color="black" />
+				<TouchableOpacity
+					style={styles.backButton}
+					onPress={() => navigation.goBack()}
+				>
+					<FontAwesome name="arrow-left" size={20} color="#1E3A5F" />
 				</TouchableOpacity>
-				<Text style={styles.headerText}>Blog</Text>
+				<Text style={styles.headerText}>Bài viết hữu ích</Text>
 			</View>
 			<FlatList
 				data={BlogData}
@@ -31,6 +34,7 @@ const Blog = ({ navigation }) => {
 				)}
 				keyExtractor={(item) => item.id.toString()}
 				contentContainerStyle={styles.list}
+				showsVerticalScrollIndicator={false}
 			/>
 		</View>
 	);
@@ -39,23 +43,29 @@ const Blog = ({ navigation }) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#f5f5f5",
+		backgroundColor: "#fff",
 	},
 	header: {
 		flexDirection: "row",
-		paddingVertical: 20,
 		alignItems: "center",
-		backgroundColor: "#B3E5FC",
-		padding: 10,
+		paddingVertical: 15,
+		paddingHorizontal: 20,
+		backgroundColor: "#fff",
+		borderBottomWidth: 1,
+		borderBottomColor: "#f0f0f0",
+	},
+	backButton: {
+		padding: 5,
 	},
 	headerText: {
-		fontSize: 24,
-		fontWeight: "bold",
-		textAlign: "center",
+		fontSize: 20,
+		fontWeight: "600",
+		color: "#1E3A5F",
 		flex: 1,
+		marginLeft: 15,
 	},
 	list: {
-		paddingBottom: 20,
+		padding: 15,
 	},
 });
 
