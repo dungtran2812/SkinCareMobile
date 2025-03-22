@@ -62,82 +62,116 @@ export default function ProfileUser({ navigation }) {
 
 	return (
 		<View style={styles.container}>
-			{/* Header */}
 			<View style={styles.header}>
 				<TouchableOpacity
 					onPress={() => navigation.goBack()}
 					style={styles.backButton}
 				>
-					<Ionicons name="arrow-back" size={30} color="#000" />
+					<Ionicons name="arrow-back" size={24} color="#1E3A5F" />
 				</TouchableOpacity>
-				<Text style={styles.title}>Thông tin tài khoản</Text>
+				<Text style={styles.headerTitle}>Thông tin tài khoản</Text>
 			</View>
 
-			{/* User info */}
-			<View style={styles.userInfoContainer}>
-				<Image source={{ uri: user.avatar }} style={styles.avatar} />
-				<View style={styles.userDetails}>
-					<Text style={styles.userName}>{user.name}</Text>
-					<Text style={styles.userEmail}>{user.email}</Text>
-				</View>
-			</View>
-
-			{/* Form fields */}
-			<View style={styles.formContainer}>
-				<TextInput
-					style={styles.input}
-					placeholder="Họ tên"
-					value={fullName}
-					onChangeText={setFullName}
-				/>
-				<TextInput
-					style={styles.input}
-					placeholder="Số điện thoại"
-					keyboardType="phone-pad"
-					value={phoneNumber}
-					onChangeText={setPhoneNumber}
-				/>
-
-				{/* Giới tính với Radio Buttons */}
-				<View style={styles.radioContainer}>
-					<Text>Giới tính</Text>
-					<View style={styles.radioButtons}>
-						{radioButtonsData.map((button) => (
-							<TouchableOpacity
-								key={button.id}
-								style={[
-									styles.radioButton,
-									button.selected ? styles.selected : null,
-								]}
-								onPress={() =>
-									handleRadioButtonPress(button.value)
-								}
-							>
-								<Text style={styles.radioText}>
-									{button.label}
-								</Text>
-							</TouchableOpacity>
-						))}
+			<View style={styles.content}>
+				<View style={styles.userInfoContainer}>
+					<Image
+						source={{ uri: user.avatar }}
+						style={styles.avatar}
+					/>
+					<View style={styles.userInfo}>
+						<Text style={styles.userName}>{user.name}</Text>
+						<Text style={styles.userEmail}>{user.email}</Text>
 					</View>
 				</View>
 
-				{/* Chọn ngày sinh */}
-				<TouchableOpacity
-					onPress={showDatePicker}
-					style={styles.birthdayinput}
-				>
-					<Text style={styles.placeholderText}>
-						{dob ? dob : "Ngày sinh"}
-					</Text>
-				</TouchableOpacity>
+				<View style={styles.formContainer}>
+					<View style={styles.inputGroup}>
+						<Text style={styles.label}>Họ và tên</Text>
+						<TextInput
+							style={styles.input}
+							placeholder="Nhập họ tên của bạn"
+							value={fullName}
+							onChangeText={setFullName}
+						/>
+					</View>
 
-				{/* Nút Cập nhật */}
+					<View style={styles.inputGroup}>
+						<Text style={styles.label}>Số điện thoại</Text>
+						<TextInput
+							style={styles.input}
+							placeholder="Nhập số điện thoại"
+							keyboardType="phone-pad"
+							value={phoneNumber}
+							onChangeText={setPhoneNumber}
+						/>
+					</View>
+
+					<View style={styles.inputGroup}>
+						<Text style={styles.label}>Giới tính</Text>
+						<View style={styles.genderContainer}>
+							<TouchableOpacity
+								style={[
+									styles.genderButton,
+									gender === "male" &&
+										styles.genderButtonActive,
+								]}
+								onPress={() => setGender("male")}
+							>
+								<Text
+									style={[
+										styles.genderButtonText,
+										gender === "male" &&
+											styles.genderButtonTextActive,
+									]}
+								>
+									Nam
+								</Text>
+							</TouchableOpacity>
+							<TouchableOpacity
+								style={[
+									styles.genderButton,
+									gender === "female" &&
+										styles.genderButtonActive,
+								]}
+								onPress={() => setGender("female")}
+							>
+								<Text
+									style={[
+										styles.genderButtonText,
+										gender === "female" &&
+											styles.genderButtonTextActive,
+									]}
+								>
+									Nữ
+								</Text>
+							</TouchableOpacity>
+						</View>
+					</View>
+
+					<View style={styles.inputGroup}>
+						<Text style={styles.label}>Ngày sinh</Text>
+						<TouchableOpacity
+							style={styles.input}
+							onPress={showDatePicker}
+						>
+							<Text
+								style={
+									dob
+										? styles.inputText
+										: styles.placeholderText
+								}
+							>
+								{dob || "Chọn ngày sinh"}
+							</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+
 				<TouchableOpacity style={styles.updateButton}>
 					<Text style={styles.updateButtonText}>Cập nhật</Text>
 				</TouchableOpacity>
 			</View>
 
-			{/* Date picker modal */}
 			<DateTimePickerModal
 				isVisible={isDatePickerVisible}
 				mode="date"
@@ -151,111 +185,123 @@ export default function ProfileUser({ navigation }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#fff", // Đặt màu nền của container là trắng
+		backgroundColor: "#fff",
 	},
 	header: {
 		flexDirection: "row",
 		alignItems: "center",
-		padding: 20,
-		backgroundColor: "#B3E5FC", // Màu nền xanh dương
+		paddingVertical: 15,
+		paddingHorizontal: 20,
+		borderBottomWidth: 1,
+		borderBottomColor: "#f0f0f0",
 	},
 	backButton: {
-		position: "absolute",
-		left: 20,
-		top: 20,
+		padding: 5,
 	},
-	title: {
-		fontSize: 24,
-		fontWeight: "bold",
-		color: "#000",
-		textAlign: "center",
+	headerTitle: {
 		flex: 1,
+		fontSize: 18,
+		fontWeight: "600",
+		color: "#1E3A5F",
+		textAlign: "center",
+		marginRight: 34,
+	},
+	content: {
+		flex: 1,
+		padding: 20,
 	},
 	userInfoContainer: {
 		flexDirection: "row",
 		alignItems: "center",
-		marginTop: 20,
-		paddingHorizontal: 20,
+		marginBottom: 30,
 	},
 	avatar: {
-		width: 80,
-		height: 80,
-		borderRadius: 40,
-		marginRight: 20,
+		width: 70,
+		height: 70,
+		borderRadius: 35,
+		marginRight: 15,
 	},
-	userDetails: {
-		flexDirection: "column",
-		justifyContent: "center",
+	userInfo: {
+		flex: 1,
 	},
 	userName: {
-		fontSize: 20,
-		fontWeight: "bold",
-		color: "#000",
+		fontSize: 18,
+		fontWeight: "600",
+		color: "#1E3A5F",
+		marginBottom: 5,
 	},
 	userEmail: {
-		fontSize: 16,
-		color: "#555",
+		fontSize: 14,
+		color: "#666",
 	},
 	formContainer: {
-		padding: 20,
+		gap: 20,
+	},
+	inputGroup: {
+		gap: 8,
+	},
+	label: {
+		fontSize: 14,
+		fontWeight: "500",
+		color: "#1E3A5F",
 	},
 	input: {
-		height: 50,
-		borderColor: "#ddd", // Màu viền xám
+		height: 48,
 		borderWidth: 1,
-		borderRadius: 10,
-		paddingLeft: 10,
-		marginBottom: 15,
-		color: "#000",
-		backgroundColor: "#fff", // Màu nền trắng cho các ô nhập liệu
+		borderColor: "#E0E0E0",
+		borderRadius: 12,
+		paddingHorizontal: 15,
+		fontSize: 15,
+		color: "#333",
+		backgroundColor: "#fff",
 	},
-	birthdayinput: {
-		height: 50,
-		borderColor: "#ddd", // Màu viền xám
+	genderContainer: {
+		flexDirection: "row",
+		gap: 12,
+	},
+	genderButton: {
+		flex: 1,
+		height: 48,
 		borderWidth: 1,
-		borderRadius: 10,
-		paddingLeft: 10,
-		paddingTop: 15,
-		fontSize: 18,
-		marginBottom: 15,
-		color: "#000",
-		backgroundColor: "#fff", // Màu nền trắng cho các ô nhập liệu
-	},
-	radioContainer: {
-		marginBottom: 15,
-	},
-	radioButtons: {
-		flexDirection: "row", // Đặt các nút radio theo chiều ngang
-		justifyContent: "flex-start", // Căn đều các nút
-	},
-	radioButton: {
-		paddingVertical: 10,
-		paddingHorizontal: 20,
-		backgroundColor: "#ddd", // Màu nền của nút radio
-		borderRadius: 25,
-		margin: 5,
-	},
-	selected: {
-		backgroundColor: "#B3E5FC", // Màu khi nút được chọn
-	},
-	radioText: {
-		fontSize: 16,
-		color: "#000", // Màu chữ trong nút
-	},
-	updateButton: {
-		backgroundColor: "#B3E5FC", // Màu nền nút cập nhật
-		paddingVertical: 15,
-		paddingHorizontal: 40,
-		borderRadius: 25,
+		borderColor: "#E0E0E0",
+		borderRadius: 12,
+		justifyContent: "center",
 		alignItems: "center",
-		marginTop: 20,
+		backgroundColor: "#fff",
 	},
-	updateButtonText: {
-		fontSize: 16,
-		fontWeight: "bold",
-		color: "#fff",
+	genderButtonActive: {
+		backgroundColor: "#E3F2FD",
+		borderColor: "#1E3A5F",
+	},
+	genderButtonText: {
+		fontSize: 15,
+		color: "#666",
+	},
+	genderButtonTextActive: {
+		color: "#1E3A5F",
+		fontWeight: "500",
+	},
+	inputText: {
+		fontSize: 15,
+		color: "#333",
+		paddingVertical: 12,
 	},
 	placeholderText: {
-		color: "#aaa", // Màu chữ placeholder
+		fontSize: 15,
+		color: "#999",
+		paddingVertical: 12,
+	},
+	updateButton: {
+		backgroundColor: "#1E3A5F",
+		height: 50,
+		borderRadius: 12,
+		justifyContent: "center",
+		alignItems: "center",
+		marginTop: 30,
+	},
+	updateButtonText: {
+		color: "#fff",
+		fontSize: 16,
+		fontWeight: "600",
 	},
 });
