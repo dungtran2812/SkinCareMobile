@@ -6,13 +6,14 @@ import {
 	StyleSheet,
 	Dimensions,
 	TouchableOpacity,
+	Platform,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const { width } = Dimensions.get("window");
-const CARD_MARGIN = 15;
+const CARD_MARGIN = 10;
 const CARD_WIDTH = width - CARD_MARGIN * 2;
-const aspectRatio = 9 / 16; // Tỷ lệ 16:9 cho ảnh
+const aspectRatio = 0.5625; // Tỷ lệ 16:9 (9/16)
 const imageHeight = CARD_WIDTH * aspectRatio;
 
 const images = [
@@ -71,38 +72,45 @@ const Carousel = () => {
 
 	return (
 		<View style={styles.container}>
-			<ScrollView
-				ref={scrollViewRef}
-				horizontal
-				pagingEnabled
-				showsHorizontalScrollIndicator={false}
-				scrollEventThrottle={16}
-				onScroll={onScroll}
-				contentContainerStyle={styles.scrollContent}
-				decelerationRate="fast"
-				snapToInterval={CARD_WIDTH + CARD_MARGIN}
-			>
-				{images.map((image, index) => (
-					<View key={index} style={styles.cardContainer}>
-						<Image source={image} style={styles.image} />
-					</View>
-				))}
-			</ScrollView>
-
-			<View style={styles.controls}>
-				<TouchableOpacity
-					style={[styles.controlButton, styles.leftButton]}
-					onPress={handlePrevious}
+			<View style={styles.carouselWrapper}>
+				<ScrollView
+					ref={scrollViewRef}
+					horizontal
+					pagingEnabled
+					showsHorizontalScrollIndicator={false}
+					scrollEventThrottle={16}
+					onScroll={onScroll}
+					contentContainerStyle={styles.scrollContent}
+					decelerationRate="fast"
+					snapToInterval={CARD_WIDTH + CARD_MARGIN}
 				>
-					<Ionicons name="chevron-back" size={24} color="#fff" />
-				</TouchableOpacity>
+					{images.map((image, index) => (
+						<View key={index} style={styles.cardContainer}>
+							<Image source={image} style={styles.image} />
+							<View style={styles.imageShadow} />
+						</View>
+					))}
+				</ScrollView>
 
-				<TouchableOpacity
-					style={[styles.controlButton, styles.rightButton]}
-					onPress={handleNext}
-				>
-					<Ionicons name="chevron-forward" size={24} color="#fff" />
-				</TouchableOpacity>
+				<View style={styles.controls}>
+					<TouchableOpacity
+						style={[styles.controlButton, styles.leftButton]}
+						onPress={handlePrevious}
+					>
+						<Ionicons name="chevron-back" size={20} color="#fff" />
+					</TouchableOpacity>
+
+					<TouchableOpacity
+						style={[styles.controlButton, styles.rightButton]}
+						onPress={handleNext}
+					>
+						<Ionicons
+							name="chevron-forward"
+							size={20}
+							color="#fff"
+						/>
+					</TouchableOpacity>
+				</View>
 			</View>
 
 			<View style={styles.indicatorContainer}>
@@ -123,7 +131,22 @@ const Carousel = () => {
 
 const styles = StyleSheet.create({
 	container: {
-		marginVertical: 15,
+		marginVertical: 10,
+	},
+	carouselWrapper: {
+		position: "relative",
+		backgroundColor: "#fff",
+		...Platform.select({
+			ios: {
+				shadowColor: "#000",
+				shadowOffset: { width: 0, height: 2 },
+				shadowOpacity: 0.15,
+				shadowRadius: 6,
+			},
+			android: {
+				elevation: 4,
+			},
+		}),
 	},
 	scrollContent: {
 		paddingHorizontal: CARD_MARGIN,
@@ -131,22 +154,24 @@ const styles = StyleSheet.create({
 	cardContainer: {
 		width: CARD_WIDTH,
 		marginRight: CARD_MARGIN,
-		borderRadius: 15,
+		borderRadius: 12,
 		overflow: "hidden",
-		backgroundColor: "#fff",
-		shadowColor: "#000",
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
-		shadowOpacity: 0.1,
-		shadowRadius: 3,
-		elevation: 3,
+		position: "relative",
 	},
 	image: {
 		width: CARD_WIDTH,
 		height: imageHeight,
 		resizeMode: "cover",
+	},
+	imageShadow: {
+		position: "absolute",
+		bottom: 0,
+		left: 0,
+		right: 0,
+		height: "30%",
+		backgroundColor: "rgba(0,0,0,0.2)",
+		backgroundGradient:
+			"linear-gradient(to top, rgba(0,0,0,0.3), transparent)",
 	},
 	controls: {
 		position: "absolute",
@@ -155,16 +180,27 @@ const styles = StyleSheet.create({
 		right: 0,
 		flexDirection: "row",
 		justifyContent: "space-between",
-		paddingHorizontal: 5,
-		transform: [{ translateY: -20 }],
+		paddingHorizontal: 10,
+		transform: [{ translateY: -15 }],
 	},
 	controlButton: {
-		width: 40,
-		height: 40,
-		borderRadius: 20,
-		backgroundColor: "rgba(0,0,0,0.3)",
+		width: 30,
+		height: 30,
+		borderRadius: 15,
+		backgroundColor: "rgba(0,0,0,0.4)",
 		justifyContent: "center",
 		alignItems: "center",
+		...Platform.select({
+			ios: {
+				shadowColor: "#000",
+				shadowOffset: { width: 0, height: 1 },
+				shadowOpacity: 0.2,
+				shadowRadius: 2,
+			},
+			android: {
+				elevation: 2,
+			},
+		}),
 	},
 	leftButton: {
 		marginLeft: 5,
@@ -176,18 +212,20 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
-		marginTop: 15,
-		gap: 8,
+		marginTop: 12,
+		gap: 6,
 	},
 	indicator: {
-		width: 8,
-		height: 8,
-		borderRadius: 4,
-		backgroundColor: "#E0E0E0",
+		width: 6,
+		height: 6,
+		borderRadius: 3,
+		backgroundColor: "#D1D1D1",
+		opacity: 0.8,
 	},
 	activeIndicator: {
-		width: 24,
+		width: 18,
 		backgroundColor: "#1E3A5F",
+		opacity: 1,
 	},
 });
 
