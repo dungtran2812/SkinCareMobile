@@ -7,56 +7,51 @@ const GiftHeader = () => {
 	const navigation = useNavigation();
 
 	return (
-		<View style={styles.container}>
-			<TouchableOpacity
-				style={styles.button}
-				onPress={() => navigation.navigate("GiftChange")}
-			>
-				<View style={styles.buttonContent}>
-					<Ionicons name="gift-outline" size={24} color="#1E3A5F" />
-					<Text style={styles.buttonText}>Đổi quà</Text>
+		<TouchableOpacity
+			style={styles.container}
+			onPress={() => navigation.navigate("GiftChange")}
+		>
+			<View style={styles.content}>
+				<View style={styles.iconContainer}>
+					<Ionicons name="gift-outline" size={22} color="#1E3A5F" />
 				</View>
-				<Ionicons name="chevron-forward" size={24} color="#1E3A5F" />
-			</TouchableOpacity>
-		</View>
+				<Text style={styles.title}>Đổi quà tặng</Text>
+			</View>
+			<Ionicons name="chevron-forward" size={22} color="#1E3A5F" />
+		</TouchableOpacity>
 	);
 };
 
 const styles = StyleSheet.create({
 	container: {
-		padding: 15,
-		backgroundColor: "#fff",
-		borderBottomWidth: 1,
-		borderBottomColor: "#ddd",
-	},
-	button: {
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
-		paddingVertical: 12,
-		paddingHorizontal: 15,
-		backgroundColor: "#f5f5f5",
-		borderRadius: 15,
-		borderWidth: 0.2,
-		borderColor: "#ddd",
-		shadowColor: "#000",
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
-		shadowOpacity: 0.1,
-		shadowRadius: 4,
-		elevation: 3,
+		backgroundColor: "#fff",
+		padding: 15,
+		marginHorizontal: 15,
+		marginVertical: 10,
+		borderRadius: 12,
+		borderWidth: 1,
+		borderColor: "#f0f0f0",
 	},
-	buttonContent: {
+	content: {
 		flexDirection: "row",
 		alignItems: "center",
 	},
-	buttonText: {
-		color: "#1E3A5F",
-		fontSize: 16,
-		marginLeft: 10,
+	iconContainer: {
+		width: 40,
+		height: 40,
+		backgroundColor: "#E3F2FD",
+		borderRadius: 20,
+		justifyContent: "center",
+		alignItems: "center",
+		marginRight: 12,
+	},
+	title: {
+		fontSize: 15,
 		fontWeight: "500",
+		color: "#1E3A5F",
 	},
 });
 

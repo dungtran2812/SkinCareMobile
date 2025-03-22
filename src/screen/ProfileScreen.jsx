@@ -23,7 +23,6 @@ export default function ProfileScreen({ navigation }) {
 			<View style={styles.contentContainer}>
 				<OrderHeader />
 				<CartHeader />
-				<GiftHeader />
 				<Beaute />
 				<Logout />
 			</View>
