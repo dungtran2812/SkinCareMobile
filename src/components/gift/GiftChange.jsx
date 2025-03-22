@@ -42,23 +42,24 @@ const GiftChange = () => {
 			<Image source={{ uri: item.image }} style={styles.giftImage} />
 			<View style={styles.giftContent}>
 				<View style={styles.giftInfo}>
-					<Text style={styles.giftName}>{item.name}</Text>
+					<View style={styles.nameContainer}>
+						<Text style={styles.giftName}>{item.name}</Text>
+						<View style={styles.pointsBadge}>
+							<Ionicons name="star" size={14} color="#FF9800" />
+							<Text style={styles.pointsBadgeText}>
+								{item.points}
+							</Text>
+						</View>
+					</View>
 					<Text style={styles.giftDescription}>
 						{item.description}
 					</Text>
 				</View>
 
-				<View style={styles.giftFooter}>
-					<View style={styles.pointsContainer}>
-						<Ionicons name="star" size={16} color="#FF9800" />
-						<Text style={styles.pointsText}>
-							{item.points} điểm
-						</Text>
-					</View>
-					<TouchableOpacity style={styles.exchangeButton}>
-						<Text style={styles.exchangeButtonText}>Đổi quà</Text>
-					</TouchableOpacity>
-				</View>
+				<TouchableOpacity style={styles.exchangeButton}>
+					<Text style={styles.exchangeButtonText}>Đổi quà ngay</Text>
+					<Ionicons name="arrow-forward" size={18} color="#fff" />
+				</TouchableOpacity>
 			</View>
 		</View>
 	);
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
 	},
 	giftImage: {
 		width: "100%",
-		height: 200,
+		height: 180,
 		resizeMode: "cover",
 	},
 	giftContent: {
@@ -140,45 +141,50 @@ const styles = StyleSheet.create({
 	giftInfo: {
 		marginBottom: 15,
 	},
+	nameContainer: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		marginBottom: 8,
+	},
 	giftName: {
 		fontSize: 16,
 		fontWeight: "600",
 		color: "#1E3A5F",
-		marginBottom: 5,
+		flex: 1,
+	},
+	pointsBadge: {
+		flexDirection: "row",
+		alignItems: "center",
+		backgroundColor: "#FFF3E0",
+		paddingHorizontal: 10,
+		paddingVertical: 4,
+		borderRadius: 12,
+		gap: 4,
+	},
+	pointsBadgeText: {
+		fontSize: 13,
+		color: "#FF9800",
+		fontWeight: "600",
 	},
 	giftDescription: {
 		fontSize: 14,
 		color: "#666",
 		lineHeight: 20,
 	},
-	giftFooter: {
-		flexDirection: "row",
-		justifyContent: "space-between",
-		alignItems: "center",
-		paddingTop: 10,
-		borderTopWidth: 1,
-		borderTopColor: "#f0f0f0",
-	},
-	pointsContainer: {
-		flexDirection: "row",
-		alignItems: "center",
-		gap: 5,
-	},
-	pointsText: {
-		fontSize: 14,
-		fontWeight: "500",
-		color: "#1E3A5F",
-	},
 	exchangeButton: {
 		backgroundColor: "#1E3A5F",
-		paddingVertical: 8,
-		paddingHorizontal: 20,
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "center",
+		paddingVertical: 12,
 		borderRadius: 8,
+		gap: 8,
 	},
 	exchangeButtonText: {
 		color: "#fff",
 		fontSize: 14,
-		fontWeight: "500",
+		fontWeight: "600",
 	},
 });
 
