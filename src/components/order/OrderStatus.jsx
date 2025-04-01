@@ -133,13 +133,13 @@ const OrderStatusScreen = ({ route }) => {
 			/>
 			<View style={styles.orderContainer}>
 				{currentPosition === 0 &&
-					renderOrderList(orderData?.orders?.data || [])}
+					renderOrderList(orderData?.data?.orders || [])}
 				{currentPosition === 1 &&
-					renderOrderList(orderData?.orders?.data || [])}
+					renderOrderList(orderData?.data?.orders || [])}
 				{currentPosition === 2 &&
-					renderOrderList(orderData?.orders?.data || [])}
+					renderOrderList(orderData?.data?.orders || [])}
 				{currentPosition === 3 &&
-					renderOrderList(orderData?.orders?.data || [])}
+					renderOrderList(orderData?.data?.orders || [])}
 			</View>
 		</ScrollView>
 	);
