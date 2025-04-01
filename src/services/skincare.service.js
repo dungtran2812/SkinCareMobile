@@ -3,19 +3,18 @@ import { axiosBaseQuery } from "./api.service";
 import endpoints from "../constants/endpoint";
 
 const skincareApi = createApi({
-  reducerPath: "skincareApi",
-  tagTypes: ['QuizQuestion', 'CartItem'],
-  baseQuery: axiosBaseQuery(),
-  endpoints: (builder) => ({
-    // Endpoint for login
-    login: builder.mutation({
-      query: (data) => ({
-        url: endpoints.LOGIN,
-        method: "POST",
-        data: data,
-      }),
-    }),
-
+	reducerPath: "skincareApi",
+	tagTypes: ["QuizQuestion", "CartItem"],
+	baseQuery: axiosBaseQuery(),
+	endpoints: (builder) => ({
+		// Endpoint for login
+		login: builder.mutation({
+			query: (data) => ({
+				url: endpoints.LOGIN,
+				method: "POST",
+				data: data,
+			}),
+		}),
     register: builder.mutation({
       query: (userData) => ({
         url: `/auth/${endpoints.REGISTER}`,
@@ -203,7 +202,6 @@ const skincareApi = createApi({
     }),
   }),
 });
-
 
 export const {
   useLoginMutation,

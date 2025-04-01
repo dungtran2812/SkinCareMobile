@@ -168,7 +168,6 @@ const MyCart = () => {
 			<Text style={styles.selectAllText}>Chọn tất cả</Text>
 		</View>
 	);
-
 	if (isLoading)
 		return (
 			<View style={styles.container}>
@@ -185,19 +184,116 @@ const MyCart = () => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.header}>
-				<TouchableOpacity onPress={() => navigation.goBack()}>
-					<FontAwesome name="arrow-left" size={24} color="black" />
+				<TouchableOpacity
+					style={styles.backButton}
+					onPress={() => navigation.goBack()}
+				>
+					<FontAwesome name="arrow-left" size={20} color="#1E3A5F" />
 				</TouchableOpacity>
 				<Text style={styles.title}>Giỏ hàng của tôi</Text>
+				<View style={styles.placeholder} />
 			</View>
+
 			<SwipeListView
 				data={cartItems}
-				renderItem={renderItem}
-				renderHiddenItem={renderHiddenItem}
+				renderItem={({ item }) => (
+					<View style={styles.cartItem}>
+						<Checkbox.Android
+							status={
+								selectedItems.includes(item.productId)
+									? "checked"
+									: "unchecked"
+							}
+							onPress={() => handleSelectItem(item.productId)}
+							color="#1E3A5F"
+						/>
+						<TouchableOpacity
+							style={styles.productImageContainer}
+							onPress={() =>
+								navigation.navigate("ProductItemDetail", {
+									product: item,
+								})
+							}
+						>
+							<Image
+								source={{ uri: item.image }}
+								style={styles.productImage}
+							/>
+						</TouchableOpacity>
+						<View style={styles.productInfo}>
+							<Text style={styles.productName} numberOfLines={2}>
+								{item.name}
+							</Text>
+							<View style={styles.priceContainer}>
+								<Text style={styles.discountedPrice}>
+									{(
+										item.price *
+										(1 - item.discount / 100)
+									).toLocaleString("vi-VN")}
+									đ
+								</Text>
+								{item.discount > 0 && (
+									<Text style={styles.originalPrice}>
+										{item.price.toLocaleString("vi-VN")}đ
+									</Text>
+								)}
+							</View>
+							<View style={styles.quantityContainer}>
+								<TouchableOpacity
+									style={styles.quantityButton}
+									onPress={() =>
+										updateQuantity({
+											productId: item.productId,
+											quantity: item.quantity - 1,
+										})
+									}
+									disabled={item.quantity <= 1}
+								>
+									<Text
+										style={[
+											styles.quantityButtonText,
+											item.quantity <= 1 &&
+												styles.disabledButton,
+										]}
+									>
+										-
+									</Text>
+								</TouchableOpacity>
+								<Text style={styles.quantityText}>
+									{item.quantity}
+								</Text>
+								<TouchableOpacity
+									style={styles.quantityButton}
+									onPress={() =>
+										updateQuantity({
+											productId: item.productId,
+											quantity: item.quantity + 1,
+										})
+									}
+								>
+									<Text style={styles.quantityButtonText}>
+										+
+									</Text>
+								</TouchableOpacity>
+							</View>
+						</View>
+					</View>
+				)}
+				renderHiddenItem={({ item }) => (
+					<View style={styles.hiddenItem}>
+						<TouchableOpacity
+							style={styles.deleteButton}
+							onPress={() => handleDeleteItem(item.productId)}
+						>
+							<FontAwesome name="trash" size={20} color="#fff" />
+						</TouchableOpacity>
+					</View>
+				)}
 				keyExtractor={(item) => item.productId}
 				rightOpenValue={-75}
 				contentContainerStyle={styles.cartList}
 			/>
+
 			<View style={styles.footer}>
 				<View style={styles.footerContent}>
 					<View style={styles.footerRow}>
@@ -274,127 +370,164 @@ const MyCart = () => {
 };
 
 const styles = StyleSheet.create({
-	container: { flex: 1, backgroundColor: "#fff", paddingTop: 20 },
+	container: {
+		flex: 1,
+		backgroundColor: "#F8F9FA",
+	},
 	header: {
 		flexDirection: "row",
 		alignItems: "center",
-		paddingHorizontal: 20,
-		marginBottom: 20,
+		paddingHorizontal: 15,
+		paddingVertical: 15,
+		backgroundColor: "#fff",
+		borderBottomWidth: 1,
+		borderBottomColor: "#E9ECEF",
 	},
-	title: { fontSize: 24, fontWeight: "bold", textAlign: "center", flex: 1 },
-	cartList: { paddingHorizontal: 20 },
+	backButton: {
+		padding: 8,
+	},
+	title: {
+		flex: 1,
+		fontSize: 18,
+		fontWeight: "600",
+		color: "#1E3A5F",
+		textAlign: "center",
+	},
+	placeholder: {
+		width: 36,
+	},
+	cartList: {
+		paddingHorizontal: 15,
+		paddingTop: 10,
+	},
 	cartItem: {
 		flexDirection: "row",
-		alignItems: "center",
-		marginBottom: 15,
 		backgroundColor: "#fff",
-		padding: 10,
 		borderRadius: 10,
-		borderBottomWidth: 1,
-		borderBottomColor: "#EEEEEE",
-		paddingVertical: 15,
+		padding: 12,
+		marginBottom: 10,
+		alignItems: "center",
+		borderWidth: 1,
+		borderColor: "#E9ECEF",
 	},
 	productImageContainer: {
-		marginLeft: 10,
+		marginHorizontal: 10,
 	},
-	productImage: { width: 80, height: 80, borderRadius: 10 },
-	productInfo: { flex: 1, marginLeft: 10 },
-	productName: { fontSize: 16, fontWeight: "bold" },
+	productImage: {
+		width: 80,
+		height: 80,
+		borderRadius: 8,
+	},
+	productInfo: {
+		flex: 1,
+	},
+	productName: {
+		fontSize: 14,
+		fontWeight: "500",
+		color: "#1E3A5F",
+		marginBottom: 6,
+	},
 	priceContainer: {
 		flexDirection: "row",
 		alignItems: "center",
-		marginTop: 5,
+		marginBottom: 8,
+	},
+	discountedPrice: {
+		fontSize: 15,
+		fontWeight: "600",
+		color: "#E53935",
+		marginRight: 8,
 	},
 	originalPrice: {
-		fontSize: 14,
-		color: "#888",
+		fontSize: 13,
+		color: "#ADB5BD",
 		textDecorationLine: "line-through",
-		marginRight: 5,
 	},
-	discountedPrice: { fontSize: 16, fontWeight: "bold", color: "#E53935" },
 	quantityContainer: {
 		flexDirection: "row",
 		alignItems: "center",
-		marginTop: 10,
 	},
 	quantityButton: {
-		width: 30,
-		height: 30,
+		width: 28,
+		height: 28,
+		backgroundColor: "#F8F9FA",
+		borderRadius: 6,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#f0f0f0",
-		borderRadius: 5,
 	},
-	quantityButtonText: { fontSize: 18, fontWeight: "bold" },
-	quantityText: { fontSize: 16, marginHorizontal: 10 },
-	footer: {
-		borderTopWidth: 1,
-		borderTopColor: "#ddd",
-		paddingVertical: 10,
-		backgroundColor: "#fff",
+	quantityButtonText: {
+		fontSize: 16,
+		color: "#1E3A5F",
+		fontWeight: "600",
 	},
-	footerContent: {
-		paddingHorizontal: 20,
+	disabledButton: {
+		color: "#ADB5BD",
 	},
-	footerRow: {
-		flexDirection: "row",
-		justifyContent: "space-between",
-		alignItems: "center",
+	quantityText: {
+		marginHorizontal: 12,
+		fontSize: 15,
+		color: "#1E3A5F",
+		fontWeight: "500",
 	},
-	leftSection: {
-		flex: 0.4,
-	},
-	rightSection: {
-		flex: 0.6,
+	hiddenItem: {
 		alignItems: "flex-end",
+		backgroundColor: "transparent",
+		marginBottom: 10,
+	},
+	deleteButton: {
+		backgroundColor: "#FF3B30",
+		width: 65,
+		height: "100%",
+		justifyContent: "center",
+		alignItems: "center",
+		borderRadius: 10,
+	},
+	footer: {
+		backgroundColor: "#fff",
+		borderTopWidth: 1,
+		borderTopColor: "#E9ECEF",
+		paddingHorizontal: 15,
+		paddingVertical: 12,
 	},
 	selectAllContainer: {
 		flexDirection: "row",
 		alignItems: "center",
+		marginBottom: 10,
 	},
-	selectAllText: { fontSize: 16, marginLeft: 10 },
-	totalText: {
+	selectAllText: {
 		fontSize: 14,
-		color: "#666",
-		marginBottom: 5,
+		color: "#1E3A5F",
+		marginLeft: 8,
+	},
+	totalContainer: {
+		alignItems: "flex-end",
+	},
+	totalLabel: {
+		fontSize: 13,
+		color: "#6C757D",
+		marginBottom: 4,
 	},
 	totalAmount: {
 		fontSize: 18,
-		fontWeight: "bold",
+		fontWeight: "600",
 		color: "#E53935",
 		marginBottom: 10,
 	},
 	purchaseButton: {
-		paddingVertical: 10,
-		paddingHorizontal: 20,
-		borderRadius: 5,
+		backgroundColor: "#1E3A5F",
+		paddingVertical: 12,
+		paddingHorizontal: 24,
+		borderRadius: 8,
+		width: "100%",
 		alignItems: "center",
+	},
+	disabledPurchaseButton: {
+		backgroundColor: "#ADB5BD",
 	},
 	purchaseButtonText: {
 		color: "#fff",
-		fontSize: 16,
-		fontWeight: "bold",
-	},
-	hiddenItem: {
-		alignItems: "flex-end",
-		backgroundColor: "#fff",
-		flex: 1,
-		marginBottom: 20,
-		paddingRight: 15,
-		borderRadius: 10,
-	},
-	deleteButton: {
-		backgroundColor: "#FF3B30",
-		justifyContent: "center",
-		alignItems: "center",
-		width: 75,
-		height: "100%",
-		borderRadius: 10,
-	},
-	swipeHint: {
-		fontSize: 12,
-		color: "#888",
-		marginTop: 5,
+		fontSize: 15,
+		fontWeight: "600",
 	},
 	modalContainer: {
 		flex: 1,
