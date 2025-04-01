@@ -168,7 +168,6 @@ const MyCart = () => {
 			<Text style={styles.selectAllText}>Chọn tất cả</Text>
 		</View>
 	);
-
 	if (isLoading)
 		return (
 			<View style={styles.container}>
@@ -344,27 +343,26 @@ const MyCart = () => {
 										(acc, item) =>
 											acc +
 											item.price *
-												(1 - item.discount / 100) *
-												item.quantity,
+											(1 - item.discount / 100) *
+											item.quantity,
 										0
-									)
-									.toLocaleString("vi-VN")
-							: 0}
-						đ
-					</Text>
-					<TouchableOpacity
-						style={[
-							styles.purchaseButton,
-							!selectedItems.length &&
-								styles.disabledPurchaseButton,
-						]}
-						onPress={handlePurchase}
-						disabled={!selectedItems.length}
-					>
-						<Text style={styles.purchaseButtonText}>
-							Mua hàng ({selectedItems.length})
-						</Text>
-					</TouchableOpacity>
+									).toLocaleString("vi-VN")
+									: 0}
+								đ
+							</Text>
+							<TouchableOpacity
+								style={[styles.purchaseButton, {
+									backgroundColor: selectedItems.length ? "#1E90FF" : "#ccc",
+								}]}
+								onPress={handlePurchase}
+								disabled={selectedItems.length === 0}
+							>
+								<Text style={styles.purchaseButtonText}>
+									Mua hàng
+								</Text>
+							</TouchableOpacity>
+						</View>
+					</View>
 				</View>
 			</View>
 
