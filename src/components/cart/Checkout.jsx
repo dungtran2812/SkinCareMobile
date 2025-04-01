@@ -20,13 +20,6 @@ const Checkout = ({ route }) => {
 	const [address, setAddress] = useState("");
 	const [paymentMethod, setPaymentMethod] = useState("ZaloPay");
 
-	const totalAmount = cartItems.reduce(
-		(sum, item) =>
-			sum +
-			item.quantity * item.originalPrice * (1 - item.discount / 100),
-		0
-	);
-
 	const handlePlaceOrder = () => {
 		// Xử lý logic đặt đơn hàng
 		navigation.navigate("OrderSuccess");
@@ -52,15 +45,16 @@ const Checkout = ({ route }) => {
 				<Text style={styles.sectionTitle}>Thông tin sản phẩm</Text>
 				{cartItems.map((item) => (
 					<View key={item.id} style={styles.productItem}>
+
 						<Image
-							source={{ uri: item.image.uri }}
+							source={{ uri: item.image }}
 							style={styles.productImage}
 						/>
 						<View style={styles.productInfo}>
 							<Text style={styles.productName}>{item.name}</Text>
-							<Text style={styles.productPrice}>
+							<Text style={styles.price}>
 								{(
-									item.originalPrice *
+									item.price *
 									(1 - item.discount / 100)
 								).toLocaleString("vi-VN")}
 								đ x {item.quantity}
@@ -118,8 +112,8 @@ const Checkout = ({ route }) => {
 			</View>
 			<View style={styles.footer}>
 				<Text style={styles.totalText}>Tổng thanh toán:</Text>
-				<Text style={styles.totalAmount}>
-					{totalAmount.toLocaleString("vi-VN")}đ
+				<Text style={styles.totalPrice}>
+					{totalPrice.toLocaleString("vi-VN")}đ
 				</Text>
 				<TouchableOpacity
 					style={[
@@ -222,7 +216,7 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		marginBottom: 10,
 	},
-	totalAmount: {
+	totalPrice: {
 		fontSize: 20,
 		fontWeight: "bold",
 		color: "#E53935",
