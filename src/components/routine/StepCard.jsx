@@ -8,7 +8,10 @@ const StepCard = ({ step }) => {
 			<Text style={styles.stepName}>{step.stepName}</Text>
 			<Text style={styles.stepName}>Bước {step.stepNumber}</Text>
 			<Text style={styles.stepDescription}>{step.stepDescription}</Text>
-			<ProductList products={step.products} stepNumber={step.stepNumber} />
+			<ProductList
+				products={step.products}
+				stepNumber={step.stepNumber}
+			/>
 		</View>
 	);
 };

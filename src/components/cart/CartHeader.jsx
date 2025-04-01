@@ -8,59 +8,59 @@ const CartHeader = () => {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>Giỏ hàng</Text>
-			<View style={styles.buttonContainer}>
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() => navigation.navigate("MyCart")}
-				>
-					<FontAwesome name="shopping-cart" size={24} color="black" />
+			<TouchableOpacity
+				style={styles.button}
+				onPress={() => navigation.navigate("MyCart")}
+			>
+				<View style={styles.buttonContent}>
+					<View style={styles.iconContainer}>
+						<FontAwesome
+							name="shopping-cart"
+							size={20}
+							color="#1E3A5F"
+						/>
+					</View>
 					<Text style={styles.buttonText}>Giỏ hàng của tôi</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() => navigation.navigate("ProductFavourite")}
-				>
-					<FontAwesome name="heart" size={24} color="red" />
-					<Text style={styles.buttonText}>Yêu thích</Text>
-				</TouchableOpacity>
-			</View>
+				</View>
+				<FontAwesome name="angle-right" size={20} color="#1E3A5F" />
+			</TouchableOpacity>
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	container: {
-		padding: 15,
 		backgroundColor: "#fff",
-		borderBottomWidth: 1,
-		borderBottomColor: "#ddd",
-	},
-	title: {
-		fontSize: 20,
-		fontWeight: "bold",
-		color: "#000",
-		marginBottom: 10,
-	},
-	buttonContainer: {
-		flexDirection: "row",
-		justifyContent: "flex-start",
+		paddingHorizontal: 15,
+		paddingVertical: 12,
 	},
 	button: {
 		flexDirection: "row",
 		alignItems: "center",
-		paddingVertical: 8,
-		paddingHorizontal: 12,
-		borderWidth: 0.2,
-		borderColor: "#000",
-		borderRadius: 15,
-		marginRight: 15,
+		justifyContent: "space-between",
+		backgroundColor: "#F8F9FA",
+		borderRadius: 10,
+		padding: 15,
+		borderWidth: 1,
+		borderColor: "#E9ECEF",
+	},
+	buttonContent: {
+		flexDirection: "row",
+		alignItems: "center",
+	},
+	iconContainer: {
+		backgroundColor: "#E3F2FD",
+		width: 40,
+		height: 40,
+		borderRadius: 20,
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	buttonText: {
-		color: "#000",
-		fontSize: 16,
-		marginLeft: 5,
-		fontWeight: "bold",
+		fontSize: 15,
+		color: "#1E3A5F",
+		fontWeight: "600",
+		marginLeft: 12,
 	},
 });
 
