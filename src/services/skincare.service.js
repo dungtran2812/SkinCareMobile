@@ -159,11 +159,46 @@ const skincareApi = createApi({
         url: `${endpoints.Order}/getOrderByStatus?status=${status}`,
         method: "GET",
       }),
+      providesTags: ['CartItem'],
     }),
     getRoutineBySkinType: builder.query({
       query: (skinTypeId) => ({
         url: `${endpoints.ROUTINE}/getRoutineBySkinType/${skinTypeId}`,
         method: "GET",
+      }),
+    }),
+
+    createOrder: builder.mutation({
+      query: (orderData) => ({
+        url: endpoints.ORDER_CREATE,
+        method: "POST",
+        data: orderData,
+      }),
+      invalidatesTags: ['CartItem'],
+    }),
+
+    updateOrderCancel: builder.mutation({
+      query: (orderData) => ({
+        url: endpoints.ORDER_UPDATE_CANCEL,
+        method: "PUT",
+        data: orderData,
+      }),
+    }),
+
+    createPayment: builder.mutation({
+      query: (paymentData) => ({
+        url: endpoints.PAYMENT_CREATE,
+        method: "POST",
+        data: paymentData,
+      }),
+      invalidatesTags: ['CartItem'],
+    }),
+    checkPayment: builder.mutation({
+      query: (paymentData) => ({
+        url: endpoints.CHECK_PAYMENT,
+        method: "POST",
+        data: paymentData,
+        invalidatesTags: ['CartItem'],
       }),
     }),
   }),
@@ -193,7 +228,11 @@ export const {
   useUpdateQuantityMutation,
   useLazyGetOrderByStatusQuery,
   useGetRoutineBySkinTypeQuery,
-  useGetSkinTypeByIdQuery
+  useGetSkinTypeByIdQuery,
+  useCheckPaymentMutation,
+  useCreateOrderMutation,
+  useCreatePaymentMutation,
+  useGetOrderByStatusQuery,
 } = skincareApi;
 
 export default skincareApi;

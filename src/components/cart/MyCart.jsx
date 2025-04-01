@@ -6,12 +6,15 @@ import {
 	Image,
 	TouchableOpacity,
 	Alert,
+	TextInput,
+	Modal,
 } from "react-native";
 import { Checkbox } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
 import { SwipeListView } from "react-native-swipe-list-view";
 import {
+	useCreateOrderMutation,
 	useGetCartInforQuery,
 	useRemoveCartItemMutation,
 	useUpdateQuantityMutation,
@@ -19,11 +22,14 @@ import {
 
 const MyCart = () => {
 	const navigation = useNavigation();
-	const { data: cardData = [], isLoading, isError } = useGetCartInforQuery();
+	const { data: cartData = [], isLoading, isError } = useGetCartInforQuery();
+	const [createOrder] = useCreateOrderMutation();
 	const [removeCartItem] = useRemoveCartItemMutation();
 	const [updateQuantity] = useUpdateQuantityMutation();
-	const cartItems = cardData.data?.products || [];
+	const cartItems = cartData.data?.products || [];
 	const [selectedItems, setSelectedItems] = useState([]);
+	const [address, setAddress] = useState("");
+	const [modalVisible, setModalVisible] = useState(false);
 
 	const handleDeleteItem = async (id) => {
 		Alert.alert(
@@ -42,11 +48,11 @@ const MyCart = () => {
 		);
 	};
 
-	const handleSelectItem = (id) => {
-		if (selectedItems.includes(id)) {
-			setSelectedItems(selectedItems.filter((item) => item !== id));
+	const handleSelectItem = (product) => {
+		if (selectedItems.some(item => item.productId === product.productId)) {
+			setSelectedItems(selectedItems.filter(item => item.productId !== product.productId));
 		} else {
-			setSelectedItems([...selectedItems, id]);
+			setSelectedItems([...selectedItems, product]);
 		}
 	};
 
@@ -54,23 +60,37 @@ const MyCart = () => {
 		if (selectedItems.length === cartItems.length) {
 			setSelectedItems([]);
 		} else {
-			setSelectedItems(cartItems.map((item) => item.productId));
+			setSelectedItems(cartItems);
 		}
 	};
 
 	const handlePurchase = () => {
-		console.log("Purchasing items: ", selectedItems);
+		setModalVisible(true);
+	};
+
+	const handleConfirmOrder = async () => {
+		const productsToOrder = selectedItems.map(item => ({
+			productId: item.productId,
+			quantity: item.quantity,
+		}));
+
+		try {
+			await createOrder({ products: productsToOrder, address }).unwrap();
+			Alert.alert("Đặt hàng thành công!", "Cảm ơn bạn đã đặt hàng.");
+			setModalVisible(false);
+			setSelectedItems([]);
+			navigation.goBack()
+		} catch (error) {
+			console.error("Error creating order:", error);
+			Alert.alert("Lỗi", "Đặt hàng không thành công. Vui lòng thử lại.");
+		}
 	};
 
 	const renderItem = ({ item }) => (
 		<View style={styles.cartItem}>
 			<Checkbox.Android
-				status={
-					selectedItems.includes(item.productId)
-						? "checked"
-						: "unchecked"
-				}
-				onPress={() => handleSelectItem(item.productId)}
+				status={selectedItems.some(selectedItem => selectedItem.productId === item.productId) ? "checked" : "unchecked"}
+				onPress={() => handleSelectItem(item)}
 				color="#1E3A5F"
 			/>
 			<TouchableOpacity
@@ -88,11 +108,7 @@ const MyCart = () => {
 				<Text style={styles.productName}>{item.name}</Text>
 				<View style={styles.priceContainer}>
 					<Text style={styles.discountedPrice}>
-						{(
-							item.price *
-							(1 - item.discount / 100)
-						).toLocaleString("vi-VN")}
-						đ
+						{(item.price * (1 - item.discount / 100)).toLocaleString("vi-VN")}đ
 					</Text>
 					<Text style={styles.originalPrice}>
 						{item.price.toLocaleString("vi-VN")}đ
@@ -145,11 +161,7 @@ const MyCart = () => {
 	const renderSelectAll = () => (
 		<View style={styles.selectAllContainer}>
 			<Checkbox.Android
-				status={
-					selectedItems.length === cartItems.length
-						? "checked"
-						: "unchecked"
-				}
+				status={selectedItems.length === cartItems.length ? "checked" : "unchecked"}
 				onPress={handleSelectAll}
 				color="#1E3A5F"
 			/>
@@ -198,35 +210,21 @@ const MyCart = () => {
 							</Text>
 							<Text style={styles.totalAmount}>
 								{selectedItems.length > 0
-									? cartItems
-											.filter((item) =>
-												selectedItems.includes(
-													item.productId
-												)
-											)
-											.reduce(
-												(acc, item) =>
-													acc +
-													item.price *
-														(1 -
-															item.discount /
-																100) *
-														item.quantity,
-												0
-											)
-											.toLocaleString("vi-VN")
+									? selectedItems.reduce(
+										(acc, item) =>
+											acc +
+											item.price *
+											(1 - item.discount / 100) *
+											item.quantity,
+										0
+									).toLocaleString("vi-VN")
 									: 0}
 								đ
 							</Text>
 							<TouchableOpacity
-								style={[
-									styles.purchaseButton,
-									{
-										backgroundColor: selectedItems.length
-											? "#1E90FF"
-											: "#ccc",
-									},
-								]}
+								style={[styles.purchaseButton, {
+									backgroundColor: selectedItems.length ? "#1E90FF" : "#ccc",
+								}]}
 								onPress={handlePurchase}
 								disabled={selectedItems.length === 0}
 							>
@@ -238,6 +236,39 @@ const MyCart = () => {
 					</View>
 				</View>
 			</View>
+
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={modalVisible}
+				onRequestClose={() => setModalVisible(false)}
+			>
+				<View style={styles.modalContainer}>
+					<View style={styles.modalContent}>
+						<Text style={styles.modalTitle}>Nhập địa chỉ giao hàng</Text>
+						<TextInput
+							style={styles.addressInput}
+							placeholder="Địa chỉ giao hàng"
+							value={address}
+							onChangeText={setAddress}
+						/>
+						<View style={styles.modalButtons}>
+							<TouchableOpacity
+								style={styles.modalButton}
+								onPress={handleConfirmOrder}
+							>
+								<Text style={styles.modalButtonText}>Xác nhận</Text>
+							</TouchableOpacity>
+							<TouchableOpacity
+								style={styles.modalButton}
+								onPress={() => setModalVisible(false)}
+							>
+								<Text style={styles.modalButtonText}>Hủy</Text>
+							</TouchableOpacity>
+						</View>
+					</View>
+				</View>
+			</Modal>
 		</View>
 	);
 };
@@ -364,6 +395,45 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 		color: "#888",
 		marginTop: 5,
+	},
+	modalContainer: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "rgba(0, 0, 0, 0.5)",
+	},
+	modalContent: {
+		width: "80%",
+		backgroundColor: "white",
+		padding: 20,
+		borderRadius: 10,
+	},
+	modalTitle: {
+		fontSize: 18,
+		fontWeight: "bold",
+		marginBottom: 10,
+	},
+	addressInput: {
+		borderWidth: 1,
+		borderColor: "#ccc",
+		borderRadius: 5,
+		padding: 10,
+		marginBottom: 20,
+	},
+	modalButtons: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+	},
+	modalButton: {
+		backgroundColor: "#1E90FF",
+		padding: 10,
+		borderRadius: 5,
+		flex: 1,
+		marginHorizontal: 5,
+	},
+	modalButtonText: {
+		color: "white",
+		textAlign: "center",
 	},
 });
 

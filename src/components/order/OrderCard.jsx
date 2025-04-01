@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 const OrderCard = ({ order }) => {
-	const { status, products } = order; // Destructuring products array
+	const { status, products, address } = order; // Destructuring products array and address
 
 	const renderStatusOrButtons = () => {
 		switch (status) {
@@ -33,27 +33,26 @@ const OrderCard = ({ order }) => {
 			{/* Tên app */}
 			<Text style={styles.appName}>Beauté</Text>
 
+			{/* Địa chỉ giao hàng */}
+			<Text style={styles.addressText}>
+				Địa chỉ: {address || "Không có thông tin"}
+			</Text>
+
 			{/* Thông tin sản phẩm */}
 			{products.map((product) => (
 				<View key={product?._id} style={styles.productInfoContainer}>
 					<Image
-						source={{ uri: product?.productImage }}
+						source={{ uri: product?.image }}
 						style={styles.productImage}
 					/>
 					<View style={styles.productDetails}>
-						<Text style={styles.productName}>{product?.productName}</Text>
-						<Text style={styles.productBrand}>
-							{product?.productBrand}
-						</Text>
-						<Text style={styles.productQuantity}>
-							Số lượng: {product?.quantity}
-						</Text>
+						<Text style={styles.productName}>{product?.name}</Text>
 						<View style={styles.priceContainer}>
 							<Text style={styles.oldPrice}>
 								{product?.price?.toLocaleString()} VNĐ
 							</Text>
 							<Text style={styles.newPrice}>
-								{(product?.price * (1 - (product?.productDiscount / 100)))?.toLocaleString()} VNĐ
+								{(product?.price * (1 - (product?.productDiscount / 100)))?.toLocaleString()} * {product?.quantity} = {product?.totalPriceAfterDiscount?.toLocaleString()} VNĐ
 							</Text>
 						</View>
 					</View>
@@ -63,7 +62,7 @@ const OrderCard = ({ order }) => {
 			{/* Tổng số tiền */}
 			<View style={styles.totalContainer}>
 				<Text style={styles.totalText}>
-					Tổng số tiền: {order?.totalPriceAfterDiscount?.toLocaleString()} VNĐ
+					Tổng số tiền: {order?.amount?.toLocaleString()} VNĐ
 				</Text>
 			</View>
 
@@ -86,6 +85,11 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		fontWeight: "bold",
 		color: "#1E3A5F",
+		marginBottom: 10,
+	},
+	addressText: {
+		fontSize: 14,
+		color: "#666",
 		marginBottom: 10,
 	},
 	productInfoContainer: {
