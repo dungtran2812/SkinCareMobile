@@ -30,95 +30,93 @@ const Header = () => {
 	}, []);
 
 	return (
-		<View style={styles.headerContainer}>
-			{/* Logo của App */}
-			<Image
-				source={require("../../assets/images/logo/logo-removebg.png")} // Đảm bảo có file logo.png trong thư mục assets
-				style={styles.logo}
-			/>
+		<View style={styles.container}>
+			<View style={styles.headerContent}>
+				<Image
+					source={require("../../assets/images/logo/logo-removebg.png")} // Đảm bảo có file logo.png trong thư mục assets
+					style={styles.logo}
+				/>
 
-			{/* Thanh tìm kiếm */}
-			<View style={styles.searchContainer}>
-				<Ionicons
-					name="search"
-					size={20}
-					color="#999"
-					style={styles.searchIcon}
-				/>
-				<TextInput
-					style={styles.searchInput}
-					placeholder="Bạn đang tìm kiếm gì?"
-					placeholderTextColor="#999"
-				/>
+				<View style={styles.searchContainer}>
+					<Ionicons name="search" size={20} color="#666" />
+					<TextInput
+						style={styles.searchInput}
+						placeholder="Tìm kiếm sản phẩm..."
+						placeholderTextColor="#999"
+					/>
+				</View>
+
+				<TouchableOpacity
+					style={styles.cartButton}
+					onPress={() => navigation.navigate("MyCart")} // Điều hướng đến MyCart
+				>
+					<Ionicons name="cart-outline" size={24} color="#1E3A5F" />
+					{cartItemCount > 0 && (
+						<View style={styles.badge}>
+							<Text style={styles.badgeText}>
+								{cartItemCount}
+							</Text>
+						</View>
+					)}
+				</TouchableOpacity>
 			</View>
-
-			{/* Icon giỏ hàng */}
-			<TouchableOpacity
-				style={styles.cartButton}
-				onPress={() => navigation.navigate("MyCart")} // Điều hướng đến MyCart
-			>
-				<Ionicons name="cart-outline" size={28} color="#fff" />
-				{cartItemCount > 0 && (
-					<View style={styles.cartBadge}>
-						<Text style={styles.cartBadgeText}>
-							{cartItemCount}
-						</Text>
-					</View>
-				)}
-			</TouchableOpacity>
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
-	headerContainer: {
+	container: {
+		backgroundColor: "#fff",
+		borderBottomWidth: 1,
+		borderBottomColor: "#f0f0f0",
+	},
+	headerContent: {
 		flexDirection: "row",
 		alignItems: "center",
-		justifyContent: "space-between",
 		paddingHorizontal: 15,
 		paddingVertical: 12,
-		backgroundColor: "#B3E5FC", // Màu xanh đơn giản
-		elevation: 3,
+		gap: 12,
 	},
 	logo: {
-		width: 40,
-		height: 40,
+		width: 35,
+		height: 35,
 		resizeMode: "contain",
 	},
 	searchContainer: {
+		flex: 1,
 		flexDirection: "row",
 		alignItems: "center",
-		backgroundColor: "#fff",
-		borderRadius: 20,
-		paddingHorizontal: 10,
-		flex: 1,
+		backgroundColor: "#f5f5f5",
+		borderRadius: 12,
+		paddingHorizontal: 12,
 		height: 40,
-		marginHorizontal: 10,
-	},
-	searchIcon: {
-		marginRight: 8,
+		gap: 8,
 	},
 	searchInput: {
 		flex: 1,
+		fontSize: 14,
 		color: "#333",
+		paddingVertical: 8,
 	},
 	cartButton: {
-		padding: 5,
 		position: "relative",
+		padding: 5,
 	},
-	cartBadge: {
+	badge: {
 		position: "absolute",
 		top: -5,
 		right: -5,
-		backgroundColor: "red",
-		borderRadius: 10,
-		paddingHorizontal: 5,
-		paddingVertical: 2,
+		backgroundColor: "#FF5252",
+		minWidth: 18,
+		height: 18,
+		borderRadius: 9,
+		justifyContent: "center",
+		alignItems: "center",
 	},
-	cartBadgeText: {
+	badgeText: {
 		color: "#fff",
-		fontSize: 12,
-		fontWeight: "bold",
+		fontSize: 11,
+		fontWeight: "600",
 	},
 });
 

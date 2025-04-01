@@ -2,11 +2,11 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import ProfileScreen from "../../ProfileScreen";
 import ProfileUser from "../../../components/profile/ProfileUser";
-import ProfilePoint from "../../../components/profile/ProfilePoint";
 import OrderStatus from "../../../components/order/OrderStatus";
 import GiftChange from "../../../components/gift/GiftChange";
 import ProductFavourite from "../../../components/favourite/ProductFavourite";
-
+import ProfileQuizzResult from "../../../components/profile/ProfileQuizzResult";
+import QuizzDetail from "../../../components/quizz/QuizzDetail";
 const Stack = createStackNavigator();
 
 const ProfileStack = () => {
@@ -23,9 +23,14 @@ const ProfileStack = () => {
 				options={{ headerShown: false, title: "Sửa Hồ Sơ" }}
 			/>
 			<Stack.Screen
-				name="ProfilePoint"
-				component={ProfilePoint}
-				options={{ headerShown: false, title: "Tích Điểm" }}
+				name="ProfileQuizzResult"
+				component={ProfileQuizzResult}
+				options={{ headerShown: false, title: "Lịch sử kiểm tra da" }}
+			/>
+			<Stack.Screen
+				name="QuizzDetail"
+				component={QuizzDetail}
+				options={{ headerShown: false, title: "Chi tiết kết quả" }}
 			/>
 			<Stack.Screen
 				name="OrderStatus"
