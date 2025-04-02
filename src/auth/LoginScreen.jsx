@@ -13,6 +13,9 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useDispatch } from "react-redux";
 import {
 	setAccessToken,
+	setAddress,
+	setEmail,
+	setImg,
 	setName,
 	setPhoneNumber,
 	setSkinType,
@@ -53,6 +56,9 @@ const LoginScreen = ({ navigation, route }) => {
 			dispatch(setName(userData?.data?.name));
 			dispatch(setPhoneNumber(userData?.data?.phone));
 			dispatch(setSkinType(userData?.data?.skinType));
+			dispatch(setImg(userData?.data?.avatar));
+			dispatch(setAddress(userData?.data?.address));
+			dispatch(setEmail(userData?.data?.email));
 
 			navigation.reset({
 				index: 0,

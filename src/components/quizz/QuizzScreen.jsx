@@ -89,8 +89,7 @@ const QuizzScreen = () => {
 		const { data } = await analysisSkinType({
 			points: totalPoints,
 		}).unwrap();
-		dispatch(setSkinType(data?.skinType?._id));
-		console.log(data.skinType._id);
+		dispatch(setSkinType(data?.skinType));
 		// Navigate to the result screen with the determined skin type
 		navigation.navigate("QuizzAnswer");
 	};

@@ -2,13 +2,15 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons"; // Thêm import icon
+import { useSelector } from "react-redux";
 
-const ProfileHeader = ({ user, navigation }) => {
+const ProfileHeader = () => {
+	const user = useSelector((state) => state?.rootReducer?.user)
 	return (
 		<View style={styles.container}>
 			<View style={styles.userInfoContainer}>
 				<Image
-					source={{ uri: user.avatar }} // Dùng avatar của người dùng
+					source={{ uri: user.img }} // Dùng avatar của người dùng
 					style={styles.avatar}
 				/>
 				<View style={styles.userInfo}>

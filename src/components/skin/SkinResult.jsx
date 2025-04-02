@@ -10,24 +10,12 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
-import { useGetSkinTypeByIdQuery } from "../../services/skincare.service";
 
 const SkinResult = ({ route }) => {
 	const navigation = useNavigation();
-	const skinTypeId = useSelector(
+	const skinType = useSelector(
 		(state) => state?.rootReducer?.user?.skinType
 	);
-	console.log(skinTypeId)
-	const { data: skinType, isLoading, isError } = useGetSkinTypeByIdQuery(skinTypeId);
-	// Handle loading state
-	if (isLoading) {
-		return (
-			<View style={styles.loadingContainer}>
-				<ActivityIndicator size="large" color="#0000ff" />
-				<Text>Loading skin type information...</Text>
-			</View>
-		);
-	}
 
 	// Handle error state
 	if (isError) {
@@ -41,17 +29,17 @@ const SkinResult = ({ route }) => {
 	return (
 		<View style={styles.container}>
 			<ScrollView contentContainerStyle={styles.scrollContainer}>
-				<Text style={styles.title}>{skinType?.data?.type}</Text>
-				<Image source={skinType?.data?.image} style={styles.image} />
+				<Text style={styles.title}>{skinType?.type}</Text>
+				<Image source={skinType?.image} style={styles.image} />
 				<Text style={styles.sectionTitle}>
-					Thông Tin Về {skinType?.data?.type}
+					Thông Tin Về {skinType?.type}
 				</Text>
 				<Text style={styles.sectionTitle}>Nguyên Nhân</Text>
-				<Text style={styles.text}>{skinType?.data?.description}</Text>
+				<Text style={styles.text}>{skinType?.description}</Text>
 				<Text style={styles.sectionTitle}>Dấu Hiệu</Text>
-				<Text style={styles.text}>{skinType?.data?.symptom}</Text>
+				<Text style={styles.text}>{skinType?.symptom}</Text>
 				<Text style={styles.sectionTitle}>Cách Chăm Sóc</Text>
-				<Text style={styles.text}>{skinType?.data?.treatment}</Text>
+				<Text style={styles.text}>{skinType?.treatment}</Text>
 			</ScrollView>
 			<View style={styles.buttonContainer}>
 				<TouchableOpacity

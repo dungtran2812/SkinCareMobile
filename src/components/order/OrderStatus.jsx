@@ -102,8 +102,8 @@ const OrderStatusScreen = ({ route }) => {
 	};
 
 	// Hàm render đơn hàng
-	const renderOrderList = (orders) => {
-		return orders.map((order) => (
+	const renderOrderList = (orderData) => {
+		return orderData.map((order) => (
 			<OrderCard key={order.id} order={order} />
 		));
 	};
@@ -133,13 +133,13 @@ const OrderStatusScreen = ({ route }) => {
 			/>
 			<View style={styles.orderContainer}>
 				{currentPosition === 0 &&
-					renderOrderList(orderData?.data?.orders || [])}
+					renderOrderList(orderData?.data || [])}
 				{currentPosition === 1 &&
-					renderOrderList(orderData?.data?.orders || [])}
+					renderOrderList(orderData?.data || [])}
 				{currentPosition === 2 &&
-					renderOrderList(orderData?.data?.orders || [])}
+					renderOrderList(orderData?.data || [])}
 				{currentPosition === 3 &&
-					renderOrderList(orderData?.data?.orders || [])}
+					renderOrderList(orderData?.data || [])}
 			</View>
 		</ScrollView>
 	);

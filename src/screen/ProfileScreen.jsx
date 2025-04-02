@@ -7,19 +7,14 @@ import Beaute from "../components/info/Beaute";
 import GiftHeader from "../components/gift/GiftHeader";
 import CartHeader from "../components/cart/CartHeader";
 
-export default function ProfileScreen({ navigation }) {
-	const user = {
-		avatar: "https://cdn-icons-png.freepik.com/512/146/146005.png",
-		name: "Đẹp gái",
-		email: "depgaicute@example.com",
-	};
+export default function ProfileScreen() {
 
 	return (
 		<ScrollView
 			style={styles.container}
 			showsVerticalScrollIndicator={false}
 		>
-			<ProfileHeader user={user} navigation={navigation} />
+			<ProfileHeader/>
 			<View style={styles.contentContainer}>
 				<OrderHeader />
 				<CartHeader />

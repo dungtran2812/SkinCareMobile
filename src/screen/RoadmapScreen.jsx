@@ -10,19 +10,20 @@ import StepCard from "../components/routine/StepCard";
 import { useSelector } from "react-redux";
 import {
 	useGetRoutineBySkinTypeQuery,
-	useGetSkinTypeByIdQuery,
 } from "../services/skincare.service";
+import { store } from "../store/store";
 
 const RoadmapScreen = () => {
-	const skinTypeId = useSelector(
+	const skinType = useSelector(
 		(state) => state?.rootReducer?.user?.skinType
 	);
+	console.log(store.getState())
 	const {
 		data: routine,
 		isLoading,
 		isError,
-	} = useGetRoutineBySkinTypeQuery(skinTypeId);
-	const { data: skinType } = useGetSkinTypeByIdQuery(skinTypeId);
+	} = useGetRoutineBySkinTypeQuery(skinType._id);
+  console.log(routine)
 
 	// Handle loading state
 	if (isLoading) {
@@ -50,7 +51,7 @@ const RoadmapScreen = () => {
 			<View style={styles.header}>
 				<Text style={styles.title}>Lộ trình chăm sóc da</Text>
 				<Text style={styles.skinType}>
-					Dành cho da: {skinType?.data?.type}
+					Dành cho da: {skinType?.type}
 				</Text>
 			</View>
 

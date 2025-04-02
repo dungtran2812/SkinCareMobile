@@ -10,6 +10,9 @@ const initialState = {
 	role: "",
 	accessTokenExpired: false,
 	skinType: "",
+	address: "",
+	img: "",
+	email: "",
 };
 
 const userSlice = createSlice({
@@ -41,17 +44,32 @@ const userSlice = createSlice({
 			state.isLoading = action.payload;
 		},
 		setAccessTokenExpired(state, action) {
-			state.accessToken = action.payload;
+			state.accessTokenExpired = action.payload;
 		},
 		setSkinType(state, action) {
 			state.skinType = action.payload;
+		},
+		setAddress(state, action) {
+			state.address = action.payload;
+		},
+		setEmail(state, action) {
+			state.email = action.payload;
+		},
+		setImg(state, action) {
+			state.img = action.payload;
 		},
 		signout(state) {
 			state.isLoggedIn = false;
 			state.isFirstLogin = false;
 			state.accessToken = "";
 			state.username = "";
-			state.role = [];
+			state.name = "";
+			state.phoneNumber = "";
+			state.role = "";
+			state.accessTokenExpired = false;
+			state.skinType = "";
+			state.address = "";
+			state.img = "";
 		},
 	},
 });
@@ -66,7 +84,10 @@ export const {
 	signout,
 	setAccessTokenExpired,
 	setName,
-	setSkinType
+	setSkinType,
+	setAddress,
+	setImg,
+	setEmail
 } = userSlice.actions;
 
 export default userSlice.reducer;
