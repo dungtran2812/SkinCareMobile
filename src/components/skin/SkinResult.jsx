@@ -6,22 +6,21 @@ import {
 	Image,
 	ScrollView,
 	TouchableOpacity,
-	ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
 const SkinResult = ({ route }) => {
 	const navigation = useNavigation();
-	const skinType = useSelector(
-		(state) => state?.rootReducer?.user?.skinType
-	);
+	const skinType = useSelector((state) => state?.rootReducer?.user?.skinType);
 
-	// Handle error state
-	if (isError) {
+	// Kiểm tra xem skinType có hợp lệ không
+	if (!skinType) {
 		return (
 			<View style={styles.errorContainer}>
-				<Text style={styles.errorText}>Error fetching skin type information. Please try again later.</Text>
+				<Text style={styles.errorText}>
+					Không có thông tin về loại da.
+				</Text>
 			</View>
 		);
 	}
@@ -30,7 +29,9 @@ const SkinResult = ({ route }) => {
 		<View style={styles.container}>
 			<ScrollView contentContainerStyle={styles.scrollContainer}>
 				<Text style={styles.title}>{skinType?.type}</Text>
-				<Image source={skinType?.image} style={styles.image} />
+				{skinType?.image && (
+					<Image source={skinType?.image} style={styles.image} />
+				)}
 				<Text style={styles.sectionTitle}>
 					Thông Tin Về {skinType?.type}
 				</Text>
