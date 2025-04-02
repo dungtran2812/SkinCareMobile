@@ -8,22 +8,16 @@ import {
 } from "react-native";
 import StepCard from "../components/routine/StepCard";
 import { useSelector } from "react-redux";
-import {
-	useGetRoutineBySkinTypeQuery,
-} from "../services/skincare.service";
-import { store } from "../store/store";
+import { useGetRoutineBySkinTypeQuery } from "../services/skincare.service";
 
 const RoadmapScreen = () => {
-	const skinType = useSelector(
-		(state) => state?.rootReducer?.user?.skinType
-	);
-	console.log(store.getState())
+	const skinType = useSelector((state) => state?.rootReducer?.user?.skinType);
+
 	const {
 		data: routine,
 		isLoading,
 		isError,
 	} = useGetRoutineBySkinTypeQuery(skinType._id);
-  console.log(routine)
 
 	// Handle loading state
 	if (isLoading) {
@@ -46,6 +40,17 @@ const RoadmapScreen = () => {
 		);
 	}
 
+	// Ensure routine and routine.steps are valid before using map
+	if (!routine || !routine.steps || routine.steps.length === 0) {
+		return (
+			<View style={styles.errorContainer}>
+				<Text style={styles.errorText}>
+					No steps found for this skin type.
+				</Text>
+			</View>
+		);
+	}
+
 	return (
 		<View style={styles.mainContainer}>
 			<View style={styles.header}>
@@ -59,10 +64,9 @@ const RoadmapScreen = () => {
 				style={styles.scrollView}
 				contentContainerStyle={styles.scrollContent}
 			>
-				{routine &&
-					routine?.steps.map((step, index) => (
-						<StepCard key={index} step={step} />
-					))}
+				{routine?.steps.map((step, index) => (
+					<StepCard key={index} step={step} />
+				))}
 			</ScrollView>
 		</View>
 	);
